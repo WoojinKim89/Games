@@ -202,6 +202,27 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
 @keyframes boomfx{0%{transform:scale(.2);opacity:1}60%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1.2);opacity:0}}
 .rainbowfx{position:absolute;z-index:24;pointer-events:none;font-size:clamp(120px,30vw,200px);animation:drop .5s,fade 1.4s forwards}
 @keyframes fade{70%{opacity:1}100%{opacity:0}}
+#field.croc2{display:block;background:linear-gradient(#ffd7a8,#ffeacc 38%,#5fb7e8 38%,#3d97d0 55%,#7fc76a 55%,#5fae52)}
+#field.croc3{display:block;background:radial-gradient(circle at 80% 14%,#fff6b0 0 34px,transparent 36px),linear-gradient(#3b2a6b,#6a4fb0 40%,#5d9a4f 40%,#3f7a3a)}
+.hpname{position:absolute;left:0;right:0;top:0;text-align:center;font-size:14px;line-height:22px;color:#1b4a1f;font-weight:bold}
+.gauge{position:absolute;top:102px;left:0;right:0;margin:0 auto;width:min(56vw,280px);height:18px;background:#fff;border-radius:10px;box-shadow:0 3px 0 rgba(0,0,0,.15);z-index:20;overflow:hidden}
+.gauge i{position:absolute;inset:3px;right:auto;width:0;background:linear-gradient(90deg,#ff7ac3,#ffd34d,#7ff0d8,#a77bff);border-radius:7px;transition:width .3s}
+.gauge span{position:absolute;inset:0;text-align:center;font-size:12px;line-height:18px;color:#7a3fa0}
+.gauge.full{animation:twinkle .6s infinite}
+.superbtn{position:absolute;left:0;right:0;margin:0 auto;width:max-content;bottom:calc(clamp(84px,24vw,124px) + 22px + env(safe-area-inset-bottom,0px));z-index:30;border:4px solid #fff;border-radius:30px;padding:10px 22px;font:inherit;font-size:clamp(22px,5.5vw,30px);color:#fff;background:linear-gradient(90deg,#ff7ac3,#ffb84d,#5fd3c0,#a77bff);box-shadow:0 6px 0 #8a4fc0;cursor:pointer;animation:hint 1s ease-in-out infinite}
+.banner{position:absolute;left:0;right:0;margin:0 auto;width:max-content;max-width:92vw;top:34%;z-index:45;background:rgba(255,255,255,.95);color:#7a3fa0;border-radius:28px;padding:16px 28px;text-align:center;font-size:clamp(26px,7vw,42px);box-shadow:0 8px 0 #c98be0;animation:drop .5s cubic-bezier(.3,1.6,.5,1);pointer-events:none;white-space:nowrap}
+.crocm .kcrown{position:absolute;left:62%;top:-22%;font-size:clamp(40px,10vw,64px);transform:rotate(12deg)}
+.crocm .fire{position:absolute;right:-18%;top:30%;font-size:clamp(36px,9vw,56px);animation:twinkle .3s infinite}
+.bun.gold span{filter:sepia(1) saturate(4) hue-rotate(5deg) brightness(1.1) drop-shadow(0 0 8px #ffd34d)}
+.bun.gold::after{content:"✨";position:absolute;top:-6px;right:-6px;font-size:.5em;animation:twinkle .8s infinite}
+.carrot{position:absolute;font-size:clamp(46px,10vw,64px);z-index:9;cursor:pointer;padding:6px;animation:twinkle 1s infinite;filter:drop-shadow(0 0 8px #fff)}
+.safe.bump{animation:chomp .3s}
+.cmdr{position:absolute;left:8px;top:104px;width:clamp(56px,13vw,80px);z-index:15;pointer-events:none}
+.cmdr img{width:100%;border-radius:50%;border:4px solid #fff;display:block}
+.cmdr.go{animation:chomp .35s}
+.orb{position:absolute;height:clamp(60px,14vw,90px);z-index:27;pointer-events:none;animation:orbitc 1.5s ease-in forwards}
+@keyframes orbitc{0%{transform:translate(-50%,-50%) rotate(var(--a)) translateX(220px) rotate(calc(-1*var(--a)))}100%{transform:translate(-50%,-50%) rotate(calc(var(--a) + 720deg)) translateX(0) rotate(calc(-1*var(--a) - 720deg)) scale(.4)}}
+.rainbowfx.big{font-size:clamp(200px,50vw,320px)}
 /* short screens (phone landscape) */
 @media (max-height:520px){
  .screen{gap:8px;padding:8px;justify-content:flex-start}
@@ -239,6 +260,9 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
  .crocm{width:170px}
  .safe{top:64px;right:90px}
  .hpbar{top:64px}
+ .gauge{top:90px}
+ .superbtn{bottom:10px;right:90px;font-size:18px}
+ .cmdr{top:64px;width:48px}
  .grid4 .pick img{width:56px;height:56px}
  .grid4 .pick{font-size:17px}
  .granny{top:64px}
@@ -833,74 +857,126 @@ const CROC_SVG=`<svg viewBox="0 0 300 180" aria-hidden="true">
 </g>
 </svg>`;
 function startCroc(){
-  mode="croc";clearGame();show(null);field.className="croc";
-  const MAXHP=14;let hp=MAXHP,rescued=0,belly=0,ended=false,rionUsed=false;
+  mode="croc";clearGame();show(null);
+  const STAGES=[
+    {n:"악어 괴물",bg:"croc",hp:10,sp:.75,filter:"",intro:"악어 괴물이 나타났어! 토끼를 구해주자!"},
+    {n:"불꽃 악어",bg:"croc2",hp:14,sp:.95,filter:"hue-rotate(-105deg) saturate(1.5)",intro:"으악! 내 동생을 괴롭혔지? 불꽃 악어 형님이 나타났어!",fire:true},
+    {n:"왕 악어",bg:"croc3",hp:18,sp:1.1,filter:"hue-rotate(160deg) saturate(1.3)",intro:"이번엔 왕관 쓴 왕 악어님이 나타났어! 티니핑 힘을 모으자!",king:true}
+  ];
+  let st=0,S0=STAGES[0],MAXHP=S0.hp,hp=MAXHP,rescued=0,belly=0,ended=false,paused=true,rionUsed=false,gauge=0;const GMAX=12;
   hud(`🐰 구출 0`);
-  const hpw=el(`<div class="hpbar"><i style="width:calc(100% - 6px)"></i></div>`);field.appendChild(hpw);
+  const hpw=el(`<div class="hpbar"><i style="width:calc(100% - 6px)"></i><span class="hpname"></span></div>`);field.appendChild(hpw);
+  const gw=el(`<div class="gauge"><i></i><span>⭐ 합체 마법</span></div>`);field.appendChild(gw);
   const safe=el(`<div class="safe">🏡<span class="n">🐰 0</span></div>`);field.appendChild(safe);
-  const C=el(`<div class="crocm"><div class="inner">${CROC_SVG}<div class="belly"></div></div></div>`);field.appendChild(C);
-  const inner=C.querySelector(".inner"),bellyEl=C.querySelector(".belly");
+  const C=el(`<div class="crocm"><div class="inner">${CROC_SVG}<div class="belly"></div><div class="kcrown" hidden>👑</div><div class="fire" hidden>🔥</div></div></div>`);field.appendChild(C);
+  const inner=C.querySelector(".inner"),bellyEl=C.querySelector(".belly"),svg=C.querySelector("svg");
   const crocW=()=>C.offsetWidth||260;
-  const cr={x:-crocW(),y:innerHeight*0.42,dir:1,stun:0,size:1,chomp:0};
+  const cr={x:-400,y:innerHeight*0.42,dir:1,stun:0,swipeAt:0};
   const buns=[];
-  say(`큰일 났어! 악어 괴물이 토끼를 잡아먹으려고 해! ${NAME[who]}야, 토끼를 눌러서 구해주고, 티니핑 마법으로 악어 괴물을 물리치자!`);
+  const cmd=el(`<div class="cmdr"><img src="${IMG[who]}"></div>`);field.appendChild(cmd);
+  function cheer(t){cmd.classList.remove("go");void cmd.offsetWidth;cmd.classList.add("go");const r=cmd.getBoundingClientRect();bubble(r.left+20,r.top-20,t);}
   function setHp(){hpw.firstChild.style.width=`calc(${Math.max(0,hp)/MAXHP*100}% - 6px)`;}
-  function setBelly(){bellyEl.textContent="🐰".repeat(belly);inner.style.transform=`scale(${1+belly*0.08})`;}
+  function setGauge(){gw.firstChild.style.width=`calc(${Math.min(gauge,GMAX)/GMAX*100}% - 6px)`;const full=gauge>=GMAX&&!ended&&!paused;superBtn.hidden=!full;gw.classList.toggle("full",gauge>=GMAX);}
+  function addG(n){gauge=Math.min(GMAX,gauge+n);setGauge();if(gauge>=GMAX&&!superBtn.dataset.told){superBtn.dataset.told=1;say("합체 마법 준비 완료! 별 버튼을 눌러!");}}
+  function setBelly(){bellyEl.textContent="🐰".repeat(Math.min(belly,8));inner.style.transform=`scale(${(STAGES[st].king?1.15:1)+belly*0.07})`;}
+  function banner(txt,ms=2200){const b=el(`<div class="banner">${txt}</div>`);field.appendChild(b);setTimeout(()=>b.remove(),ms);}
+  function startStage(i){
+    st=i;const S=STAGES[i];MAXHP=S.hp;hp=MAXHP;rionUsed=false;setHp();field.className=S.bg;
+    hpw.querySelector(".hpname").textContent=S.n;svg.style.filter=S.filter;
+    C.querySelector(".kcrown").hidden=!S.king;C.querySelector(".fire").hidden=true;C.classList.remove("baby","love","stun","sleep","open");
+    cr.x=-crocW()-40;cr.y=innerHeight*0.42;cr.stun=0;cr.swipeAt=performance.now()+9000;setBelly();
+    paused=true;banner(`${i+1}단계<br>${S.king?"👑":S.fire?"🔥":"🐊"} ${S.n} 등장!`);say(S.intro);
+    timers.push(setTimeout(()=>{paused=false;setGauge();},2200));
+  }
   function addBun(){
-    if(ended||buns.length>=5)return;
-    const b={el:el(`<div class="bun"><span>🐇</span></div>`),x:30+Math.random()*(innerWidth-120),y:innerHeight*(0.4+Math.random()*0.3),t:0};
+    if(ended||paused||buns.filter(b=>!b.carrot).length>=5)return;
+    const gold=Math.random()<.18;
+    const b={gold,el:el(`<div class="bun${gold?" gold":""}"><span>🐇</span></div>`),x:30+Math.random()*(innerWidth-120),y:innerHeight*(0.38+Math.random()*0.3)};
     b.el.style.left=b.x+"px";b.el.style.top=b.y+"px";field.appendChild(b.el);buns.push(b);
     b.el.onpointerdown=e=>{e.stopPropagation();save(b);};
   }
-  function toSafe(elm,fromX,fromY){
+  function addCarrot(){
+    if(ended||paused||field.querySelector(".carrot"))return;
+    const c=el(`<div class="carrot">🥕</div>`);const x=30+Math.random()*(innerWidth-110),y=innerHeight*(0.35+Math.random()*0.3);
+    c.style.left=x+"px";c.style.top=y+"px";field.appendChild(c);
+    c.onpointerdown=e=>{e.stopPropagation();c.onpointerdown=null;sfx.pop();
+      // throw it in front of the croc as a decoy
+      const tx=cr.dir>0?cr.x+crocW()+40:cr.x-60,ty=cr.y+crocW()*0.15;
+      c.style.transition="left .4s,top .4s";c.style.left=Math.max(10,Math.min(innerWidth-70,tx))+"px";c.style.top=ty+"px";
+      const d={carrot:true,el:c,x:Math.max(10,Math.min(innerWidth-70,tx)),y:ty};buns.push(d);cheer("당근 받아라!");};
+    timers.push(setTimeout(()=>{if(c.isConnected&&c.onpointerdown)c.remove();},9000));
+  }
+  function toSafe(elm,fromX,fromY,gold){
     const r=safe.getBoundingClientRect();elm.style.left=fromX+"px";elm.style.top=fromY+"px";
     requestAnimationFrame(()=>requestAnimationFrame(()=>{elm.style.left=(r.left+10)+"px";elm.style.top=(r.top+10)+"px";elm.style.transform="scale(.4)";}));
     setTimeout(()=>elm.remove(),550);rescued++;safe.querySelector(".n").textContent=`🐰 ${rescued}`;$("#cnt").textContent=`🐰 구출 ${rescued}`;
+    safe.classList.remove("bump");void safe.offsetWidth;safe.classList.add("bump");
   }
   function save(b){
-    if(b.gone)return;b.gone=true;buns.splice(buns.indexOf(b),1);sfx.ding();
-    bubble(b.x,b.y-20,["살았다!","고마워!","깡총!","휴~"][rescued%4]);b.el.onpointerdown=null;toSafe(b.el,b.x,b.y);
-  }
-  function spit(n=1){
-    for(let i=0;i<n&&belly>0;i++){belly--;setBelly();
-      const m=mouthPos();const e=el(`<div class="bun"><span>🐇</span></div>`);field.appendChild(e);
-      setTimeout(()=>toSafe(e,m.x,m.y),i*200);}
-    if(n>0){tone(110,.5,"sawtooth",.22,0,70);const m=mouthPos();bubble(m.x,m.y-40,"꺼억~!");}
+    if(b.gone)return;b.gone=true;buns.splice(buns.indexOf(b),1);sfx.ding();b.el.onpointerdown=null;
+    if(b.gold){[1047,1319,1568].forEach((f,i)=>tone(f,.15,"triangle",.15,i*.07));bubble(b.x,b.y-20,"황금 토끼! ⭐+3");addG(3);}
+    else{bubble(b.x,b.y-20,["살았다!","고마워!","깡총!","휴~"][rescued%4]);addG(1);}
+    toSafe(b.el,b.x,b.y);
   }
   function mouthPos(){const r=C.getBoundingClientRect();return cr.dir>0?{x:r.right-60,y:r.top+r.height*0.4}:{x:r.left+10,y:r.top+r.height*0.4};}
-  function boom(x,y,chars){for(let i=0;i<8;i++){const b=el(`<div class="boom">${chars[i%chars.length]}</div>`);b.style.left=x+"px";b.style.top=y+"px";
-    b.style.setProperty("--dx",(Math.random()*160-80)+"px");b.style.setProperty("--dy",(Math.random()*160-80)+"px");field.appendChild(b);setTimeout(()=>b.remove(),1000);}}
+  function spit(n=1){
+    const m=mouthPos();let k=0;
+    for(let i=0;i<n&&belly>0;i++){belly--;k++;const e=el(`<div class="bun"><span>🐇</span></div>`);field.appendChild(e);setTimeout(()=>toSafe(e,m.x,m.y),i*180);}
+    setBelly();if(k){tone(110,.5,"sawtooth",.22,0,70);bubble(m.x,m.y-40,"꺼억~!");}
+  }
+  function boom(x,y,chars,n=8,spread=160){for(let i=0;i<n;i++){const b=el(`<div class="boom">${chars[i%chars.length]}</div>`);b.style.left=x+"px";b.style.top=y+"px";
+    b.style.setProperty("--dx",(Math.random()*spread-spread/2)+"px");b.style.setProperty("--dy",(Math.random()*spread-spread/2)+"px");field.appendChild(b);setTimeout(()=>b.remove(),1000);}}
+  function center(){const r=C.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2,r};}
   function hit(dmg,kind){
-    if(ended)return;hp-=dmg;setHp();
-    const r=C.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+    if(ended||paused)return;hp-=dmg;setHp();addG(1);
+    const {x:cx,y:cy}=center();
     C.classList.remove("love","sleep","stun");
-    if(kind==="hachu"){C.classList.add("love");cr.stun=performance.now()+1800;boom(cx,cy,["💖","💕","💗"]);bubble(cx,cy-60,"헤헤... 하츄핑 귀여워~ 💕");}
-    if(kind==="diana"){C.classList.add("stun");cr.stun=performance.now()+1200;boom(cx,cy,["⭐","💎","✨","🌟"]);bubble(cx,cy-60,"아야! 반짝반짝 눈부셔!");}
-    if(kind==="aurora"){cr.stun=performance.now()+1500;const rb=el(`<div class="rainbowfx">🌈</div>`);rb.style.left=(cx-100)+"px";rb.style.top=(cy-150)+"px";field.appendChild(rb);setTimeout(()=>rb.remove(),1400);
-      boom(cx,cy,["🌈","✨"]);bubble(cx,cy-60,"크크크 간지러워~!");}
-    if(kind==="eclipse"){C.classList.add("sleep");cr.stun=performance.now()+3000;boom(cx,cy,["🌙","💤","✨"]);bubble(cx,cy-60,"쿨쿨... 졸려... 💤");}
-    if(kind==="rion"){C.classList.add("stun");cr.stun=performance.now()+2500;boom(cx,cy,["💨","💨","😵"]);bubble(cx,cy-60,"으악! 냄새~! 😵");}
-    spit(kind==="aurora"?2:1);
-    if(hp<=0)defeat();
+    const now=performance.now();
+    if(kind==="hachu"){C.classList.add("love");cr.stun=now+1800;boom(cx,cy,["💖","💕","💗"]);bubble(cx,cy-60,"헤헤... 하츄핑 귀여워~ 💕");}
+    if(kind==="diana"){C.classList.add("stun");cr.stun=now+1200;boom(cx,cy,["⭐","💎","✨","🌟"]);bubble(cx,cy-60,"아야! 반짝반짝 눈부셔!");}
+    if(kind==="aurora"){cr.stun=now+1500;const rb=el(`<div class="rainbowfx">🌈</div>`);rb.style.left=(cx-100)+"px";rb.style.top=(cy-150)+"px";field.appendChild(rb);setTimeout(()=>rb.remove(),1400);boom(cx,cy,["🌈","✨"]);bubble(cx,cy-60,"크크크 간지러워~!");}
+    if(kind==="eclipse"){C.classList.add("sleep");cr.stun=now+3000;boom(cx,cy,["🌙","💤","✨"]);bubble(cx,cy-60,"쿨쿨... 졸려... 💤");}
+    if(kind==="rion"){C.classList.add("stun");cr.stun=now+2500;boom(cx,cy,["💨","💨","😵"]);bubble(cx,cy-60,"으악! 냄새~! 😵");}
+    if(kind==="carrot"){C.classList.add("stun");cr.stun=now+2000;boom(cx,cy,["🥕","💫"]);bubble(cx,cy-60,"웩! 당근이잖아~ 퉤퉤!");}
+    if(kind==="super"){C.classList.add("stun");cr.stun=now+3200;boom(cx,cy,["🌈","⭐","💖","🌙","💎","✨"],24,320);bubble(cx,cy-70,"으아아~ 무지개 별빛이다!");}
+    spit(kind==="super"?belly:kind==="aurora"?2:1);
+    if(hp<=0)stageClear();
     else if(!rionUsed&&hp<=MAXHP/2){rionUsed=true;timers.push(setTimeout(rionAttack,1500));}
   }
   function rionAttack(){
-    if(ended)return;const R=el(`<div class="rion"><img src="${IMG.rion}"></div>`);field.appendChild(R);
-    const y=cr.y+20;let x=-160;R.style.top=y+"px";sfx.bark();say("리온이가 도와주러 왔어! 리온이 방구 공격!");
+    if(ended||paused)return;const R=el(`<div class="rion"><img src="${IMG.rion}"></div>`);field.appendChild(R);
+    const y=cr.y+20,x=-160;R.style.top=y+"px";sfx.bark();say("리온이가 도와주러 왔어! 리온이 방구 공격!");
     const goal=Math.max(10,cr.x-130);const t0=performance.now();
     (function go(t){const k=Math.min(1,(t-t0)/900);R.style.left=(x+(goal-x)*k)+"px";
       if(k<1){requestAnimationFrame(go);return;}
-      R.firstChild.style.transform="scaleX(-1)";
       timers.push(setTimeout(()=>{const w=fart();bubble(goal+40,y-30,w);hit(3,"rion");
         timers.push(setTimeout(()=>{R.style.transition="left .8s";R.style.left="-200px";setTimeout(()=>R.remove(),900);},1200));},500));})(t0);
   }
-  function defeat(){
-    ended=true;cr.stun=Infinity;C.classList.remove("love","stun","sleep");spit(belly);
-    buns.splice(0).forEach(b=>{b.gone=true;toSafe(b.el,b.x,b.y);});
-    C.classList.add("baby");sfx.yay();confetti();
-    const r=C.getBoundingClientRect();bubble(r.left+r.width/2,r.top+r.height*0.6,"미안해~ 이제 당근만 먹을게 🥕");
-    say(`와! ${NAME[who]}랑 티니핑이 악어 괴물을 물리쳤다! 악어가 아기 악어가 됐어!`);
-    timers.push(setTimeout(()=>win(`${NAME[who]}랑 티니핑이 악어 괴물을 물리치고 토끼 ${rescued}마리를 구했다!`),4000));
+  // combine all teeniepings
+  const superBtn=el(`<button class="superbtn" hidden>⭐ 티니핑 합체! ⭐</button>`);field.appendChild(superBtn);
+  superBtn.onpointerdown=e=>{e.stopPropagation();if(gauge<GMAX||ended||paused)return;gauge=0;superBtn.dataset.told="";setGauge();
+    cheer("티니핑 합체!");say("티니핑 합체 마법! 무지개 별빛 폭발!");
+    [523,659,784,1047,1319,1568].forEach((f,i)=>tone(f,.25,"triangle",.18,i*.09));
+    const {x:cx,y:cy}=center();const imgs=IMG.pings.map((src,i)=>{const im=el(`<img class="orb" src="${src}">`);im.style.setProperty("--a",i*90+"deg");im.style.left=cx+"px";im.style.top=cy+"px";field.appendChild(im);return im;});
+    cr.stun=performance.now()+1600;
+    timers.push(setTimeout(()=>{imgs.forEach(i=>i.remove());const rb=el(`<div class="rainbowfx big">🌈</div>`);rb.style.left=(cx-160)+"px";rb.style.top=(cy-230)+"px";field.appendChild(rb);setTimeout(()=>rb.remove(),1400);
+      sfx.bigpoop&&tone(80,.6,"sawtooth",.2,0,40);hit(6,"super");},1500));};
+  function stageClear(){
+    paused=true;cr.stun=Infinity;C.classList.remove("love","stun","sleep","open");spit(belly);
+    buns.splice(0).forEach(b=>{b.gone=true;if(b.carrot){b.el.remove();return;}toSafe(b.el,b.x,b.y);});
+    field.querySelectorAll(".carrot").forEach(c=>c.remove());
+    C.classList.add("baby");sfx.yay();confetti();superBtn.hidden=true;
+    const {x,y}=center();
+    if(st<STAGES.length-1){
+      bubble(x,y,["으앙~ 형님 불러올 거야!","으앙~ 왕 악어님께 이를 거야!"][st]);
+      say(`${st+1}단계 성공! 그런데... 뭔가 또 온다!`);
+      timers.push(setTimeout(()=>{C.style.transition="left 1s";cr.x=innerWidth+50;C.style.left=cr.x+"px";},1500));
+      timers.push(setTimeout(()=>{C.style.transition="";startStage(st+1);},3200));
+    }else{
+      ended=true;bubble(x,y,"미안해~ 이제 당근만 먹을게 🥕");
+      say(`와! ${NAME[who]}랑 티니핑이 왕 악어까지 물리쳤다! 악어들이 착한 아기 악어가 됐어!`);
+      timers.push(setTimeout(()=>win(`${NAME[who]}랑 티니핑이 악어 3형제를 물리치고 토끼 ${rescued}마리를 구했다!`),4200));
+    }
   }
   // ping powers
   const POW=[
@@ -912,40 +988,48 @@ function startCroc(){
   const bar=el(`<div class="powers"></div>`);field.appendChild(bar);
   POW.forEach(pw=>{
     const b=el(`<button class="pw" style="--cd:${pw.cd}ms"><img src="${pw.img}">${pw.n}<div class="cd"></div></button>`);bar.appendChild(b);
-    b.onpointerdown=e=>{e.stopPropagation();if(ended||b.classList.contains("cool"))return;
+    b.onpointerdown=e=>{e.stopPropagation();if(ended||paused||b.classList.contains("cool"))return;
       b.classList.add("cool");setTimeout(()=>b.classList.remove("cool"),pw.cd);
-      say(pw.say);[784,988,1175,1568].forEach((f,i)=>tone(f,.15,"triangle",.15,i*.06));
+      say(pw.say);cheer(["가라!","얍!","힘내!","간다!"][Math.floor(Math.random()*4)]);[784,988,1175,1568].forEach((f,i)=>tone(f,.15,"triangle",.15,i*.06));
       const br=b.getBoundingClientRect();const sh=el(`<div class="shot"><img src="${pw.img}"></div>`);
       sh.style.left=br.left+"px";sh.style.top=br.top+"px";field.appendChild(sh);
       requestAnimationFrame(()=>requestAnimationFrame(()=>{const r=C.getBoundingClientRect();sh.style.left=(r.left+r.width/2-40)+"px";sh.style.top=(r.top+r.height*0.3)+"px";sh.style.transform="scale(1.3) rotate(360deg)";}));
       setTimeout(()=>{sh.remove();hit(pw.dmg,pw.k);},460);};
   });
   field.onpointerdown=e=>{if(e.target.closest(".home"))return;tone(500,.08,"sine",.1,0,250);};
-  // croc AI
+  function tailSwipe(){
+    cr.stun=performance.now()+900;C.classList.add("stun");const {x,y}=center();bubble(x,y-70,STAGES[st].fire?"불꽃 꼬리 휘두르기!":"꼬리 휘두르기!");
+    tone(200,.4,"sawtooth",.15,0,90);
+    for(const b of buns){if(b.carrot)continue;if(Math.hypot(b.x-x,b.y-y)<260){b.x=30+Math.random()*(innerWidth-120);b.y=innerHeight*(0.35+Math.random()*0.33);b.el.style.left=b.x+"px";b.el.style.top=b.y+"px";}}
+  }
   function loop(t){
-    if(!ended){
+    if(!paused&&!ended){
       if(t>cr.stun){
         C.classList.remove("love","stun","sleep");
+        if(st>0&&t>cr.swipeAt){cr.swipeAt=t+8000+Math.random()*4000;tailSwipe();}
         let tgt=null,bd=1e9;const cx=cr.x+crocW()/2;
-        for(const b of buns){const d=Math.hypot(b.x-cx,b.y-cr.y);if(d<bd){bd=d;tgt=b;}}
+        for(const b of buns){const d=Math.hypot(b.x-cx,b.y-cr.y)-(b.carrot?2000:0);if(d<bd){bd=d;tgt=b;}}
         if(tgt){const mx=cr.dir>0?cr.x+crocW()*0.85:cr.x+crocW()*0.1,my=cr.y+crocW()*0.2;
           const dx=tgt.x+20-mx,dy=tgt.y+20-my,d=Math.hypot(dx,dy)||1;
           if(Math.abs(dx)>20)cr.dir=dx>0?1:-1;
-          const sp=0.75+(MAXHP-hp)*0.03;cr.x+=dx/d*sp;cr.y+=dy/d*sp*0.6;
+          const sp=(STAGES[st].sp+(MAXHP-hp)*0.03)*(tgt.carrot?2:1);cr.x+=dx/d*sp;cr.y+=dy/d*sp*0.6;
           cr.y=Math.max(innerHeight*0.25,Math.min(innerHeight*0.62,cr.y));
-          if(d<110)C.classList.add("open");else C.classList.remove("open");
-          if(d<45){ // gobble
-            tgt.gone=true;buns.splice(buns.indexOf(tgt),1);tgt.el.remove();belly++;setBelly();sfx.munch();
-            bubble(mx,my-50,"냠! 토끼 맛있다~");if(Math.random()<.5)say("앗! 악어 괴물이 토끼를 먹었어! 티니핑, 도와줘!");
-            C.classList.remove("open");}
-        }else C.classList.remove("open");
-      }else C.classList.remove("open");
-      C.style.left=cr.x+"px";C.style.top=cr.y+"px";C.firstChild.style.scale=cr.dir>0?"1 1":"-1 1";
+          const near=d<110;C.classList.toggle("open",near);C.querySelector(".fire").hidden=!(near&&STAGES[st].fire);
+          if(d<45){
+            tgt.gone=true;buns.splice(buns.indexOf(tgt),1);tgt.el.remove();C.classList.remove("open");C.querySelector(".fire").hidden=true;
+            if(tgt.carrot){sfx.munch();hit(1,"carrot");}
+            else{belly++;setBelly();sfx.munch();bubble(mx,my-50,tgt.gold?"냠! 황금 토끼다~":"냠! 토끼 맛있다~");if(Math.random()<.4)say("앗! 악어가 토끼를 먹었어! 티니핑, 도와줘!");}
+          }
+        }else{C.classList.remove("open");C.querySelector(".fire").hidden=true;}
+      }else{C.classList.remove("open");C.querySelector(".fire").hidden=true;}
     }
+    C.style.left=cr.x+"px";C.style.top=cr.y+"px";C.firstChild.style.scale=cr.dir>0?"1 1":"-1 1";
     raf=requestAnimationFrame(loop);
   }
-  for(let i=0;i<4;i++)addBun();
-  timers.push(setInterval(addBun,2200));
+  for(let i=0;i<4;i++)timers.push(setTimeout(addBun,2300+i*100));
+  timers.push(setInterval(addBun,2100));
+  timers.push(setInterval(addCarrot,11000));
+  startStage(0);
   raf=requestAnimationFrame(loop);
 }
 
