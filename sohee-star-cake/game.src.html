@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#2b2363">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>소희랑 준이 놀이</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+html,body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none;-webkit-touch-callout:none;font-family:"Jua","Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:#fde7f3}
+.screen{position:fixed;inset:0;display:none;overflow-y:auto;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:16px}
+.screen.on{display:flex}
+#title{background:linear-gradient(#2b2363,#7a4fb0 60%,#ffb3d9)}
+h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-shadow:0 4px 0 #ff5fa8}
+.sub{color:#fff;font-size:clamp(18px,4vw,28px)}
+.row{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
+.pick{background:#fff;border:none;border-radius:32px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:6px;font:inherit;font-size:clamp(22px,5vw,34px);color:#7a3fa0;box-shadow:0 8px 0 #c98be0;cursor:pointer;transition:transform .1s}
+.pick:active{transform:translateY(6px);box-shadow:0 2px 0 #c98be0}
+.pick img{width:clamp(110px,24vw,180px);height:clamp(110px,24vw,180px);object-fit:contain}
+.pick.big img{width:clamp(130px,30vw,220px);height:clamp(130px,30vw,220px)}
+.pings{display:flex;gap:6px;justify-content:center}
+.pings img{height:clamp(70px,15vw,130px);animation:bob 1.6s ease-in-out infinite}
+.pings img:nth-child(2){animation-delay:.3s}.pings img:nth-child(3){animation-delay:.6s}.pings img:nth-child(4){animation-delay:.9s}
+@keyframes bob{50%{transform:translateY(-14px) rotate(-4deg)}}
+#field{position:fixed;inset:0;display:none;overflow:hidden}
+#field.stars{display:block;background:radial-gradient(circle at 80% 15%,#fff6b0 0 50px,transparent 52px),linear-gradient(#1b1650,#4b2f8f 70%,#7b4fb5)}
+#field.cake{display:block;background:linear-gradient(#ffe0ef,#ffd0e6 60%,#f7b4d4)}
+.hud{position:absolute;top:10px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 14px;z-index:20;pointer-events:none}
+.hud .count{background:#fff;border-radius:24px;padding:6px 18px;font-size:clamp(22px,5vw,36px);color:#7a3fa0;box-shadow:0 4px 0 #c98be0}
+.home{pointer-events:auto;background:#fff;border:none;border-radius:50%;width:60px;height:60px;font-size:32px;box-shadow:0 4px 0 #c98be0;cursor:pointer}
+.star{position:absolute;font-size:clamp(64px,13vw,96px);line-height:1;cursor:pointer;animation:twinkle 1s ease-in-out infinite;filter:drop-shadow(0 0 12px #fff59a);z-index:5}
+@keyframes twinkle{50%{transform:scale(1.15) rotate(10deg)}}
+.pop{animation:popout .5s forwards!important}
+@keyframes popout{to{transform:scale(2.2) rotate(90deg);opacity:0}}
+.me{position:absolute;width:clamp(90px,18vw,140px);z-index:6;transition:left .3s,top .3s}
+.me img{width:100%;border-radius:50%;border:6px solid #fff;box-shadow:0 6px 0 rgba(0,0,0,.2)}
+.rion{position:absolute;width:clamp(90px,18vw,140px);z-index:7;pointer-events:none}
+.rion img{width:100%;border-radius:50%;border:6px solid #fff;animation:run .35s ease-in-out infinite}
+@keyframes run{50%{transform:translateY(-10px) rotate(6deg)}}
+.poop{position:absolute;font-size:clamp(56px,11vw,84px);z-index:8;cursor:pointer;animation:drop .6s cubic-bezier(.3,1.6,.5,1)}
+.poop::after{content:"✨";position:absolute;font-size:.4em;right:-.3em;top:-.2em}
+@keyframes drop{from{transform:scale(0)}to{transform:scale(1)}}
+.bubble{position:absolute;background:#fff;color:#a0408a;border-radius:20px;padding:6px 14px;font-size:clamp(20px,4.5vw,32px);z-index:30;white-space:nowrap;animation:float 1.4s forwards;pointer-events:none}
+@keyframes float{0%{transform:scale(.5);opacity:0}15%{transform:scale(1.1);opacity:1}80%{opacity:1}100%{transform:translateY(-50px);opacity:0}}
+.friend{position:absolute;height:clamp(80px,16vw,130px);z-index:4;pointer-events:none;animation:bob 2s ease-in-out infinite}
+/* cake */
+.cakewrap{position:absolute;left:0;right:0;top:80px;bottom:0;display:flex;flex-direction:column;align-items:center;gap:8px}
+.order{display:flex;align-items:center;gap:10px;background:#fff;border-radius:24px;padding:8px 16px;box-shadow:0 4px 0 #e7a3c8}
+.order img{height:clamp(70px,14vw,110px)}
+.mini{display:flex;flex-direction:column-reverse;align-items:center}
+.mini .ly{width:90px;height:26px;border-radius:8px;margin-top:2px;border:2px solid rgba(0,0,0,.1)}
+.mini .tp{font-size:34px;line-height:1}
+.plate{position:relative;flex:1;width:100%;display:flex;flex-direction:column-reverse;align-items:center;justify-content:flex-start;padding-bottom:6px}
+.plate .dish{width:clamp(240px,55vw,380px);height:24px;background:#fff;border-radius:50%;box-shadow:0 6px 0 #d9a0c0}
+.plate .ly{width:clamp(180px,42vw,300px);height:clamp(40px,8vw,60px);border-radius:18px;border:3px solid rgba(0,0,0,.08);margin-bottom:-4px;animation:drop .4s cubic-bezier(.3,1.6,.5,1);box-shadow:inset 0 -8px 0 rgba(0,0,0,.08)}
+.plate .tp{font-size:clamp(50px,10vw,76px);line-height:1;animation:drop .4s}
+.btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;padding:8px 8px 18px}
+.cb{width:clamp(76px,17vw,120px);height:clamp(76px,17vw,120px);border-radius:26px;border:5px solid #fff;box-shadow:0 6px 0 rgba(0,0,0,.18);font-size:clamp(40px,9vw,64px);cursor:pointer;display:flex;align-items:center;justify-content:center;background:#fff}
+.cb:active{transform:translateY(5px);box-shadow:0 1px 0 rgba(0,0,0,.18)}
+.cb.hint{animation:hint 1s ease-in-out infinite}
+@keyframes hint{50%{transform:scale(1.12);box-shadow:0 0 0 8px #fff59a}}
+#win{background:rgba(43,35,99,.85);z-index:50}
+#win img.face{width:clamp(140px,32vw,220px);border-radius:50%;border:8px solid #fff;animation:bob 1s infinite}
+.confetti{position:fixed;top:-40px;font-size:30px;z-index:60;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+/* short screens (phone landscape) */
+@media (max-height:520px){
+ .screen{gap:8px;padding:8px;justify-content:flex-start}
+ h1{font-size:26px}.sub{font-size:16px}
+ .pings img{height:54px}
+ .pick{padding:8px;font-size:20px;border-radius:22px}
+ .pick img,.pick.big img{width:90px;height:90px}
+ .cakewrap{top:62px;flex-direction:row;flex-wrap:wrap;justify-content:center;align-content:flex-start}
+ .order img{height:56px}
+ .plate{flex:1 1 40%;min-height:120px}
+ .plate .ly{height:30px;width:160px}
+ .btns{flex:1 1 100%;padding:4px}
+ .cb{width:64px;height:64px;font-size:34px}
+ .home{width:48px;height:48px;font-size:26px}
+ .hud .count{font-size:20px}
+}
+/* big screens (PC) */
+@media (min-width:1100px) and (min-height:760px){
+ .pick img{width:200px;height:200px}.pick.big img{width:240px;height:240px}
+ .cb{width:130px;height:130px}
+}
+</style>
+</head>
+<body>
+
+<div id="title" class="screen on">
+  <div class="pings"><img src="IMG.hachu"><img src="IMG.diana"><img src="IMG.aurora"><img src="IMG.eclipse"></div>
+  <h1>소희랑 준이의<br>⭐별 &amp; 🎂케이크 놀이</h1>
+  <div class="sub">누가 할까요?</div>
+  <div class="row">
+    <button class="pick" data-who="sohee"><img src="IMG.sohee2" style="border-radius:50%">소희</button>
+    <button class="pick" data-who="jun"><img src="IMG.jun" style="border-radius:50%">준이</button>
+  </div>
+</div>
+
+<div id="menu" class="screen" style="background:linear-gradient(#ffe0ef,#d9c4ff)">
+  <h1 style="color:#7a3fa0;text-shadow:0 4px 0 #fff">무슨 놀이 할까?</h1>
+  <div class="row">
+    <button class="pick big" id="goStars"><img src="IMG.diana">⭐ 별 찾기</button>
+    <button class="pick big" id="goCake"><img src="IMG.hachu">🎂 케이크 만들기</button>
+  </div>
+  <div class="row" style="align-items:center;color:#7a3fa0;font-size:22px"><img src="IMG.rion" style="width:64px;border-radius:50%;border:4px solid #fff"> 리온이 조심! 💩</div>
+</div>
+
+<div id="field"></div>
+
+<div id="win" class="screen">
+  <img class="face" id="winFace">
+  <h1 id="winText">최고야!</h1>
+  <div class="pings"><img src="IMG.hachu"><img src="IMG.diana"><img src="IMG.aurora"><img src="IMG.eclipse"></div>
+  <div class="row">
+    <button class="pick" id="again" style="font-size:30px">🔁 또 하기</button>
+    <button class="pick" id="toMenu" style="font-size:30px">🏠 처음으로</button>
+  </div>
+</div>
+
+<script>
+const IMG={sohee:"IMG.sohee2",jun:"IMG.jun",rion:"IMG.rion",pings:["IMG.hachu","IMG.diana","IMG.aurora","IMG.eclipse"]};
+const NAME={sohee:"소희",jun:"준이"};
+let who="sohee", mode="stars", timers=[], raf=0;
+const $=s=>document.querySelector(s);
+const field=$("#field");
+
+// ---------- sound ----------
+let ac;
+function audio(){ if(!ac){ try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){} } if(ac&&ac.state==="suspended")ac.resume(); return ac;}
+function tone(f,d=.15,type="sine",vol=.25,when=0,slide){const a=audio();if(!a)return;const t=a.currentTime+when;const o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(slide)o.frequency.exponentialRampToValueAtTime(slide,t+d);g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g).connect(a.destination);o.start(t);o.stop(t+d+.02);}
+const sfx={
+  ding(){tone(880,.12,"triangle");tone(1320,.2,"triangle",.2,.08);},
+  yay(){[523,659,784,1047].forEach((f,i)=>tone(f,.25,"triangle",.22,i*.12));},
+  boo(){tone(300,.25,"square",.12,0,180);},
+  poop(){tone(160,.5,"sawtooth",.25,0,60);tone(110,.35,"square",.12,.15,50);tone(700,.12,"sine",.15,.6,1200);},
+  bark(){tone(600,.08,"square",.15,0,400);tone(650,.08,"square",.15,.15,420);},
+  pop(){tone(400,.1,"sine",.25,0,1600);}
+};
+function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="ko-KR";u.rate=.95;u.pitch=1.3;speechSynthesis.speak(u);}catch(e){}}
+
+// ---------- helpers ----------
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));field.className="";if(id)$(id).classList.add("on");}
+function clearGame(){field.onpointerdown=null;timers.forEach(clearTimeout);timers.forEach(clearInterval);timers=[];cancelAnimationFrame(raf);field.innerHTML="";}
+function bubble(x,y,txt){const b=document.createElement("div");b.className="bubble";b.textContent=txt;b.style.left=Math.max(4,Math.min(innerWidth-200,x-60))+"px";b.style.top=Math.max(70,y-60)+"px";field.appendChild(b);setTimeout(()=>b.remove(),1500);}
+function el(html){const d=document.createElement("div");d.innerHTML=html.trim();return d.firstChild;}
+function hud(label){const h=el(`<div class="hud"><button class="home">🏠</button><div class="count" id="cnt">${label}</div><div style="width:60px"></div></div>`);field.appendChild(h);h.querySelector(".home").onpointerdown=e=>{e.stopPropagation();clearGame();show("#menu");};}
+function confetti(){for(let i=0;i<40;i++){const c=document.createElement("div");c.className="confetti";c.textContent=["⭐","💖","🎉","✨","🌙","🎂"][i%6];c.style.left=Math.random()*100+"vw";c.style.animationDuration=(2+Math.random()*2)+"s";c.style.animationDelay=Math.random()+"s";document.body.appendChild(c);setTimeout(()=>c.remove(),5000);}}
+function win(text){clearGame();sfx.yay();confetti();$("#winFace").src=IMG[who];$("#winText").textContent=text;show("#win");say(text);}
+
+// Rion: chases a target, poops when it arrives
+function makeRion(){const r=el(`<div class="rion"><img src="${IMG.rion}"></div>`);field.appendChild(r);return {el:r,x:-150,y:innerHeight*0.6,place(){r.style.left=this.x+"px";r.style.top=this.y+"px";r.firstChild.style.transform=""; }};}
+function poopAt(x,y,msg){
+  sfx.poop();
+  const p=el(`<div class="poop">💩</div>`);p.style.left=x+"px";p.style.top=y+"px";field.appendChild(p);
+  bubble(x,y,msg||"뿌직~ 💩");
+  p.onpointerdown=e=>{e.stopPropagation();sfx.pop();p.classList.add("pop");bubble(x,y,"뿡! 치웠다 ✨");setTimeout(()=>p.remove(),500);};
+}
+
+// ---------- STAR GAME ----------
+function startStars(){
+  mode="stars";clearGame();show(null);field.className="stars";
+  const GOAL=10;let got=0;
+  hud(`⭐ 0 / ${GOAL}`);
+  say(`${NAME[who]}야, 반짝반짝 별을 찾아줘! 리온이가 오기 전에!`);
+  // friends floating
+  IMG.pings.forEach((src,i)=>{const f=el(`<img class="friend" src="${src}">`);f.style.left=(5+i*24)+"%";f.style.bottom="8px";f.style.animationDelay=i*.4+"s";field.appendChild(f);});
+  // player
+  const me=el(`<div class="me"><img src="${IMG[who]}"></div>`);field.appendChild(me);
+  let mx=innerWidth*0.5-60,my=innerHeight*0.42;me.style.left=mx+"px";me.style.top=my+"px";
+  const R=makeRion();R.place();
+  let speed=0.9, pooping=false;
+  function spawn(){
+    if(field.querySelectorAll(".star").length>=3)return;
+    const s=el(`<div class="star">⭐</div>`);
+    const sz=100;s.style.left=(20+Math.random()*(innerWidth-sz-40))+"px";s.style.top=(90+Math.random()*(innerHeight-sz-230))+"px";
+    field.appendChild(s);
+    s.onpointerdown=e=>{e.stopPropagation();if(s.classList.contains("pop"))return;s.classList.add("pop");sfx.ding();got++;
+      $("#cnt").textContent=`⭐ ${got} / ${GOAL}`;
+      const rc=s.getBoundingClientRect();mx=rc.left;my=rc.top;me.style.left=mx+"px";me.style.top=my+"px";
+      bubble(rc.left,rc.top,["반짝!","찾았다!","최고!","와~!","잘했어!"][got%5]);
+      R.x-=120; // push Rion back
+      setTimeout(()=>s.remove(),500);
+      if(got>=GOAL){setTimeout(()=>win(`${NAME[who]} 별 ${GOAL}개 다 찾았다! 최고야!`),600);}
+    };
+  }
+  spawn();spawn();
+  timers.push(setInterval(spawn,1300));
+  field.onpointerdown=e=>{ // missed tap -> Rion a little faster
+    if(e.target.closest(".home"))return; sfx.boo(); speed=Math.min(2.2,speed+0.15); bubble(e.clientX,e.clientY,"멍멍! 🐶");
+  };
+  function loop(){
+    if(!pooping){
+      const dx=mx-R.x, dy=my-R.y, d=Math.hypot(dx,dy);
+      if(d<60){ // caught!
+        pooping=true;sfx.bark();
+        poopAt(mx+20,my+60,`리온이가 ${NAME[who]} 옆에 뿌직~💩`);
+        say("뿌직! 리온이가 똥 쌌다!");
+        timers.push(setTimeout(()=>{R.x=Math.random()<.5?-150:innerWidth+30;R.y=innerHeight*Math.random()*.7+80;speed=0.9;pooping=false;},1600));
+      }else{R.x+=dx/d*speed;R.y+=dy/d*speed;R.el.firstChild.style.transform=dx<0?"scaleX(-1)":"";}
+      R.el.style.left=R.x+"px";R.el.style.top=R.y+"px";
+    }
+    raf=requestAnimationFrame(loop);
+  }
+  loop();
+}
+
+// ---------- CAKE GAME ----------
+const LAYERS=[
+  {k:"pink",c:"#ff8cc6",n:"딸기 분홍"},
+  {k:"choco",c:"#8b5a3c",n:"초코 갈색"},
+  {k:"yellow",c:"#ffe066",n:"바나나 노랑"},
+  {k:"purple",c:"#b48cff",n:"포도 보라"},
+  {k:"mint",c:"#8ef0c8",n:"민트 초록"}
+];
+const TOPS=[{k:"🍓",n:"딸기"},{k:"⭐",n:"별"},{k:"🍒",n:"체리"},{k:"🕯️",n:"초"}];
+function startCake(){
+  mode="cake";clearGame();show(null);field.className="cake";
+  const ROUNDS=3;let round=0;
+  hud(`🎂 0 / ${ROUNDS}`);
+  const wrap=el(`<div class="cakewrap"><div class="order"></div><div class="plate"><div class="dish"></div></div><div class="btns"></div></div>`);
+  field.appendChild(wrap);
+  const R=makeRion();R.place();
+  let recipe,step,busy=false;
+  function newCake(){
+    const n=Math.min(2+round,4);const pick=[...LAYERS].sort(()=>Math.random()-.5).slice(0,n);
+    recipe=[...pick.map(l=>({type:"ly",...l})),{type:"tp",...TOPS[Math.floor(Math.random()*TOPS.length)]}];
+    step=0;
+    const ping=IMG.pings[round%4];
+    wrap.querySelector(".order").innerHTML=`<img src="${ping}"><div style="font-size:clamp(20px,4vw,30px);color:#a0408a">이렇게<br>만들어줘!</div><div class="mini">${recipe.map(r=>r.type==="ly"?`<div class="ly" style="background:${r.c}"></div>`:`<div class="tp">${r.k}</div>`).join("")}</div>`;
+    const plate=wrap.querySelector(".plate");plate.innerHTML=`<div class="dish"></div>`;
+    renderBtns();
+    say(`${NAME[who]}야, 케이크 만들어줘! 맨 아래는 ${recipe[0].n}!`);
+  }
+  function renderBtns(){
+    const b=wrap.querySelector(".btns");b.innerHTML="";
+    const cur=recipe[step];
+    const items=cur.type==="ly"?LAYERS.map(l=>({type:"ly",...l})):TOPS.map(t=>({type:"tp",...t}));
+    items.forEach(it=>{
+      const btn=el(`<button class="cb">${it.type==="tp"?it.k:""}</button>`);
+      if(it.type==="ly")btn.style.background=it.c;
+      btn.onpointerdown=e=>{e.stopPropagation();choose(it,btn);};
+      b.appendChild(btn);
+    });
+    // after 2 mistakes on the same step, show a gentle hint
+    if(cur.miss>=2){[...b.children].forEach((btn,i)=>{if(items[i].k===cur.k)btn.classList.add("hint");});}
+  }
+  function choose(it,btn){
+    if(busy)return;const cur=recipe[step];
+    if(it.k===cur.k){
+      sfx.ding();
+      const plate=wrap.querySelector(".plate");
+      const piece=it.type==="ly"?el(`<div class="ly" style="background:${it.c}"></div>`):el(`<div class="tp">${it.k}</div>`);
+      plate.appendChild(piece);
+      const rc=btn.getBoundingClientRect();bubble(rc.left,rc.top,["좋아!","딩동댕!","맞았어!","예쁘다!"][step%4]);
+      step++;
+      if(step>=recipe.length){
+        round++;$("#cnt").textContent=`🎂 ${round} / ${ROUNDS}`;sfx.yay();say("우와! 맛있는 케이크 완성!");
+        busy=true;
+        timers.push(setTimeout(()=>{busy=false;if(round>=ROUNDS)win(`${NAME[who]} 케이크 ${ROUNDS}개 완성! 최고 파티시에!`);else newCake();},2000));
+      }else{renderBtns();const nx=recipe[step];say(nx.type==="ly"?`다음은 ${nx.n}!`:`마지막으로 ${nx.n} 올려줘!`);}
+    }else{
+      // wrong! Rion chases in and poops
+      cur.miss=(cur.miss||0)+1;sfx.boo();busy=true;
+      const rc=btn.getBoundingClientRect();
+      const tx=rc.left,ty=rc.top-110;
+      R.x=tx<innerWidth/2?innerWidth+20:-150;R.y=ty;R.place();sfx.bark();
+      say("앗! 리온이가 온다!");
+      const t0=performance.now(),sx=R.x;
+      (function run(t){const p=Math.min(1,(t-t0)/700);R.x=sx+(tx-sx)*p;R.el.style.left=R.x+"px";R.el.style.top=ty+"px";R.el.firstChild.style.transform=tx<sx?"scaleX(-1)":"";
+        if(p<1){raf=requestAnimationFrame(run);}else{
+          poopAt(tx<innerWidth/2?tx+110:tx-70,ty+50,"뿌직~ 다시 해보자! 💩");say("뿌직! 다시 해보자!");
+          timers.push(setTimeout(()=>{const ex=tx<innerWidth/2?-200:innerWidth+40;R.x=ex;R.place();busy=false;renderBtns();
+            field.querySelectorAll(".poop").forEach(p=>p.remove());},1700));
+        }})(t0);
+    }
+  }
+  newCake();
+}
+
+// ---------- wiring ----------
+document.querySelectorAll("[data-who]").forEach(b=>b.onclick=()=>{audio();who=b.dataset.who;sfx.ding();show("#menu");say(`안녕 ${NAME[who]}! 무슨 놀이 할까?`);});
+$("#goStars").onclick=()=>{audio();startStars();};
+$("#goCake").onclick=()=>{audio();startCake();};
+$("#again").onclick=()=>{mode==="stars"?startStars():startCake();};
+$("#toMenu").onclick=()=>{clearGame();show("#menu");};
+</script>
+</body>
+</html>
