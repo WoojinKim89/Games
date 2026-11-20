@@ -7,6 +7,8 @@
 <meta name="theme-color" content="#2b2363">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>소이랑 준이 놀이</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;touch-action:manipulation}
 html,body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none;-webkit-touch-callout:none;font-family:"Jua","Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:#fde7f3}
@@ -223,6 +225,84 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
 .orb{position:absolute;height:clamp(60px,14vw,90px);z-index:27;pointer-events:none;animation:orbitc 1.5s ease-in forwards}
 @keyframes orbitc{0%{transform:translate(-50%,-50%) rotate(var(--a)) translateX(220px) rotate(calc(-1*var(--a)))}100%{transform:translate(-50%,-50%) rotate(calc(var(--a) + 720deg)) translateX(0) rotate(calc(-1*var(--a) - 720deg)) scale(.4)}}
 .rainbowfx.big{font-size:clamp(200px,50vw,320px)}
+.ppn{font-size:clamp(22px,6vw,40px);color:#ff7ac3;font-weight:bold;letter-spacing:2px;align-self:center}
+#field.num{display:block;background:
+  radial-gradient(circle,#ffe1ef 3px,transparent 4px) 0 0/34px 34px,
+  linear-gradient(#fff6ea 0 62%,transparent 62%),
+  repeating-linear-gradient(90deg,#c98b55 0 58px,#b97a46 58px 60px,#d39963 60px 118px,#b97a46 118px 120px)}
+#field.num::before{content:"";position:absolute;right:8%;top:120px;width:clamp(90px,24vw,150px);aspect-ratio:1.1;background:linear-gradient(#bfe8ff,#e9f8ff);border:8px solid #fff;border-radius:12px;box-shadow:0 4px 0 rgba(0,0,0,.08),inset 0 0 0 3px #f3d9c0;background-image:linear-gradient(#fff,#fff),linear-gradient(#fff,#fff),linear-gradient(#bfe8ff,#e9f8ff);background-size:6px 100%,100% 6px,100% 100%;background-position:center,center,0 0;background-repeat:no-repeat}
+.ladder{position:absolute;top:74px;left:0;right:0;margin:0 auto;width:max-content;max-width:96vw;display:flex;gap:4px;z-index:20}
+.ladder span{width:clamp(26px,8vw,36px);height:clamp(26px,8vw,36px);border-radius:50%;background:#fff;color:#c7a6d9;display:flex;align-items:center;justify-content:center;font-size:clamp(14px,4vw,19px);box-shadow:0 3px 0 rgba(0,0,0,.12);transition:background .3s,transform .3s}
+.ladder span.now{background:#fff59a;color:#a0408a;transform:scale(1.18)}
+.ladder span.done{background:linear-gradient(#ffe066,#ffb84d);color:#fff;text-shadow:0 1px 0 #c77d00}
+.nwrap{position:absolute;top:114px;bottom:0;left:0;right:0;display:flex;flex-direction:column;align-items:center;z-index:3}
+.scene{position:relative;flex:1;width:100%;min-height:0}
+.kid{position:absolute;bottom:2%;width:clamp(100px,26vw,150px);aspect-ratio:.62;z-index:6;animation:idle 1.6s ease-in-out infinite}
+.kid:nth-child(2){animation-delay:.4s}
+@keyframes idle{50%{transform:translateY(-5px)}}
+.kid .khead{position:absolute;left:12%;top:0;width:76%;aspect-ratio:1;border-radius:50%;border:5px solid #fff;object-fit:cover;box-shadow:0 4px 8px rgba(0,0,0,.18);z-index:2;background:#fff}
+.kid .kbody{position:absolute;left:0;top:44%;width:100%;overflow:visible}
+.kid .blush{position:absolute;top:34%;width:16%;aspect-ratio:1.6;border-radius:50%;background:rgba(255,120,160,.45);z-index:3;filter:blur(1px)}
+.kid .arm{transition:transform .25s}
+.kid .arm.l{transform-origin:28px 14px;transform:rotate(110deg)}.kid .arm.r{transform-origin:72px 14px;transform:rotate(70deg)}
+.kid.catch{animation:kjump .5s}
+.kid.catch .arm.l{transform:rotate(220deg)}.kid.catch .arm.r{transform:rotate(-40deg)}
+@keyframes kjump{40%{transform:translateY(-26px)}}
+.kid.bonk .khead{animation:wob .6s}
+@keyframes wob{25%{transform:rotate(-14deg)}75%{transform:rotate(14deg)}}
+.kid.kcheer{animation:kjump .5s 3}.kid.kcheer .arm.l{transform:rotate(235deg)}.kid.kcheer .arm.r{transform:rotate(-55deg)}
+.kid .dizzy{position:absolute;top:-14%;left:30%;font-size:28px;animation:spin 1s linear}
+.kid .name{position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);background:#fff;color:#a0408a;border-radius:10px;padding:0 8px;font-size:clamp(13px,3.4vw,17px);z-index:4;white-space:nowrap;box-shadow:0 2px 0 rgba(0,0,0,.1)}
+.dog{position:absolute;right:3%;bottom:3%;width:clamp(140px,38vw,230px);aspect-ratio:1.25;z-index:6}
+.dflip svg{position:absolute;left:0;bottom:0;width:100%;overflow:visible}
+.dflip .dhead{position:absolute;left:-4%;top:0;width:56%;aspect-ratio:1;border-radius:50%;border:5px solid #fff;object-fit:cover;box-shadow:0 4px 8px rgba(0,0,0,.15);z-index:2}
+.dflip .tail{transform-origin:138px 58px;animation:wag .35s ease-in-out infinite alternate}
+@keyframes wag{from{transform:rotate(-16deg)}to{transform:rotate(16deg)}}
+.dflip .legs{animation:none}
+.dog.throw{animation:dhop .35s}
+@keyframes dhop{50%{transform:translateY(-18px) rotate(-5deg)}}
+.dog.happy{animation:dance .5s ease-in-out 4}
+@keyframes dance{25%{transform:rotate(-10deg) translateY(-12px)}75%{transform:rotate(10deg) translateY(-12px)}}
+.dog.happy .tail,.pdog.happy .tail{animation-duration:.12s}
+.dflip .collar{position:absolute;left:14%;top:47%;width:28%;height:7%;background:#ff5fa8;border-radius:6px;z-index:3}
+.dflip .collar::after{content:"";position:absolute;left:40%;top:60%;width:22%;aspect-ratio:1;border-radius:50%;background:#ffd34d;border:2px solid #e0a800}
+.ball{position:absolute;font-size:clamp(46px,11vw,64px);line-height:1;z-index:30;cursor:pointer;padding:10px;margin:-10px;filter:drop-shadow(0 4px 3px rgba(0,0,0,.2))}
+.ball span{display:inline-block;animation:spin .6s linear infinite}
+.tenframe{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;background:#fff;border-radius:20px;padding:8px;box-shadow:0 6px 0 #e7c7a8;width:min(88vw,380px);margin:6px 0;z-index:4}
+.tenframe div{aspect-ratio:1;border-radius:12px;border:3px dashed #f0c9de;display:flex;align-items:center;justify-content:center;font-size:clamp(26px,7vw,40px);line-height:1;position:relative;transition:transform .2s,background .2s}
+.tenframe div.full{border-style:solid;border-color:#ffe066;background:#fffbe0}
+.tenframe div.glow{transform:scale(1.18);background:#fff59a;box-shadow:0 0 0 4px #ffb3d9}
+.tenframe div i{position:absolute;bottom:-2px;right:3px;font-size:12px;font-style:normal;color:#a0408a}
+.numpop{position:absolute;left:0;right:0;margin:0 auto;top:24%;width:max-content;z-index:45;text-align:center;pointer-events:none;animation:numpop 1.1s forwards}
+.numpop b{display:block;font-size:clamp(90px,26vw,150px);line-height:.95;color:#ff7ac3;-webkit-text-stroke:6px #fff;paint-order:stroke fill;text-shadow:0 8px 0 rgba(160,64,138,.25)}
+.numpop span{display:block;font-size:clamp(30px,9vw,52px);color:#7a3fa0;-webkit-text-stroke:5px #fff;paint-order:stroke fill;letter-spacing:2px}
+.numpop small{display:block;font-size:clamp(18px,5vw,26px);color:#a0408a}
+@keyframes numpop{0%{transform:scale(.3);opacity:0}18%{transform:scale(1.15);opacity:1}30%{transform:scale(1)}80%{opacity:1}100%{transform:translateY(-30px);opacity:0}}
+.opts{display:flex;gap:12px;justify-content:center;padding:4px 0 calc(12px + env(safe-area-inset-bottom,0px));min-height:clamp(96px,26vw,130px)}
+.opt{width:clamp(88px,25vw,120px);border-radius:24px;border:5px solid #fff;background:linear-gradient(#fff,#ffeaf5);box-shadow:0 7px 0 #e7a3c8;cursor:pointer;font:inherit;color:#7a3fa0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px;animation:drop .4s cubic-bezier(.3,1.6,.5,1) backwards}
+.opt b{font-size:clamp(46px,13vw,66px);line-height:1;color:#ff5fa8}
+.opt span{font-size:clamp(16px,4.4vw,22px)}
+.opt:nth-child(2){animation-delay:.08s}.opt:nth-child(3){animation-delay:.16s}
+.opt.no{animation:shake .12s linear 4;opacity:.5}
+.opt.hint{animation:hint 1s ease-in-out infinite}
+.dflip{position:absolute;inset:0}
+.pdog{aspect-ratio:1.25}
+.rion.pdog{width:clamp(120px,28vw,180px)}
+.bigrion.pdog{width:clamp(170px,42vw,260px)}
+.sleeper.pdog{width:clamp(130px,30vw,190px)}
+.sleeper.pdog .zz{left:auto;right:-6px}
+.sleeper.pdog:not(.awake) .tail{animation-duration:1.6s}
+.menudog{display:inline-block;position:relative;width:90px}
+.kid .khead{height:auto!important}
+.kslot{display:block;width:clamp(96px,24vw,140px)}
+.kslot .kid,.me .kid,.granny .kid{position:relative;left:auto;bottom:auto;width:100%}
+.kslot .kid .name{display:none}
+.me{width:clamp(80px,19vw,120px)}
+.granny{width:clamp(76px,18vw,110px)}
+.granny .kid .name{display:none}
+.fig .mface{position:absolute;left:31.5%;top:0.6%;width:37%;z-index:2;filter:drop-shadow(0 2px 2px rgba(0,0,0,.15))}
+.tapfx{position:fixed;z-index:999;pointer-events:none;font-size:26px;transform:translate(-50%,-50%);animation:tapfx .6s ease-out forwards}
+@keyframes tapfx{from{opacity:1;transform:translate(-50%,-50%) scale(.4)}to{opacity:0;transform:translate(-50%,-120%) scale(1.3)}}
 /* short screens (phone landscape) */
 @media (max-height:520px){
  .screen{gap:8px;padding:8px;justify-content:flex-start}
@@ -236,7 +316,7 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
  .plate .ly{height:30px;width:160px}
  .btns{flex:1 1 100%;padding:4px}
  .cb{width:64px;height:64px;font-size:34px}
- .grid4{grid-template-columns:repeat(7,minmax(0,1fr));width:100%;gap:6px}
+ .grid4{grid-template-columns:repeat(8,minmax(0,1fr));width:100%;gap:5px}
  .grid4 .pick{font-size:14px!important;padding:6px}
  .grid4 .pick.wide{grid-column:auto}
  .grid4 .pick .pp{gap:2px}
@@ -254,6 +334,15 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
  .tool{width:60px;height:60px;font-size:30px}
  .nurse{top:64px;width:54px}
  .cheer img{height:110px}
+ .ladder{top:62px}
+ .nwrap{top:96px;flex-direction:row;flex-wrap:wrap;align-content:flex-start}
+ .scene{flex:1 1 55%;height:100%}
+ .kid{width:64px}.dog{width:120px}
+ .tenframe{width:250px;gap:3px;padding:5px;margin:0}
+ .tenframe div{font-size:22px}
+ .opts{position:absolute;right:8px;bottom:6px;min-height:0;padding:0}
+ .opt{width:66px;height:66px}.opt b{font-size:34px}.opt span{font-size:12px}
+ .numpop{top:8%}.numpop b{font-size:80px}
  .pw{width:64px;height:64px;font-size:0}
  .pw img{height:90%}
  .powers{left:auto;right:8px;flex-direction:column;bottom:6px}
@@ -285,8 +374,8 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
   <h1>소이랑 준이의<br>⭐별 &amp; 🎂케이크 놀이</h1>
   <div class="sub">누가 할까요?</div>
   <div class="row">
-    <button class="pick" data-who="sohee"><img src="IMG.sohee2" style="border-radius:50%">소이</button>
-    <button class="pick" data-who="jun"><img src="IMG.jun" style="border-radius:50%">준이</button>
+    <button class="pick" data-who="sohee"><span class="kslot" data-k="sohee"></span>소이</button>
+    <button class="pick" data-who="jun"><span class="kslot" data-k="jun"></span>준이</button>
   </div>
 </div>
 
@@ -299,9 +388,10 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
     <button class="pick" id="goBug"><img src="IMG.eclipse">🦟 모기 잡기</button>
     <button class="pick" id="goPrincess"><span class="pp"><img src="IMG.eunyul" style="border-radius:50%"><img src="IMG.elsa" style="border-radius:20px;object-fit:cover"><img src="IMG.cinderella"></span>👑 공주님 꾸미기</button>
     <button class="pick" id="goDentist"><img src="IMG.rainbow">🦷 무지개 괴물 치과</button>
-    <button class="pick wide" id="goCroc"><span class="pp"><img src="IMG.hachu"><span style="font-size:clamp(50px,12vw,80px);line-height:1">🐊</span><img src="IMG.aurora"></span>🐊 악어 괴물 물리치기</button>
+    <button class="pick" id="goCroc"><span class="pp"><img src="IMG.hachu"><span style="font-size:clamp(50px,12vw,80px);line-height:1">🐊</span><img src="IMG.aurora"></span>🐊 악어 괴물 물리치기</button>
+    <button class="pick" id="goNum"><span class="pp"><img src="IMG.rion" style="border-radius:50%;object-fit:cover"><span class="ppn">1 2 3</span></span>🔢 영어 숫자 놀이</button>
   </div>
-  <div class="row" style="align-items:center;color:#7a3fa0;font-size:22px"><img src="IMG.rion" style="width:64px;border-radius:50%;border:4px solid #fff"> 리온이 조심! 💩</div>
+  <div class="row" style="align-items:center;color:#7a3fa0;font-size:22px"><span class="pdog menudog"></span> 리온이 조심! 💩</div>
 </div>
 
 <div id="field"></div>
@@ -318,7 +408,7 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
 </div>
 
 <script>
-const IMG={rainbow:"IMG.rainbow",eunyul:"IMG.eunyul",elsa:"IMG.elsa",cinderella:"IMG.cinderella",sohee:"IMG.sohee2",jun:"IMG.jun",rion:"IMG.rion",pings:["IMG.hachu","IMG.diana","IMG.aurora","IMG.eclipse"]};
+const IMG={soihead:"IMG.soihead",rainbow:"IMG.rainbow",eunyul:"IMG.eunyul",elsa:"IMG.elsa",cinderella:"IMG.cinderella",sohee:"IMG.soihead",eunface:"IMG.eunface",jun:"IMG.jun",rion:"IMG.rion",pings:["IMG.hachu","IMG.diana","IMG.aurora","IMG.eclipse"]};
 const NAME={sohee:"소이",jun:"준이"};
 let who="sohee", mode="stars", timers=[], raf=0;
 const $=s=>document.querySelector(s);
@@ -402,7 +492,7 @@ function confetti(){for(let i=0;i<40;i++){const c=document.createElement("div");
 function win(text){clearGame();sfx.yay();confetti();$("#winFace").src=IMG[who];$("#winText").textContent=text;show("#win");say(text);}
 
 // Rion: chases a target, poops when it arrives
-function makeRion(){const r=el(`<div class="rion"><img src="${IMG.rion}"></div>`);field.appendChild(r);return {el:r,x:-150,y:innerHeight*0.6,place(){r.style.left=this.x+"px";r.style.top=this.y+"px";r.firstChild.style.transform=""; }};}
+function makeRion(){const r=el(`<div class="rion pdog">${dogInner()}</div>`);field.appendChild(r);return {el:r,x:-150,y:innerHeight*0.6,place(){r.style.left=this.x+"px";r.style.top=this.y+"px";r.firstChild.style.transform=""; }};}
 function poopAt(x,y,msg,onClean,big){
   const fw=fart();setTimeout(()=>bubble(x+50,y-40,fw),250);
   const p=el(`<div class="poop${big?" big":""}">💩</div>`);p.style.left=x+"px";p.style.top=y+"px";field.appendChild(p);
@@ -420,7 +510,7 @@ function startStars(){
   // friends floating
   IMG.pings.forEach((src,i)=>{const f=el(`<img class="friend" src="${src}">`);f.style.left=(5+i*24)+"%";f.style.bottom="8px";f.style.animationDelay=i*.4+"s";field.appendChild(f);});
   // player
-  const me=el(`<div class="me"><img src="${IMG[who]}"></div>`);field.appendChild(me);
+  const me=el(`<div class="me">${kidHTML(who)}</div>`);field.appendChild(me);
   let mx=innerWidth*0.5-60,my=innerHeight*0.42;me.style.left=mx+"px";me.style.top=my+"px";
   const R=makeRion();R.place();
   let speed=0.9, pooping=false;
@@ -451,7 +541,7 @@ function startStars(){
         poopAt(mx+20,my+60,`리온이가 ${NAME[who]} 옆에 뿌직~💩`);
         say("뿌직! 리온이가 똥 쌌다!");
         timers.push(setTimeout(()=>{R.x=Math.random()<.5?-150:innerWidth+30;R.y=innerHeight*Math.random()*.7+80;speed=0.9;pooping=false;},1600));
-      }else{R.x+=dx/d*speed;R.y+=dy/d*speed;R.el.firstChild.style.transform=dx<0?"scaleX(-1)":"";}
+      }else{R.x+=dx/d*speed;R.y+=dy/d*speed;R.el.firstChild.style.transform=dx>0?"scaleX(-1)":"";}
       R.el.style.left=R.x+"px";R.el.style.top=R.y+"px";
     }
     raf=requestAnimationFrame(loop);
@@ -521,7 +611,7 @@ function startCake(){
       R.x=tx<innerWidth/2?innerWidth+20:-150;R.y=ty;R.place();sfx.bark();
       say("앗! 리온이가 온다!");
       const t0=performance.now(),sx=R.x;
-      (function run(t){const p=Math.min(1,(t-t0)/700);R.x=sx+(tx-sx)*p;R.el.style.left=R.x+"px";R.el.style.top=ty+"px";R.el.firstChild.style.transform=tx<sx?"scaleX(-1)":"";
+      (function run(t){const p=Math.min(1,(t-t0)/700);R.x=sx+(tx-sx)*p;R.el.style.left=R.x+"px";R.el.style.top=ty+"px";R.el.firstChild.style.transform=tx>sx?"scaleX(-1)":"";
         if(p<1){raf=requestAnimationFrame(run);}else{
           poopAt(tx<innerWidth/2?tx+110:tx-70,ty+50,"뿌직~ 다시 해보자! 💩");say("뿌직! 다시 해보자!");
           timers.push(setTimeout(()=>{const ex=tx<innerWidth/2?-200:innerWidth+40;R.x=ex;R.place();busy=false;renderBtns();
@@ -537,8 +627,8 @@ function startFeed(){
   mode="feed";clearGame();show(null);field.className="feed";
   const ROUNDS=3,NEED=5;let round=0,eaten=0,busy=false;
   hud(`🍰 0 / ${NEED}`);
-  field.appendChild(el(`<div class="granny"><img src="${IMG.sohee}"><div class="gl">소이 케이크 🎂</div></div>`));
-  const R=el(`<div class="bigrion"><img src="${IMG.rion}"></div>`);field.appendChild(R);
+  field.appendChild(el(`<div class="granny">${kidHTML("sohee")}<div class="gl">소이 케이크 🎂</div></div>`));
+  const R=el(`<div class="bigrion pdog">${dogInner()}</div>`);field.appendChild(R);
   say(`소이가 케이크를 만들었어! ${NAME[who]}야, 케이크를 눌러서 리온이 먹여주자!`);
   const FOOD=["🎂","🍰","🧁","🍩","🍪","🍓","🍦"];
   function rionCenter(){const r=R.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height*0.45};}
@@ -585,7 +675,7 @@ function startBug(){
   const PINGS=[{src:IMG.pings[1],n:"다이아나핑"},{src:IMG.pings[0],n:"하츄핑"},{src:IMG.pings[2],n:"오로라핑"}];
   hud(`🦟 0 / ${GOAL}`);
   // Rion (sleeps, sometimes wakes up to help)
-  const R=el(`<div class="sleeper"><img src="${IMG.rion}"><div class="zz">💤</div></div>`);field.appendChild(R);
+  const R=el(`<div class="sleeper pdog">${dogInner()}<div class="zz">💤</div></div>`);field.appendChild(R);
   const rw=()=>R.offsetWidth||140;
   const home=()=>({x:innerWidth-rw()-16,y:innerHeight*0.94-rw()});
   const rion={x:home().x,y:home().y,state:"sleep",caught:0,until:0,target:null};
@@ -664,7 +754,7 @@ function startBug(){
       if(rion.state==="back")goal=home();
       if(goal){const dx=goal.x-rion.x,dy=goal.y-rion.y,d=Math.hypot(dx,dy)||1,v=7;
         if(rion.state==="back"&&d<8){rion.x=goal.x;rion.y=goal.y;rion.state="sleep";R.classList.remove("awake");}
-        else{rion.x+=dx/d*Math.min(v,d);rion.y+=dy/d*Math.min(v,d);R.firstChild.style.transform=dx<0?"scaleX(-1)":"";}}
+        else{rion.x+=dx/d*Math.min(v,d);rion.y+=dy/d*Math.min(v,d);R.firstChild.style.transform=dx>0?"scaleX(-1)":"";}}
       placeR();
     }
     raf=requestAnimationFrame(loop);
@@ -681,22 +771,37 @@ function startBug(){
 }
 
 // ---------- PRINCESS DRESS-UP ----------
-const MERMAID_SVG=`<svg viewBox="0 0 200 300" aria-hidden="true">
-<defs><linearGradient id="tailG" x1="0" y1="0" x2="0" y2="1"><stop id="t1" offset="0" stop-color="#ff9ad5"/><stop id="t2" offset=".55" stop-color="#ff7ac3"/><stop id="t3" offset="1" stop-color="#c060ff"/></linearGradient></defs>
-<path d="M44 60 Q30 150 58 185 L142 185 Q170 150 156 60 Q100 10 44 60Z" fill="#7a4a2a"/>
-<path d="M66 148 Q56 205 88 248 Q100 262 112 248 Q144 205 134 148 Z" fill="url(#tailG)"/>
-<path d="M100 250 Q68 262 48 296 Q82 288 100 270 Q118 288 152 296 Q132 262 100 250Z" fill="url(#tailG)" stroke="#fff" stroke-opacity=".5" stroke-width="2"/>
-<g fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="2"><path d="M74 170 q8 8 16 0 q8 8 16 0 q8 8 16 0"/><path d="M78 190 q8 8 14 0 q8 8 14 0 q8 8 14 0"/><path d="M84 210 q8 8 16 0 q8 8 16 0"/><path d="M90 230 q10 8 20 0"/></g>
-<rect x="91" y="92" width="18" height="18" rx="6" fill="#f3cdb8"/>
-<path d="M72 106 Q68 130 66 150 L134 150 Q132 130 128 106 Q100 96 72 106Z" fill="#f6d6c4"/>
-<path d="M74 110 Q56 130 58 156" stroke="#f3cdb8" stroke-width="12" stroke-linecap="round" fill="none"/>
-<path d="M126 110 Q150 122 168 126" stroke="#f3cdb8" stroke-width="12" stroke-linecap="round" fill="none"/>
-<circle cx="86" cy="124" r="12" fill="#b58cff"/><circle cx="114" cy="124" r="12" fill="#b58cff"/>
-<path d="M80 120 q6 -6 12 0 M108 120 q6 -6 12 0" stroke="#fff" stroke-width="2" fill="none"/>
-<g fill="#fff">${[70,80,90,100,110,120,130].map(x=>`<circle cx="${x}" cy="150" r="4"/>`).join("")}</g>
+const MERMAID_SVG=`<svg viewBox="0 0 200 500" aria-hidden="true">
+<defs>
+ <linearGradient id="tailG" x1="0" y1="0" x2="0" y2="1"><stop id="t1" offset="0" stop-color="#ff9ad5"/><stop id="t2" offset=".55" stop-color="#ff7ac3"/><stop id="t3" offset="1" stop-color="#c060ff"/></linearGradient>
+ <linearGradient id="skinG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e9bfa8"/><stop offset=".5" stop-color="#f6d8c6"/><stop offset="1" stop-color="#e4b8a0"/></linearGradient>
+ <linearGradient id="topG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9c2ff"/><stop offset="1" stop-color="#b58cff"/></linearGradient>
+ <linearGradient id="hairG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a563c"/><stop offset="1" stop-color="#4e3322"/></linearGradient>
+ <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+ <pattern id="scl" width="12" height="9" patternUnits="userSpaceOnUse"><path d="M0 9 Q6 0 12 9" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="1.1"/></pattern>
+</defs>
+<path d="M58 44 Q56 4 100 6 Q144 4 142 44 Q152 120 150 200 Q154 250 136 296 L126 236 Q122 170 114 120 L86 120 Q78 170 74 236 L64 296 Q46 250 50 200 Q48 120 58 44Z" fill="url(#hairG)"/>
+<path d="M100 470 Q72 478 38 496 Q74 494 100 476 Q126 494 164 496 Q130 478 100 470Z" fill="url(#tailG)" opacity=".9"/>
+<path d="M102 432 Q72 446 42 492 Q78 484 102 460 Q126 484 164 494 Q134 446 104 432Z" fill="url(#tailG)" stroke="#fff" stroke-opacity=".6" stroke-width="1.5"/>
+<g stroke="#fff" stroke-opacity=".45" stroke-width="1"><path d="M102 446 L64 484"/><path d="M102 446 L84 488"/><path d="M104 446 L124 488"/><path d="M104 446 L146 486"/></g>
+<path d="M76 238 Q60 290 72 336 Q84 384 98 422 Q102 434 104 438 Q108 422 116 402 Q132 360 132 314 Q136 274 124 238Z" fill="url(#tailG)"/>
+<path d="M76 238 Q60 290 72 336 Q84 384 98 422 Q102 434 104 438 Q108 422 116 402 Q132 360 132 314 Q136 274 124 238Z" fill="url(#scl)"/>
+<path d="M88 250 Q84 320 100 410 Q104 330 112 250Z" fill="url(#shine)"/>
+<path d="M84 438 Q100 428 120 438" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/>
+<path d="M91 94 L109 94 L111 124 Q100 130 89 124Z" fill="#e8bca4"/>
+<path d="M56 136 Q72 120 100 122 Q128 120 144 136 Q150 152 140 172 Q130 200 126 238 L74 238 Q70 200 60 172 Q50 152 56 136Z" fill="url(#skinG)"/>
+<path d="M60 138 Q46 170 44 204 Q42 230 52 254" fill="none" stroke="#efcab5" stroke-width="13" stroke-linecap="round"/>
+<path d="M140 138 Q156 172 158 206 Q160 232 148 254" fill="none" stroke="#efcab5" stroke-width="13" stroke-linecap="round"/>
+<ellipse cx="52" cy="258" rx="7" ry="9" fill="#f2cdb8"/><ellipse cx="148" cy="258" rx="7" ry="9" fill="#f2cdb8"/>
+<path d="M66 158 Q84 146 100 160 Q116 146 134 158 Q132 196 127 238 L73 238 Q68 196 66 158Z" fill="url(#topG)"/>
+<path d="M66 158 Q84 146 100 160 Q116 146 134 158" fill="none" stroke="#fff" stroke-width="2.5"/>
+<g fill="#fff" opacity=".85"><circle cx="84" cy="180" r="1.6"/><circle cx="112" cy="190" r="1.4"/><circle cx="96" cy="206" r="1.8"/><circle cx="120" cy="214" r="1.3"/><circle cx="80" cy="222" r="1.5"/><circle cx="104" cy="226" r="1.2"/></g>
+<g fill="#fff"><circle cx="70" cy="150" r="2"/><circle cx="68" cy="143" r="2"/><circle cx="130" cy="150" r="2"/><circle cx="132" cy="143" r="2"/></g>
+<path d="M58 60 Q50 130 62 196 Q70 150 74 110Z" fill="url(#hairG)"/><path d="M142 60 Q150 130 138 196 Q130 150 126 110Z" fill="url(#hairG)"/>
+<g fill="#fff">${[74,82,90,98,106,114,122].map(x=>`<circle cx="${x}" cy="240" r="3.4"/>`).join("")}</g>
 </svg>`;
 const PRINCESS=[
-  {k:"mermaid",n:"은율 인어공주",bg:"sea",ar:2/3,crown:[50,1],cs:30,ns:12,neck:[50,35],hand:[85,42],flower:[28,10]},
+  {k:"mermaid",n:"은율 인어공주",bg:"sea",ar:.4,crown:[50,0],cs:26,ns:12,neck:[50,29],hand:[76,49],flower:[25,11]},
   {k:"elsa",n:"엘사",bg:"snow",ar:420/456,img:IMG.elsa,frame:true,crown:[30,8],cs:18,ns:8,neck:[31,37],hand:[57,30],flower:[20,16]},
   {k:"rainbow",n:"무지개 괴물",bg:"ball",ar:380/248,img:IMG.rainbow,crown:[50,6],cs:24,ns:9,neck:[50,66],hand:[86,80],flower:[30,18]},
   {k:"cinderella",n:"신데렐라",bg:"ball",ar:324/420,img:IMG.cinderella,crown:[56,3],cs:15,ns:7,neck:[54,22],hand:[34,48],flower:[47,9]}
@@ -722,7 +827,7 @@ function dressUp(p){
   const wrap=el(`<div class="pwrap"><div class="stage"><div class="fig"></div></div><div class="tray"></div><button class="magic">✨ 변신! ✨</button></div>`);
   field.appendChild(wrap);
   const fig=wrap.querySelector(".fig"),stage=wrap.querySelector(".stage"),tray=wrap.querySelector(".tray");
-  if(p.k==="mermaid")fig.innerHTML=MERMAID_SVG+`<img class="face" src="${IMG.eunyul}">`;
+  if(p.k==="mermaid")fig.innerHTML=MERMAID_SVG+`<img class="mface" src="${IMG.eunface}">`;
   else fig.innerHTML=`<img class="body${p.frame?" framed":""}" src="${p.img}">`;
   if(p.k!=="rainbow"){const bd=el(`<img class="buddy" src="${IMG.rainbow}">`);field.appendChild(bd);}
   function fit(){const W=stage.clientWidth*0.92,Hh=stage.clientHeight-34;let h=Hh,wd=h*p.ar;if(wd>W){wd=W;h=wd/p.ar;}fig.style.width=wd+"px";fig.style.height=h+"px";}
@@ -769,7 +874,7 @@ function dressUp(p){
     fig.classList.remove("twirl");void fig.offsetWidth;fig.classList.add("twirl");
     sfx.yay();confetti();say(`우와! ${p.n} 너무너무 예쁘다! 공주님 파티 시작!`);
     // Rion comes to see... and toots
-    const R=el(`<div class="rion"><img src="${IMG.rion}"></div>`);field.appendChild(R);
+    const R=el(`<div class="rion pdog">${dogInner()}</div>`);field.appendChild(R);
     let x=-160;const y=innerHeight-200;R.style.top=y+"px";R.style.left=x+"px";
     timers.push(setTimeout(()=>{const t0=performance.now();(function go(t){const k=Math.min(1,(t-t0)/900);R.style.left=(-160+k*(innerWidth*0.12+160))+"px";
       if(k<1)raf=requestAnimationFrame(go);else{bubble(innerWidth*0.12,y-30,"멍! 공주님 예뻐요!");sfx.bark();
@@ -944,7 +1049,7 @@ function startCroc(){
     else if(!rionUsed&&hp<=MAXHP/2){rionUsed=true;timers.push(setTimeout(rionAttack,1500));}
   }
   function rionAttack(){
-    if(ended||paused)return;const R=el(`<div class="rion"><img src="${IMG.rion}"></div>`);field.appendChild(R);
+    if(ended||paused)return;const R=el(`<div class="rion pdog">${dogInner()}</div>`);field.appendChild(R);
     const y=cr.y+20,x=-160;R.style.top=y+"px";sfx.bark();say("리온이가 도와주러 왔어! 리온이 방구 공격!");
     const goal=Math.max(10,cr.x-130);const t0=performance.now();
     (function go(t){const k=Math.min(1,(t-t0)/900);R.style.left=(x+(goal-x)*k)+"px";
@@ -1033,20 +1138,168 @@ function startCroc(){
   raf=requestAnimationFrame(loop);
 }
 
+// ---------- CHARACTERS (photo heads on drawn bodies) ----------
+function kidHTML(k){
+  const soi=k==="sohee";
+  const sleeve=`<g><rect x="-4" y="-5" width="30" height="10" rx="5" fill="#ff8fb1"/><rect x="2" y="-5" width="5" height="10" fill="#ffd34d"/><rect x="8" y="-5" width="5" height="10" fill="#7fd6ff"/><rect x="14" y="-5" width="5" height="10" fill="#b58cff"/><rect x="20" y="-5" width="4" height="10" fill="#8ef0a8"/><circle cx="29" cy="0" r="5" fill="#ffe0cf"/></g>`;
+  const plain=`<g><rect x="-4" y="-5" width="30" height="10" rx="5" fill="#fff"/><circle cx="29" cy="0" r="5" fill="#ffe0cf"/></g>`;
+  const arm=soi?sleeve:plain;
+  const body=soi?`
+    <path d="M18 44 Q50 34 82 44 L96 98 Q50 112 4 98Z" fill="#ff9cc8"/>
+    <path d="M10 92 Q50 104 90 92 L94 98 Q50 110 6 98Z" fill="#ff7ab3"/>
+    <path d="M26 6 Q50 -2 74 6 L78 46 Q50 54 22 46Z" fill="#fff0f6"/>
+    <path d="M40 8 L50 26 L60 8" fill="none" stroke="#fff" stroke-width="5"/><path d="M40 8 L50 26 L60 8" fill="none" stroke="#ff8fb1" stroke-width="2"/>
+    <path d="M50 28 q-12 -8 -14 4 q8 4 14 -4 q12 -8 14 4 q-8 4 -14 -4" fill="#ff5fa8"/><path d="M50 30 l-6 16 M50 30 l5 15" stroke="#ff5fa8" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="36" cy="106" rx="9" ry="5" fill="#ff5fa8"/><ellipse cx="64" cy="106" rx="9" ry="5" fill="#ff5fa8"/>`
+  :`
+    <rect x="30" y="62" width="17" height="38" rx="6" fill="#5b8fd8"/><rect x="53" y="62" width="17" height="38" rx="6" fill="#5b8fd8"/>
+    <path d="M24 6 Q50 -2 76 6 L80 66 Q50 72 20 66Z" fill="#fff"/>
+    <path d="M24 6 Q34 2 42 4 L50 40 L58 4 Q66 2 76 6 L80 66 Q50 72 20 66Z" fill="#8a6be0"/>
+    <circle cx="50" cy="48" r="3" fill="#ffd34d"/><circle cx="50" cy="58" r="3" fill="#ffd34d"/>
+    <path d="M36 26 q8 6 0 12" stroke="#c9b4ff" stroke-width="2" fill="none"/><path d="M64 26 q-8 6 0 12" stroke="#c9b4ff" stroke-width="2" fill="none"/>
+    <ellipse cx="38" cy="104" rx="11" ry="6" fill="#33406b"/><ellipse cx="62" cy="104" rx="11" ry="6" fill="#33406b"/>`;
+  return `<div class="kid" data-k="${k}">
+    <svg class="kbody" viewBox="0 0 100 112">
+      <g class="arm l"><g transform="translate(28 14)">${arm}</g></g>
+      <g class="arm r"><g transform="translate(72 14)">${arm}</g></g>
+      ${body}
+    </svg>
+    <img class="khead" src="${k==="sohee"?IMG.soihead:IMG.jun}">
+    <div class="blush" style="left:16%"></div><div class="blush" style="right:16%"></div>
+    <div class="name">${NAME[k]}</div></div>`;
+}
+function dogHTML(){return `<div class="dog">${dogInner()}</div>`;}
+function dogInner(){
+  return `<div class="dflip">
+    <svg viewBox="0 0 160 110">
+      <g class="tail"><circle cx="146" cy="50" r="14" fill="#fff"/><circle cx="154" cy="36" r="12" fill="#fff"/><circle cx="140" cy="38" r="11" fill="#f4f4f4"/><circle cx="150" cy="24" r="9" fill="#fff"/></g>
+      <g class="legs" fill="#fff" stroke="#e6e6e6" stroke-width="2"><rect x="40" y="82" width="18" height="26" rx="9"/><rect x="66" y="84" width="18" height="24" rx="9"/><rect x="98" y="84" width="18" height="24" rx="9"/><rect x="122" y="82" width="18" height="26" rx="9"/></g>
+      <g fill="#fff"><ellipse cx="90" cy="66" rx="58" ry="32"/><circle cx="50" cy="56" r="26"/><circle cx="74" cy="44" r="22"/><circle cx="104" cy="44" r="22"/><circle cx="130" cy="58" r="22"/><circle cx="70" cy="86" r="16"/><circle cx="112" cy="86" r="16"/></g>
+      <g fill="none" stroke="#eaeaea" stroke-width="2"><path d="M70 60 q6 6 12 0"/><path d="M100 64 q6 6 12 0"/><path d="M84 78 q6 6 12 0"/></g>
+      <g fill="#ffb3c7"><ellipse cx="49" cy="106" rx="5" ry="2"/><ellipse cx="131" cy="106" rx="5" ry="2"/></g>
+    </svg>
+    <img class="dhead" src="${IMG.rion}"><div class="collar"></div></div>`;
+}
+
+// ---------- ENGLISH NUMBERS 1-10 ----------
+const EN=["one","two","three","four","five","six","seven","eight","nine","ten"];
+const ENU=EN.map(w=>w.toUpperCase());
+const KO=["하나","둘","셋","넷","다섯","여섯","일곱","여덟","아홉","열"];
+function speakSeq(list){try{speechSynthesis.cancel();for(const [t,l] of list){const u=new SpeechSynthesisUtterance(t);u.lang=l==="en"?"en-US":"ko-KR";u.rate=l==="en"?.8:.95;u.pitch=l==="en"?1.15:1.3;speechSynthesis.speak(u);}}catch(e){}}
+function sayEn(t){speakSeq([[t,"en"]]);}
+function startNum(){
+  mode="num";clearGame();show(null);field.className="num";
+  hud("🔢 One, Two, Three!");
+  const lad=el(`<div class="ladder">${EN.map((_,i)=>`<span>${i+1}</span>`).join("")}</div>`);field.appendChild(lad);
+  const w=el(`<div class="nwrap"><div class="scene">${kidHTML("sohee")}${kidHTML("jun")}${dogHTML()}</div><div class="tenframe">${EN.map(()=>"<div></div>").join("")}</div><div class="opts"></div></div>`);
+  field.appendChild(w);
+  const kids=[...w.querySelectorAll(".kid")];kids[0].style.left="4%";kids[1].style.left="30%";
+  // the player stands in front
+  if(who==="jun"){kids[1].style.left="4%";kids[0].style.left="30%";}
+  const dog=w.querySelector(".dog"),frame=[...w.querySelectorAll(".tenframe div")],opts=w.querySelector(".opts");
+  let N=1,caught=0,thrown=0,busy=true;const balls=[];
+  const BALLS=["🎾","⚽","🏀","🍪","🦴"];
+  function anim(elm,c){elm.classList.remove(c);void elm.offsetWidth;elm.classList.add(c);}
+  function setLadder(){[...lad.children].forEach((s,i)=>{s.classList.toggle("now",i===N-1);});}
+  function numpop(k){const p=el(`<div class="numpop"><b>${k}</b><span>${ENU[k-1]}</span><small>${KO[k-1]}</small></div>`);field.appendChild(p);setTimeout(()=>p.remove(),1100);}
+  function round(){
+    caught=0;thrown=0;busy=true;opts.innerHTML="";setLadder();
+    frame.forEach((f,i)=>{f.className="";f.innerHTML="";f.style.visibility=i<Math.max(5,N>5?10:5)?"visible":"hidden";});
+    const icon=BALLS[(N-1)%BALLS.length];
+    speakSeq([[N===1?"리온이가 공을 던진대! 잡아줘!":"리온이가 또 던진다! 하나씩 잡으면서 세어보자!","ko"]]);
+    timers.push(setTimeout(()=>throwNext(icon),1800));
+  }
+  function mouth(){const r=dog.querySelector(".dhead").getBoundingClientRect();return {x:r.left+r.width*0.2,y:r.top+r.height*0.55};}
+  function throwNext(icon){
+    if(thrown>=N)return;const i=thrown++;
+    anim(dog,"throw");tone(620,.07,"square",.1,0,420);
+    const kid=kids[i%2],kr=kid.querySelector(".khead").getBoundingClientRect();
+    const m=mouth();const b={el:el(`<div class="ball"><span>${icon}</span></div>`),sx:m.x-30,sy:m.y-30,tx:kr.left+kr.width/2-30,ty:kr.top+kr.height/2-30,t0:performance.now(),D:Math.max(1300,2300-N*90),kid,i,icon,done:false};
+    field.appendChild(b.el);balls.push(b);
+    b.el.onpointerdown=e=>{e.stopPropagation();land(b,true);};
+    if(thrown<N)timers.push(setTimeout(()=>throwNext(icon),Math.max(900,1500-N*50)));
+  }
+  function land(b,caughtIt){
+    if(b.done)return;b.done=true;balls.splice(balls.indexOf(b),1);
+    const slot=frame[caught];caught++;const k=caught;
+    if(caughtIt){anim(b.kid,"catch");sfx.ding();}
+    else{anim(b.kid,"bonk");tone(300,.15,"sine",.2,0,150);const dz=el(`<div class="dizzy">💫</div>`);b.kid.appendChild(dz);setTimeout(()=>dz.remove(),1000);
+      const kr=b.kid.getBoundingClientRect();bubble(kr.left+20,kr.top,"아야! 콩!");}
+    // fly into the ten-frame slot
+    const r=slot.getBoundingClientRect(),cur=b.el.getBoundingClientRect();
+    b.el.style.transition="left .35s ease-in,top .35s ease-in,transform .35s";b.el.style.left=cur.left+"px";b.el.style.top=cur.top+"px";
+    requestAnimationFrame(()=>{b.el.style.left=(r.left+r.width/2-30)+"px";b.el.style.top=(r.top+r.height/2-30)+"px";b.el.style.transform="scale(.6)";});
+    setTimeout(()=>{b.el.remove();slot.className="full";slot.innerHTML=`${b.icon}<i>${k}</i>`;},360);
+    numpop(k);sayEn(EN[k-1]);tone(440*Math.pow(2,(k-1)/12*2),.18,"triangle",.15);
+    if(caught>=N)timers.push(setTimeout(ask,1300));
+  }
+  function ask(){
+    busy=false;
+    speakSeq([["몇 개일까?","ko"],["How many?","en"]]);
+    const set=new Set([N]);while(set.size<3){const d=N+(Math.floor(Math.random()*5)-2);if(d>=1&&d<=10)set.add(d);}
+    const ch=[...set].sort(()=>Math.random()-.5);opts.innerHTML="";
+    ch.forEach(k=>{const b=el(`<button class="opt" data-n="${k}"><b>${k}</b><span>${ENU[k-1]}</span></button>`);b.onclick=()=>choose(k,b);opts.appendChild(b);});
+  }
+  function countAlong(cb,step=650){
+    busy=true;let i=0;
+    (function next(){if(i>=N){frame.forEach(f=>f.classList.remove("glow"));cb&&cb();return;}
+      frame.forEach(f=>f.classList.remove("glow"));frame[i].classList.add("glow");sayEn(EN[i]);tone(440*Math.pow(2,i/6),.15,"triangle",.12);i++;timers.push(setTimeout(next,step));})();
+  }
+  function choose(k,btn){
+    if(busy)return;
+    if(k===N){
+      busy=true;sfx.yay();kids.forEach(kd=>anim(kd,"kcheer"));anim(dog,"happy");lad.children[N-1].classList.add("done");
+      opts.querySelectorAll(".opt").forEach(o=>{if(o!==btn)o.style.visibility="hidden";});
+      speakSeq([[`${EN[N-1]}!`,"en"],[`정답! ${KO[N-1]}! ${N}개!`,"ko"]]);
+      for(let i=0;i<6;i++){const c=el(`<div class="confetti">${["⭐","💖","✨"][i%3]}</div>`);c.style.left=Math.random()*100+"vw";c.style.animationDuration="2s";document.body.appendChild(c);setTimeout(()=>c.remove(),2500);}
+      timers.push(setTimeout(()=>countAlong(()=>{
+        if(N>=10)finale();else{N++;timers.push(setTimeout(round,700));}
+      },N>6?420:550),2200));
+    }else{
+      busy=true;btn.classList.add("no");sayEn(EN[k-1]);
+      timers.push(setTimeout(()=>{const r=dog.getBoundingClientRect();anim(dog,"throw");poopAt(r.left+r.width*0.75,r.bottom-60,`히히! ${k}개가 아니야~`);
+        speakSeq([["앗! 리온이가 똥 쌌다! 같이 세어볼까?","ko"]]);},700));
+      timers.push(setTimeout(()=>countAlong(()=>{busy=false;opts.querySelector(`[data-n="${N}"]`).classList.add("hint");speakSeq([["How many?","en"]]);}),3200));
+    }
+  }
+  function finale(){
+    busy=true;speakSeq([["와! 열까지 다 했다! 다 같이 세어보자!","ko"]]);
+    let i=0;timers.push(setTimeout(function step(){
+      if(i>=10){speakSeq([["One to ten! 최고야!","en"]]);anim(dog,"happy");kids.forEach(kd=>anim(kd,"kcheer"));confetti();
+        timers.push(setTimeout(()=>win(`${NAME[who]}랑 ${who==="sohee"?"준이":"소이"}가 영어로 1부터 10까지 셀 수 있어요! One to Ten!`),3000));return;}
+      [...lad.children].forEach(s=>s.classList.remove("now"));lad.children[i].classList.add("now");numpop(i+1);sayEn(EN[i]);tone(440*Math.pow(2,i/6),.2,"triangle",.15);i++;
+      timers.push(setTimeout(step,800));},2200));
+  }
+  function loop(t){
+    for(const b of [...balls]){
+      const p=Math.min(1,(t-b.t0)/b.D);const x=b.sx+(b.tx-b.sx)*p,y=b.sy+(b.ty-b.sy)*p-170*4*p*(1-p);
+      b.el.style.left=x+"px";b.el.style.top=y+"px";
+      if(p>=1)land(b,false);
+    }
+    raf=requestAnimationFrame(loop);
+  }
+  raf=requestAnimationFrame(loop);
+  round();
+}
+
 // ---------- wiring ----------
 setMusicBtn();
+document.querySelectorAll(".kslot").forEach(k=>k.innerHTML=kidHTML(k.dataset.k));
+document.querySelectorAll(".menudog").forEach(d=>d.innerHTML=dogInner());
+document.addEventListener("pointerdown",e=>{const t=document.createElement("div");t.className="tapfx";t.textContent=["✨","⭐","💖"][Math.floor(Math.random()*3)];t.style.left=e.clientX+"px";t.style.top=e.clientY+"px";document.body.appendChild(t);setTimeout(()=>t.remove(),600);},{passive:true});
 document.getElementById("music").onclick=e=>{e.stopPropagation();musicOn=!musicOn;try{localStorage.setItem("music",musicOn?"on":"off")}catch(_){}
   setMusicBtn();musicOn?startMusic():stopMusic();};
 document.addEventListener("pointerdown",()=>startMusic(),{once:false,passive:true});
 document.querySelectorAll("[data-who]").forEach(b=>b.onclick=()=>{audio();who=b.dataset.who;sfx.ding();show("#menu");say(`안녕 ${NAME[who]}! 무슨 놀이 할까?`);});
 $("#goStars").onclick=()=>{audio();startStars();};
 $("#goCake").onclick=()=>{audio();startCake();};
-$("#again").onclick=()=>({stars:startStars,cake:startCake,feed:startFeed,bug:startBug,princess:startPrincess,dentist:startDentist,croc:startCroc})[mode]();
+$("#again").onclick=()=>({stars:startStars,cake:startCake,feed:startFeed,bug:startBug,princess:startPrincess,dentist:startDentist,croc:startCroc,num:startNum})[mode]();
 $("#goFeed").onclick=()=>{audio();startFeed();};
 $("#goBug").onclick=()=>{audio();startBug();};
 $("#goPrincess").onclick=()=>{audio();startPrincess();};
 $("#goDentist").onclick=()=>{audio();startDentist();};
 $("#goCroc").onclick=()=>{audio();startCroc();};
+$("#goNum").onclick=()=>{audio();startNum();};
 $("#toMenu").onclick=()=>{clearGame();show("#menu");};
 </script>
 </body>
