@@ -91,6 +91,18 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
 @keyframes buzz{50%{transform:translateY(-4px) rotate(8deg)}}
 #music{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));right:calc(14px + env(safe-area-inset-right,0px));z-index:100;width:60px;height:60px;border-radius:50%;border:none;background:#fff;font-size:30px;box-shadow:0 4px 0 #c98be0;cursor:pointer}
 #music.off{opacity:.55}
+.pf{position:absolute;z-index:9;cursor:pointer;padding:6px}
+.pf img{height:clamp(76px,16vw,110px);display:block}
+.pf.dizzy{animation:spin .8s}
+@keyframes spin{to{transform:rotate(720deg)}}
+.hunter{position:absolute;width:clamp(80px,17vw,110px);z-index:12;pointer-events:none;transition:left .14s ease-out,top .14s ease-out}
+.hunter img{width:100%;border-radius:50%;border:5px solid #fff;display:block;box-shadow:0 5px 0 rgba(0,0,0,.15)}
+.hunter .hand{position:absolute;right:-26px;top:-34px;font-size:clamp(44px,9vw,64px);transform-origin:20% 90%}
+.hunter.slap .hand{animation:slap .3s}
+@keyframes slap{0%{transform:rotate(-60deg)}55%{transform:rotate(35deg) scale(1.4)}100%{transform:rotate(0)}}
+.sleeper.awake .zz{display:none}
+.sleeper.awake img{animation:run .25s infinite}
+.sleeper{right:auto!important;bottom:auto!important;z-index:11}
 /* short screens (phone landscape) */
 @media (max-height:520px){
  .screen{gap:8px;padding:8px;justify-content:flex-start}
@@ -234,7 +246,7 @@ function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtteranc
 // ---------- helpers ----------
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));field.className="";if(id)$(id).classList.add("on");}
 function clearGame(){field.onpointerdown=null;timers.forEach(clearTimeout);timers.forEach(clearInterval);timers=[];cancelAnimationFrame(raf);field.innerHTML="";}
-function bubble(x,y,txt){const b=document.createElement("div");b.className="bubble";b.textContent=txt;b.style.left=Math.max(4,Math.min(innerWidth-200,x-60))+"px";b.style.top=Math.max(70,y-60)+"px";field.appendChild(b);setTimeout(()=>b.remove(),1500);}
+function bubble(x,y,txt){const b=document.createElement("div");b.className="bubble";b.textContent=txt;b.style.left=Math.max(4,Math.min(innerWidth-200,x-60))+"px";b.style.top=Math.max(70,y-60)+"px";field.appendChild(b);b.style.left=Math.max(8,Math.min(innerWidth-b.offsetWidth-8,x-b.offsetWidth/2+30))+"px";setTimeout(()=>b.remove(),1500);}
 function el(html){const d=document.createElement("div");d.innerHTML=html.trim();return d.firstChild;}
 function hud(label){const h=el(`<div class="hud"><button class="home">🏠</button><div class="count" id="cnt">${label}</div><div style="width:60px"></div></div>`);field.appendChild(h);h.querySelector(".home").onpointerdown=e=>{e.stopPropagation();clearGame();show("#menu");};}
 function confetti(){for(let i=0;i<40;i++){const c=document.createElement("div");c.className="confetti";c.textContent=["⭐","💖","🎉","✨","🌙","🎂"][i%6];c.style.left=Math.random()*100+"vw";c.style.animationDuration=(2+Math.random()*2)+"s";c.style.animationDelay=Math.random()+"s";document.body.appendChild(c);setTimeout(()=>c.remove(),5000);}}
@@ -420,47 +432,103 @@ function startFeed(){
 // ---------- MOSQUITO ----------
 function startBug(){
   mode="bug";clearGame();show(null);field.className="bug";
-  const GOAL=15;let got=0;const bugs=[];
+  const GOAL=20;let got=0;const fl=[];let won=false;
+  const PINGS=[{src:IMG.pings[1],n:"다이아나핑"},{src:IMG.pings[0],n:"하츄핑"},{src:IMG.pings[2],n:"오로라핑"}];
   hud(`🦟 0 / ${GOAL}`);
+  // Rion (sleeps, sometimes wakes up to help)
   const R=el(`<div class="sleeper"><img src="${IMG.rion}"><div class="zz">💤</div></div>`);field.appendChild(R);
-  const f=el(`<img class="friend" src="${IMG.pings[Math.floor(Math.random()*4)]}">`);f.style.left="12px";f.style.bottom="10px";field.appendChild(f);
-  say(`윙윙! 모기가 나타났어! ${NAME[who]}야, 리온이가 물리지 않게 모기를 잡아줘!`);
-  function rc(){const r=R.getBoundingClientRect();return {x:r.left+r.width/2-40,y:r.top+r.height/2-40};}
-  function spawn(){
-    if(bugs.length>=Math.min(2+Math.floor(got/5),4))return;
+  const rw=()=>R.offsetWidth||140;
+  const home=()=>({x:innerWidth-rw()-16,y:innerHeight*0.94-rw()});
+  const rion={x:home().x,y:home().y,state:"sleep",caught:0,until:0,target:null};
+  function placeR(){R.style.left=rion.x+"px";R.style.top=rion.y+"px";}
+  placeR();
+  // the player (swats with a hand)
+  const H=el(`<div class="hunter"><img src="${IMG[who]}"><div class="hand">✋</div></div>`);field.appendChild(H);
+  const hHome=()=>({x:16,y:innerHeight*0.94-(H.offsetWidth||100)});
+  function hTo(x,y){H.style.left=x+"px";H.style.top=y+"px";}
+  hTo(hHome().x,hHome().y);let hTimer=0;
+  say(`윙윙! 모기가 나타났어! ${NAME[who]}야, 모기만 잡아! 핑은 잡으면 안 돼!`);
+
+  function lvl(){return 1+got/GOAL;} // gets faster as you go
+  function retarget(f){f.tx=20+Math.random()*(innerWidth-140);f.ty=80+Math.random()*(innerHeight*0.6);}
+  function add(kind,ping){
     const side=Math.random()<.5;
-    const b={el:el(`<div class="mos"><span>🦟</span></div>`),x:side?-80:innerWidth+10,y:90+Math.random()*innerHeight*0.45,
-      tx:0,ty:0,born:performance.now(),ph:Math.random()*6,sp:0.9+Math.random()*0.6};
-    retarget(b);field.appendChild(b.el);bugs.push(b);
-    b.el.onpointerdown=e=>{e.stopPropagation();swat(b);};
+    const f={kind,ping,x:side?-100:innerWidth+10,y:90+Math.random()*innerHeight*0.45,born:performance.now(),ph:Math.random()*6,
+      sp:(kind==="mos"?2.4:2.2)+Math.random()*1.4,tx:0,ty:0,pause:0};
+    f.el=kind==="mos"?el(`<div class="mos"><span>🦟</span></div>`):el(`<div class="pf"><img src="${ping.src}"></div>`);
+    retarget(f);field.appendChild(f.el);fl.push(f);
+    f.el.onpointerdown=e=>{e.stopPropagation();kind==="mos"?swat(f):oops(f);};
   }
-  function retarget(b){b.tx=40+Math.random()*(innerWidth-160);b.ty=90+Math.random()*(innerHeight*0.55);}
-  function kill(b){const i=bugs.indexOf(b);if(i>=0)bugs.splice(i,1);}
-  function swat(b){
-    if(b.dead)return;b.dead=true;kill(b);sfx.slap();got++;
-    b.el.innerHTML="<span>💥</span>";bubble(b.x,b.y,["탁!","잡았다!","최고!","얍!"][got%4]);
-    setTimeout(()=>b.el.remove(),300);$("#cnt").textContent=`🦟 ${got} / ${GOAL}`;
-    if(got>=GOAL)setTimeout(()=>win(`${NAME[who]}가 모기 ${GOAL}마리 다 잡았다! 리온이가 고마워해!`),400);
+  function remove(f){const i=fl.indexOf(f);if(i>=0)fl.splice(i,1);}
+  function count(by){got++;$("#cnt").textContent=`🦟 ${Math.min(got,GOAL)} / ${GOAL}`;
+    if(got>=GOAL&&!won){won=true;setTimeout(()=>win(`${NAME[who]}랑 리온이가 모기 ${GOAL}마리 다 잡았다! 최고야!`),600);}}
+  function swat(f){
+    if(f.dead)return;f.dead=true;remove(f);
+    // player flies over and slaps it
+    clearTimeout(hTimer);hTo(f.x-10,f.y-20);H.classList.remove("slap");void H.offsetWidth;H.classList.add("slap");
+    setTimeout(()=>{sfx.slap();f.el.innerHTML="<span>💥</span>";bubble(f.x,f.y,["탁!","잡았다!","얍!","찰싹!"][got%4]);setTimeout(()=>f.el.remove(),300);count();},150);
+    hTimer=setTimeout(()=>{const h=hHome();hTo(h.x,h.y);},650);
   }
-  function bite(b){
-    b.dead=true;kill(b);b.el.remove();sfx.bark();
+  function oops(f){
+    if(f.pause>performance.now())return;
+    sfx.boo();f.pause=performance.now()+900;
+    f.el.classList.remove("dizzy");void f.el.offsetWidth;f.el.classList.add("dizzy");
+    bubble(f.x,f.y,`아야! 나는 ${f.ping.n}야!`);
+    say(`아야! 나는 ${f.ping.n}야! 모기만 잡아줘!`);
+    const m=fl.find(o=>o.kind==="mos");if(m)setTimeout(()=>bubble(m.x,m.y,"히히~ 못 잡지롱"),500);
+  }
+  function bite(f){
+    f.dead=true;remove(f);f.el.remove();sfx.bark();
     R.classList.remove("jump");void R.offsetWidth;R.classList.add("jump");
-    const c=rc();bubble(c.x,c.y-40,"앗 가려워! 멍멍!");
-    timers.push(setTimeout(()=>{poopAt(c.x-100,c.y+30,"깜짝 놀라서 뿌직!💩");say("리온이가 깜짝 놀라서 똥 쌌다!");},600));
+    bubble(rion.x,rion.y-40,"앗 가려워! 멍멍!");
+    timers.push(setTimeout(()=>{poopAt(rion.x-100,rion.y+30,"깜짝 놀라서 뿌직!💩");say("리온이가 깜짝 놀라서 똥 쌌다!");},600));
   }
-  field.onpointerdown=e=>{if(e.target.closest(".home"))return;tone(500,.08,"sine",.12,0,250);bubble(e.clientX,e.clientY,"휙~");};
+  function wakeRion(){
+    if(won||rion.state!=="sleep"||!fl.some(f=>f.kind==="mos"))return;
+    rion.state="hunt";rion.caught=0;rion.until=performance.now()+4500;R.classList.add("awake");sfx.bark();
+    bubble(rion.x,rion.y-40,"멍! 리온이가 도와줄게!");say("리온이가 도와주러 왔어!");
+  }
+  field.onpointerdown=e=>{if(e.target.closest(".home"))return;tone(500,.08,"sine",.12,0,250);bubble(e.clientX,e.clientY,"휙~");
+    clearTimeout(hTimer);hTo(e.clientX-50,e.clientY-50);hTimer=setTimeout(()=>{const h=hHome();hTo(h.x,h.y);},500);};
   function loop(t){
-    for(const b of [...bugs]){
-      const age=(t-b.born)/1000;
-      if(age>7){const c=rc();b.tx=c.x;b.ty=c.y;}
-      const dx=b.tx-b.x,dy=b.ty-b.y,d=Math.hypot(dx,dy)||1;
-      if(d<30){if(age>7){bite(b);continue;}retarget(b);}
-      b.x+=dx/d*b.sp;b.y+=dy/d*b.sp+Math.sin(t/180+b.ph)*1.2;
-      b.el.style.left=b.x+"px";b.el.style.top=b.y+"px";b.el.firstChild.style.transform=dx<0?"scaleX(-1)":"";
+    const L=lvl();
+    for(const f of [...fl]){
+      if(f.pause>t)continue;
+      const age=(t-f.born)/1000;
+      if(f.kind==="mos"&&age>8&&rion.state==="sleep"){f.tx=rion.x;f.ty=rion.y;}
+      else if(Math.random()<0.02)retarget(f); // sudden zig-zags
+      const dx=f.tx-f.x,dy=f.ty-f.y,d=Math.hypot(dx,dy)||1;
+      if(d<30){if(f.kind==="mos"&&age>8&&rion.state==="sleep"){bite(f);continue;}retarget(f);}
+      const sp=f.sp*(f.kind==="mos"?L:1);
+      f.x+=dx/d*sp;f.y+=dy/d*sp+Math.sin(t/140+f.ph)*1.8;
+      f.el.style.left=f.x+"px";f.el.style.top=f.y+"px";
+      f.el.firstChild.style.transform=dx<0?"scaleX(-1)":"";
+    }
+    if(rion.state!=="sleep"){
+      let goal;
+      if(rion.state==="hunt"){
+        if(t>rion.until||rion.caught>=2)rion.state="back";
+        else{let best=null,bd=1e9;for(const f of fl)if(f.kind==="mos"){const dd=Math.hypot(f.x-rion.x,f.y-rion.y);if(dd<bd){bd=dd;best=f;}}
+          if(!best)rion.state="back";else{goal=best;if(bd<60){best.dead=true;remove(best);sfx.slap();sfx.bark();best.el.innerHTML="<span>💥</span>";
+            bubble(best.x,best.y,"왕! 잡았다!");setTimeout(()=>best.el.remove(),300);rion.caught++;count();}}}
+      }
+      if(rion.state==="back")goal=home();
+      if(goal){const dx=goal.x-rion.x,dy=goal.y-rion.y,d=Math.hypot(dx,dy)||1,v=7;
+        if(rion.state==="back"&&d<8){rion.x=goal.x;rion.y=goal.y;rion.state="sleep";R.classList.remove("awake");}
+        else{rion.x+=dx/d*Math.min(v,d);rion.y+=dy/d*Math.min(v,d);R.firstChild.style.transform=dx<0?"scaleX(-1)":"";}}
+      placeR();
     }
     raf=requestAnimationFrame(loop);
   }
-  spawn();timers.push(setInterval(spawn,1500));raf=requestAnimationFrame(loop);
+  function spawn(){
+    if(won)return;
+    const mos=fl.filter(f=>f.kind==="mos").length;
+    if(mos<Math.min(3+Math.floor(got/6),5))add("mos");
+    for(const p of PINGS)if(!fl.some(f=>f.ping===p))add("ping",p);
+  }
+  spawn();spawn();timers.push(setInterval(spawn,1100));
+  (function rionHelp(){timers.push(setTimeout(()=>{wakeRion();rionHelp();},7000+Math.random()*5000));})();
+  raf=requestAnimationFrame(loop);
 }
 
 // ---------- wiring ----------
