@@ -6,7 +6,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#2b2363">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>소희랑 준이 놀이</title>
+<title>소이랑 준이 놀이</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;touch-action:manipulation}
 html,body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none;-webkit-touch-callout:none;font-family:"Jua","Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:#fde7f3}
@@ -70,6 +70,7 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
 .grid4 .pick img{width:clamp(80px,22vw,150px);height:clamp(80px,22vw,150px)}
 #field.feed{display:block;background:linear-gradient(#fff3d6,#ffe1b8 62%,#e2b183 62%,#d29d6c)}
 #field.bug{display:block;background:linear-gradient(#bfe8ff,#e6f7ff 55%,#9ad58a 55%,#7cc46b)}
+.granny img{width:clamp(70px,16vw,110px);border-radius:50%;border:5px solid #fff;display:block;margin:0 auto}
 .granny{position:absolute;left:14px;top:84px;font-size:clamp(56px,12vw,88px);line-height:1;z-index:4;text-align:center;animation:bob 2s ease-in-out infinite}
 .granny .gl{font-size:clamp(14px,3vw,20px);background:#fff;color:#a0408a;border-radius:12px;padding:2px 8px;margin-top:4px;white-space:nowrap}
 .bigrion{position:absolute;left:50%;bottom:6%;width:clamp(130px,30vw,210px);transform:translateX(-50%) scale(var(--s,1));transform-origin:50% 100%;transition:transform .35s cubic-bezier(.3,1.6,.5,1);z-index:6;pointer-events:none}
@@ -88,6 +89,8 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
 .mos{position:absolute;font-size:clamp(66px,15vw,100px);line-height:1;padding:12px;z-index:8;cursor:pointer}
 .mos span{display:inline-block;animation:buzz .15s linear infinite}
 @keyframes buzz{50%{transform:translateY(-4px) rotate(8deg)}}
+#music{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));right:calc(14px + env(safe-area-inset-right,0px));z-index:100;width:60px;height:60px;border-radius:50%;border:none;background:#fff;font-size:30px;box-shadow:0 4px 0 #c98be0;cursor:pointer}
+#music.off{opacity:.55}
 /* short screens (phone landscape) */
 @media (max-height:520px){
  .screen{gap:8px;padding:8px;justify-content:flex-start}
@@ -104,9 +107,10 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
  .grid4{grid-template-columns:repeat(4,minmax(0,1fr));width:100%}
  .grid4 .pick img{width:70px;height:70px}
  .grid4 .pick{font-size:17px}
- .granny{top:64px;font-size:48px}
+ .granny{top:64px}
+ .granny img{width:60px}
  .bigrion{width:120px}
- .home{width:48px;height:48px;font-size:26px}
+ .home,#music{width:48px;height:48px;font-size:26px}
  .hud .count{font-size:20px}
 }
 /* big screens (PC) */
@@ -120,10 +124,10 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
 
 <div id="title" class="screen on">
   <div class="pings"><img src="IMG.hachu"><img src="IMG.diana"><img src="IMG.aurora"><img src="IMG.eclipse"></div>
-  <h1>소희랑 준이의<br>⭐별 &amp; 🎂케이크 놀이</h1>
+  <h1>소이랑 준이의<br>⭐별 &amp; 🎂케이크 놀이</h1>
   <div class="sub">누가 할까요?</div>
   <div class="row">
-    <button class="pick" data-who="sohee"><img src="IMG.sohee2" style="border-radius:50%">소희</button>
+    <button class="pick" data-who="sohee"><img src="IMG.sohee2" style="border-radius:50%">소이</button>
     <button class="pick" data-who="jun"><img src="IMG.jun" style="border-radius:50%">준이</button>
   </div>
 </div>
@@ -140,6 +144,7 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
 </div>
 
 <div id="field"></div>
+<button id="music" aria-label="배경음악">🎵</button>
 
 <div id="win" class="screen">
   <img class="face" id="winFace">
@@ -153,7 +158,7 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
 
 <script>
 const IMG={sohee:"IMG.sohee2",jun:"IMG.jun",rion:"IMG.rion",pings:["IMG.hachu","IMG.diana","IMG.aurora","IMG.eclipse"]};
-const NAME={sohee:"소희",jun:"준이"};
+const NAME={sohee:"소이",jun:"준이"};
 let who="sohee", mode="stars", timers=[], raf=0;
 const $=s=>document.querySelector(s);
 const field=$("#field");
@@ -173,6 +178,57 @@ const sfx={
   slap(){tone(1400,.06,"square",.22,0,150);tone(90,.12,"sine",.3,0,60);},
   bigpoop(){tone(200,.9,"sawtooth",.28,0,45);tone(140,.7,"square",.15,.3,40);[900,1100,1300].forEach((f,i)=>tone(f,.12,"sine",.15,1+i*.1));}
 };
+// ---- farts: several funny kinds ----
+let noiseBuf;
+function noise(){const a=audio();if(!noiseBuf){noiseBuf=a.createBuffer(1,a.sampleRate,a.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}return noiseBuf;}
+function puff(when,dur,f0,f1,rate,depth,vol,wet){
+  const a=audio();if(!a)return;const t=a.currentTime+when;
+  const o=a.createOscillator(),lfo=a.createOscillator(),ld=a.createGain(),flt=a.createBiquadFilter(),g=a.createGain();
+  o.type="sawtooth";o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f1,t+dur);
+  lfo.type="square";lfo.frequency.setValueAtTime(rate,t);lfo.frequency.linearRampToValueAtTime(rate*0.6,t+dur);ld.gain.value=depth;
+  lfo.connect(ld).connect(o.frequency);
+  flt.type="lowpass";flt.frequency.value=Math.max(500,f0*6);flt.Q.value=4;
+  g.gain.setValueAtTime(0.001,t);g.gain.exponentialRampToValueAtTime(vol,t+0.03);g.gain.setValueAtTime(vol,t+dur*0.7);g.gain.exponentialRampToValueAtTime(0.001,t+dur);
+  o.connect(flt).connect(g).connect(a.destination);o.start(t);lfo.start(t);o.stop(t+dur+.05);lfo.stop(t+dur+.05);
+  if(wet){const n=a.createBufferSource(),bp=a.createBiquadFilter(),ng=a.createGain();n.buffer=noise();bp.type="bandpass";bp.frequency.value=f0*3;bp.Q.value=1.5;
+    ng.gain.setValueAtTime(wet,t);ng.gain.exponentialRampToValueAtTime(0.001,t+dur);n.connect(bp).connect(ng).connect(a.destination);n.start(t);n.stop(t+dur+.05);}
+}
+const FARTS=[
+  {w:"뿡!",p:()=>puff(0,.22,130,90,32,40,.5)},
+  {w:"뿌우우웅~",p:()=>puff(0,1.1,95,60,26,30,.45)},
+  {w:"삐융~♪",p:()=>puff(0,.45,380,760,55,80,.3)},
+  {w:"뿌다다다닥!",p:()=>{for(let i=0;i<6;i++)puff(i*.11,.09,120+i*8,100,35,40,.45);}},
+  {w:"뿌지직!",p:()=>puff(0,.55,85,70,22,25,.4,.35)},
+  {w:"부우웅~ 뽕!",p:()=>{puff(0,.7,70,130,20,25,.45);puff(.8,.12,220,180,40,50,.45);}},
+  {w:"뿌뿌뿡~",p:()=>{puff(0,.15,150,120,30,40,.45);puff(.2,.15,120,100,30,40,.45);puff(.42,.4,90,70,26,30,.5);}},
+  {w:"뽀옹~?",p:()=>puff(0,.5,160,300,40,30,.35)}
+];
+let lastFart=-1;
+function fart(){let i;do{i=Math.floor(Math.random()*FARTS.length)}while(i===lastFart);lastFart=i;FARTS[i].p();return FARTS[i].w;}
+
+// ---- background music ----
+let musicOn=true,musicTimer=0,mStep=0,mNext=0;
+try{musicOn=localStorage.getItem("music")!=="off";}catch(e){}
+const N=n=>440*Math.pow(2,(n-69)/12);
+// cheerful tune: [midi note or 0 for rest] per eighth note, two phrases
+const MEL=[72,0,76,79,76,0,72,0, 74,0,77,81,79,0,0,0, 76,0,79,84,79,0,76,0, 74,77,76,74,72,0,0,0,
+           79,0,81,79,77,0,76,0, 74,0,76,77,79,0,0,0, 84,0,81,79,77,76,74,0, 72,74,76,74,72,0,0,0];
+const BASS=[48,55,53,55, 48,55,50,55, 48,55,53,55, 43,47,48,0];
+function musicTick(){
+  const a=audio();if(!a)return;
+  const eighth=0.24;
+  while(mNext<a.currentTime+0.3){
+    const t=mNext-a.currentTime;const n=MEL[mStep%MEL.length];
+    if(n)tone(N(n),.2,"triangle",.05,Math.max(0,t));
+    if(mStep%4===0){const b=BASS[(mStep/4)%BASS.length];if(b)tone(N(b),.35,"sine",.07,Math.max(0,t));}
+    if(mStep%2===1)tone(2600,.03,"square",.008,Math.max(0,t));
+    mStep++;mNext+=eighth;
+  }
+}
+function startMusic(){const a=audio();if(!a||!musicOn||musicTimer)return;mNext=a.currentTime+0.1;musicTimer=setInterval(musicTick,100);}
+function stopMusic(){clearInterval(musicTimer);musicTimer=0;}
+function setMusicBtn(){const b=document.getElementById("music");if(b){b.textContent=musicOn?"🎵":"🔇";b.classList.toggle("off",!musicOn);}}
+
 function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="ko-KR";u.rate=.95;u.pitch=1.3;speechSynthesis.speak(u);}catch(e){}}
 
 // ---------- helpers ----------
@@ -187,9 +243,9 @@ function win(text){clearGame();sfx.yay();confetti();$("#winFace").src=IMG[who];$
 // Rion: chases a target, poops when it arrives
 function makeRion(){const r=el(`<div class="rion"><img src="${IMG.rion}"></div>`);field.appendChild(r);return {el:r,x:-150,y:innerHeight*0.6,place(){r.style.left=this.x+"px";r.style.top=this.y+"px";r.firstChild.style.transform=""; }};}
 function poopAt(x,y,msg,onClean,big){
-  sfx.poop();
+  const fw=fart();setTimeout(()=>bubble(x+50,y-40,fw),250);
   const p=el(`<div class="poop${big?" big":""}">💩</div>`);p.style.left=x+"px";p.style.top=y+"px";field.appendChild(p);
-  bubble(x,y,msg||"뿌직~ 💩");
+  if(msg!=="")bubble(x,y,msg||"뿌직~ 💩");
   p.onpointerdown=e=>{e.stopPropagation();sfx.pop();p.classList.add("pop");bubble(x,y,"뿡! 치웠다 ✨");setTimeout(()=>p.remove(),500);onClean&&onClean();};
   return p;
 }
@@ -320,9 +376,9 @@ function startFeed(){
   mode="feed";clearGame();show(null);field.className="feed";
   const ROUNDS=3,NEED=5;let round=0,eaten=0,busy=false;
   hud(`🍰 0 / ${NEED}`);
-  field.appendChild(el(`<div class="granny">👵<div class="gl">할머니 케이크</div></div>`));
+  field.appendChild(el(`<div class="granny"><img src="${IMG.sohee}"><div class="gl">소이 케이크 🎂</div></div>`));
   const R=el(`<div class="bigrion"><img src="${IMG.rion}"></div>`);field.appendChild(R);
-  say(`할머니가 케이크를 만들어 주셨어! ${NAME[who]}야, 케이크를 눌러서 리온이 먹여주자!`);
+  say(`소이가 케이크를 만들었어! ${NAME[who]}야, 케이크를 눌러서 리온이 먹여주자!`);
   const FOOD=["🎂","🍰","🧁","🍩","🍪","🍓","🍦"];
   function rionCenter(){const r=R.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height*0.45};}
   function spawn(){
@@ -347,14 +403,14 @@ function startFeed(){
     busy=true;field.querySelectorAll(".food").forEach(f=>f.remove());
     say("어? 리온이 배가 빵빵해! 뿌지지직!");R.classList.add("shake");
     timers.push(setTimeout(()=>{
-      R.classList.remove("shake");R.style.setProperty("--s",1);sfx.bigpoop();
+      R.classList.remove("shake");R.style.setProperty("--s",1);[0,1.1].forEach((d,i)=>timers.push(setTimeout(()=>{const w=fart();const r=R.getBoundingClientRect();bubble(r.left+Math.random()*r.width,r.top-20-i*30,w);},d*1000)));
       const rb=R.getBoundingClientRect();let left=0;
       const done=()=>{left--;if(left>0)return;round++;
         if(round>=ROUNDS){win(`${NAME[who]}가 리온이 케이크 다 먹이고 똥도 다 치웠다! 최고야!`);return;}
         eaten=0;busy=false;$("#cnt").textContent=`🍰 0 / ${NEED}`;say("깨끗해졌다! 또 먹여주자!");};
       const spots=[[rb.left-120,rb.bottom-130,true],[rb.right+10,rb.bottom-90],[rb.left-60,rb.top-30],[rb.right-20,rb.top-60]];
       spots.forEach(([x,y,big],i)=>{left++;timers.push(setTimeout(()=>{
-        poopAt(Math.max(8,Math.min(innerWidth-110,x)),Math.max(80,Math.min(innerHeight-130,y)),i?"뿌직!":"뿌지지직~💩",done,big);},i*250));});
+        poopAt(Math.max(8,Math.min(innerWidth-110,x)),Math.max(80,Math.min(innerHeight-130,y)),i?"":"뿌지지직~💩",done,big);},i*250));});
       timers.push(setTimeout(()=>say("리온이가 똥 쌌다! 똥을 눌러서 치워줘!"),1400));
     },1300));
   }
@@ -408,6 +464,10 @@ function startBug(){
 }
 
 // ---------- wiring ----------
+setMusicBtn();
+document.getElementById("music").onclick=e=>{e.stopPropagation();musicOn=!musicOn;try{localStorage.setItem("music",musicOn?"on":"off")}catch(_){}
+  setMusicBtn();musicOn?startMusic():stopMusic();};
+document.addEventListener("pointerdown",()=>startMusic(),{once:false,passive:true});
 document.querySelectorAll("[data-who]").forEach(b=>b.onclick=()=>{audio();who=b.dataset.who;sfx.ding();show("#menu");say(`안녕 ${NAME[who]}! 무슨 놀이 할까?`);});
 $("#goStars").onclick=()=>{audio();startStars();};
 $("#goCake").onclick=()=>{audio();startCake();};
