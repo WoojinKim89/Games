@@ -65,9 +65,9 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
 #win img.face{width:clamp(140px,32vw,220px);border-radius:50%;border:8px solid #fff;animation:bob 1s infinite}
 .confetti{position:fixed;top:-40px;font-size:30px;z-index:60;pointer-events:none;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
-.grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;width:min(100%,560px)}
+.grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:min(100%,560px)}
 .grid4 .pick{font-size:clamp(18px,4.4vw,28px);word-break:keep-all}
-.grid4 .pick img{width:clamp(80px,22vw,150px);height:clamp(80px,22vw,150px)}
+.grid4 .pick img{width:clamp(64px,18vw,130px);height:clamp(64px,18vw,130px)}
 #field.feed{display:block;background:linear-gradient(#fff3d6,#ffe1b8 62%,#e2b183 62%,#d29d6c)}
 #field.bug{display:block;background:linear-gradient(#bfe8ff,#e6f7ff 55%,#9ad58a 55%,#7cc46b)}
 .granny img{width:clamp(70px,16vw,110px);border-radius:50%;border:5px solid #fff;display:block;margin:0 auto}
@@ -169,6 +169,39 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
 .cheer{position:absolute;bottom:4%;z-index:30;pointer-events:none;animation:drop .6s cubic-bezier(.3,1.6,.5,1)}
 .cheer img{height:clamp(120px,26vh,220px);display:block;animation:bob 1s ease-in-out infinite}
 .buddy{position:absolute;left:4px;bottom:4px;width:clamp(80px,20vw,130px);z-index:7;pointer-events:none;animation:bob 1.8s ease-in-out infinite}
+#field.croc{display:block;background:linear-gradient(#a8e6ff,#d9f6ff 40%,#9be07f 40%,#6cc35a)}
+.hpbar{position:absolute;top:74px;left:50%;transform:translateX(-50%);width:min(70vw,360px);height:22px;background:#fff;border-radius:12px;box-shadow:0 3px 0 rgba(0,0,0,.15);z-index:20;overflow:hidden}
+.hpbar i{position:absolute;inset:3px;right:auto;background:linear-gradient(90deg,#2fa84f,#7be05a);border-radius:9px;transition:width .3s}
+.hpbar b{position:absolute;left:-30px;top:-6px;font-size:28px}
+.hpwrap{position:absolute;top:70px;left:0;right:0;height:30px;z-index:20;pointer-events:none}
+.safe{position:absolute;top:108px;right:max(10px,2vw);z-index:15;text-align:center;font-size:clamp(46px,10vw,66px);line-height:1;pointer-events:none}
+.safe .n{font-size:clamp(16px,3.6vw,22px);background:#fff;color:#a0408a;border-radius:12px;padding:2px 8px;display:block;margin-top:2px}
+.crocm{position:absolute;width:clamp(190px,50vw,320px);z-index:8;pointer-events:none;transition:filter .3s}
+.crocm .inner{transform-origin:50% 100%;transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+.crocm svg{width:100%;display:block;overflow:visible}
+.crocm .jaw{transform-origin:205px 92px;transition:transform .18s}
+.crocm.open .jaw{transform:rotate(-30deg)}
+.crocm .belly{position:absolute;left:28%;top:48%;width:34%;display:flex;flex-wrap:wrap;justify-content:center;font-size:clamp(14px,3.6vw,22px);line-height:1}
+.crocm.stun .inner{animation:shake .15s linear infinite}
+.crocm.love{filter:hue-rotate(-90deg) saturate(1.3)}
+.crocm.sleep .eyeo{transform:scaleY(.15);transform-origin:228px 52px}
+.crocm.baby .inner{transform:scale(.45)!important}
+.crocm .st{position:absolute;top:-34px;left:55%;font-size:32px;animation:bob 1s infinite}
+.bun{position:absolute;font-size:clamp(46px,10vw,66px);line-height:1;z-index:9;cursor:pointer;padding:6px;transition:left .5s ease-out,top .5s ease-out,transform .5s}
+.bun span{display:inline-block;animation:hop .7s ease-in-out infinite}
+@keyframes hop{50%{transform:translateY(-14px)}}
+.powers{position:absolute;left:0;right:0;bottom:calc(8px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;justify-content:center;z-index:20}
+.pw{position:relative;width:clamp(74px,21vw,110px);height:clamp(84px,24vw,124px);border-radius:22px;border:4px solid #fff;background:rgba(255,255,255,.9);box-shadow:0 6px 0 rgba(0,0,0,.15);cursor:pointer;padding:4px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;font:inherit;font-size:clamp(12px,3vw,15px);color:#7a3fa0}
+.pw img{height:72%;object-fit:contain}
+.pw .cd{position:absolute;inset:0;border-radius:18px;background:rgba(80,60,120,.55);transform-origin:bottom;transform:scaleY(0)}
+.pw.cool .cd{animation:cool var(--cd) linear forwards}
+@keyframes cool{from{transform:scaleY(1)}to{transform:scaleY(0)}}
+.shot{position:absolute;z-index:25;pointer-events:none;transition:left .45s ease-in,top .45s ease-in,transform .45s}
+.shot img{height:clamp(60px,14vw,90px)}
+.boom{position:absolute;z-index:26;pointer-events:none;font-size:clamp(34px,8vw,52px);animation:boomfx 1s forwards}
+@keyframes boomfx{0%{transform:scale(.2);opacity:1}60%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1.2);opacity:0}}
+.rainbowfx{position:absolute;z-index:24;pointer-events:none;font-size:clamp(120px,30vw,200px);animation:drop .5s,fade 1.4s forwards}
+@keyframes fade{70%{opacity:1}100%{opacity:0}}
 /* short screens (phone landscape) */
 @media (max-height:520px){
  .screen{gap:8px;padding:8px;justify-content:flex-start}
@@ -182,7 +215,8 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
  .plate .ly{height:30px;width:160px}
  .btns{flex:1 1 100%;padding:4px}
  .cb{width:64px;height:64px;font-size:34px}
- .grid4{grid-template-columns:repeat(6,minmax(0,1fr));width:100%}
+ .grid4{grid-template-columns:repeat(7,minmax(0,1fr));width:100%;gap:6px}
+ .grid4 .pick{font-size:14px!important;padding:6px}
  .grid4 .pick.wide{grid-column:auto}
  .grid4 .pick .pp{gap:2px}
  .grid4 .pick .pp img{width:34px;height:60px}
@@ -199,7 +233,13 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
  .tool{width:60px;height:60px;font-size:30px}
  .nurse{top:64px;width:54px}
  .cheer img{height:110px}
- .grid4 .pick img{width:70px;height:70px}
+ .pw{width:64px;height:64px;font-size:0}
+ .pw img{height:90%}
+ .powers{left:auto;right:8px;flex-direction:column;bottom:6px}
+ .crocm{width:170px}
+ .safe{top:64px;right:90px}
+ .hpbar{top:64px}
+ .grid4 .pick img{width:56px;height:56px}
  .grid4 .pick{font-size:17px}
  .granny{top:64px}
  .granny img{width:60px}
@@ -235,6 +275,7 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
     <button class="pick" id="goBug"><img src="IMG.eclipse">🦟 모기 잡기</button>
     <button class="pick" id="goPrincess"><span class="pp"><img src="IMG.eunyul" style="border-radius:50%"><img src="IMG.elsa" style="border-radius:20px;object-fit:cover"><img src="IMG.cinderella"></span>👑 공주님 꾸미기</button>
     <button class="pick" id="goDentist"><img src="IMG.rainbow">🦷 무지개 괴물 치과</button>
+    <button class="pick wide" id="goCroc"><span class="pp"><img src="IMG.hachu"><span style="font-size:clamp(50px,12vw,80px);line-height:1">🐊</span><img src="IMG.aurora"></span>🐊 악어 괴물 물리치기</button>
   </div>
   <div class="row" style="align-items:center;color:#7a3fa0;font-size:22px"><img src="IMG.rion" style="width:64px;border-radius:50%;border:4px solid #fff"> 리온이 조심! 💩</div>
 </div>
@@ -772,6 +813,142 @@ function startDentist(){
   newRound();
 }
 
+// ---------- CROCODILE MONSTER vs TEENIEPINGS ----------
+const CROC_SVG=`<svg viewBox="0 0 300 180" aria-hidden="true">
+<path d="M70 110 Q20 100 4 70 Q30 92 40 86 Q34 104 70 96Z" fill="#3c9a3f"/>
+<g fill="#2e7d32"><path d="M60 70 l8 -16 l8 16z"/><path d="M84 60 l9 -18 l9 18z"/><path d="M110 56 l9 -18 l9 18z"/><path d="M136 56 l9 -18 l9 18z"/><path d="M162 58 l8 -16 l8 16z"/></g>
+<ellipse cx="130" cy="110" rx="92" ry="55" fill="#4caf50"/>
+<ellipse cx="128" cy="124" rx="62" ry="36" fill="#c5e8a0"/>
+<g fill="#3c9a3f"><rect x="62" y="150" width="26" height="26" rx="10"/><rect x="160" y="150" width="26" height="26" rx="10"/></g>
+<g fill="#fff"><circle cx="66" cy="176" r="4"/><circle cx="76" cy="177" r="4"/><circle cx="164" cy="176" r="4"/><circle cx="174" cy="177" r="4"/></g>
+<path d="M190 100 Q250 104 292 112 Q296 128 280 132 Q240 134 196 128Z" fill="#43a047"/>
+<g fill="#fff"><path d="M212 104 l5 -9 l5 9z"/><path d="M232 106 l5 -9 l5 9z"/><path d="M252 108 l5 -9 l5 9z"/><path d="M272 110 l5 -9 l5 9z"/></g>
+<g class="jaw">
+ <path d="M188 60 Q240 58 292 82 Q300 98 284 102 Q240 102 192 98Z" fill="#4caf50"/>
+ <g fill="#fff"><path d="M214 98 l5 9 l5 -9z"/><path d="M234 99 l5 9 l5 -9z"/><path d="M254 100 l5 9 l5 -9z"/><path d="M274 100 l5 9 l5 -9z"/></g>
+ <circle cx="282" cy="84" r="3" fill="#1b5e20"/><circle cx="272" cy="82" r="3" fill="#1b5e20"/>
+ <circle cx="228" cy="52" r="20" fill="#4caf50"/>
+ <g class="eyeo"><circle cx="228" cy="50" r="14" fill="#fff"/><circle cx="232" cy="50" r="8" fill="#2b2b2b"/><circle cx="235" cy="46" r="3" fill="#fff"/></g>
+ <path d="M212 34 q16 -10 30 0" stroke="#1b5e20" stroke-width="4" fill="none" stroke-linecap="round"/>
+</g>
+</svg>`;
+function startCroc(){
+  mode="croc";clearGame();show(null);field.className="croc";
+  const MAXHP=14;let hp=MAXHP,rescued=0,belly=0,ended=false,rionUsed=false;
+  hud(`🐰 구출 0`);
+  const hpw=el(`<div class="hpbar"><i style="width:calc(100% - 6px)"></i></div>`);field.appendChild(hpw);
+  const safe=el(`<div class="safe">🏡<span class="n">🐰 0</span></div>`);field.appendChild(safe);
+  const C=el(`<div class="crocm"><div class="inner">${CROC_SVG}<div class="belly"></div></div></div>`);field.appendChild(C);
+  const inner=C.querySelector(".inner"),bellyEl=C.querySelector(".belly");
+  const crocW=()=>C.offsetWidth||260;
+  const cr={x:-crocW(),y:innerHeight*0.42,dir:1,stun:0,size:1,chomp:0};
+  const buns=[];
+  say(`큰일 났어! 악어 괴물이 토끼를 잡아먹으려고 해! ${NAME[who]}야, 토끼를 눌러서 구해주고, 티니핑 마법으로 악어 괴물을 물리치자!`);
+  function setHp(){hpw.firstChild.style.width=`calc(${Math.max(0,hp)/MAXHP*100}% - 6px)`;}
+  function setBelly(){bellyEl.textContent="🐰".repeat(belly);inner.style.transform=`scale(${1+belly*0.08})`;}
+  function addBun(){
+    if(ended||buns.length>=5)return;
+    const b={el:el(`<div class="bun"><span>🐇</span></div>`),x:30+Math.random()*(innerWidth-120),y:innerHeight*(0.4+Math.random()*0.3),t:0};
+    b.el.style.left=b.x+"px";b.el.style.top=b.y+"px";field.appendChild(b.el);buns.push(b);
+    b.el.onpointerdown=e=>{e.stopPropagation();save(b);};
+  }
+  function toSafe(elm,fromX,fromY){
+    const r=safe.getBoundingClientRect();elm.style.left=fromX+"px";elm.style.top=fromY+"px";
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{elm.style.left=(r.left+10)+"px";elm.style.top=(r.top+10)+"px";elm.style.transform="scale(.4)";}));
+    setTimeout(()=>elm.remove(),550);rescued++;safe.querySelector(".n").textContent=`🐰 ${rescued}`;$("#cnt").textContent=`🐰 구출 ${rescued}`;
+  }
+  function save(b){
+    if(b.gone)return;b.gone=true;buns.splice(buns.indexOf(b),1);sfx.ding();
+    bubble(b.x,b.y-20,["살았다!","고마워!","깡총!","휴~"][rescued%4]);b.el.onpointerdown=null;toSafe(b.el,b.x,b.y);
+  }
+  function spit(n=1){
+    for(let i=0;i<n&&belly>0;i++){belly--;setBelly();
+      const m=mouthPos();const e=el(`<div class="bun"><span>🐇</span></div>`);field.appendChild(e);
+      setTimeout(()=>toSafe(e,m.x,m.y),i*200);}
+    if(n>0){tone(110,.5,"sawtooth",.22,0,70);const m=mouthPos();bubble(m.x,m.y-40,"꺼억~!");}
+  }
+  function mouthPos(){const r=C.getBoundingClientRect();return cr.dir>0?{x:r.right-60,y:r.top+r.height*0.4}:{x:r.left+10,y:r.top+r.height*0.4};}
+  function boom(x,y,chars){for(let i=0;i<8;i++){const b=el(`<div class="boom">${chars[i%chars.length]}</div>`);b.style.left=x+"px";b.style.top=y+"px";
+    b.style.setProperty("--dx",(Math.random()*160-80)+"px");b.style.setProperty("--dy",(Math.random()*160-80)+"px");field.appendChild(b);setTimeout(()=>b.remove(),1000);}}
+  function hit(dmg,kind){
+    if(ended)return;hp-=dmg;setHp();
+    const r=C.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+    C.classList.remove("love","sleep","stun");
+    if(kind==="hachu"){C.classList.add("love");cr.stun=performance.now()+1800;boom(cx,cy,["💖","💕","💗"]);bubble(cx,cy-60,"헤헤... 하츄핑 귀여워~ 💕");}
+    if(kind==="diana"){C.classList.add("stun");cr.stun=performance.now()+1200;boom(cx,cy,["⭐","💎","✨","🌟"]);bubble(cx,cy-60,"아야! 반짝반짝 눈부셔!");}
+    if(kind==="aurora"){cr.stun=performance.now()+1500;const rb=el(`<div class="rainbowfx">🌈</div>`);rb.style.left=(cx-100)+"px";rb.style.top=(cy-150)+"px";field.appendChild(rb);setTimeout(()=>rb.remove(),1400);
+      boom(cx,cy,["🌈","✨"]);bubble(cx,cy-60,"크크크 간지러워~!");}
+    if(kind==="eclipse"){C.classList.add("sleep");cr.stun=performance.now()+3000;boom(cx,cy,["🌙","💤","✨"]);bubble(cx,cy-60,"쿨쿨... 졸려... 💤");}
+    if(kind==="rion"){C.classList.add("stun");cr.stun=performance.now()+2500;boom(cx,cy,["💨","💨","😵"]);bubble(cx,cy-60,"으악! 냄새~! 😵");}
+    spit(kind==="aurora"?2:1);
+    if(hp<=0)defeat();
+    else if(!rionUsed&&hp<=MAXHP/2){rionUsed=true;timers.push(setTimeout(rionAttack,1500));}
+  }
+  function rionAttack(){
+    if(ended)return;const R=el(`<div class="rion"><img src="${IMG.rion}"></div>`);field.appendChild(R);
+    const y=cr.y+20;let x=-160;R.style.top=y+"px";sfx.bark();say("리온이가 도와주러 왔어! 리온이 방구 공격!");
+    const goal=Math.max(10,cr.x-130);const t0=performance.now();
+    (function go(t){const k=Math.min(1,(t-t0)/900);R.style.left=(x+(goal-x)*k)+"px";
+      if(k<1){requestAnimationFrame(go);return;}
+      R.firstChild.style.transform="scaleX(-1)";
+      timers.push(setTimeout(()=>{const w=fart();bubble(goal+40,y-30,w);hit(3,"rion");
+        timers.push(setTimeout(()=>{R.style.transition="left .8s";R.style.left="-200px";setTimeout(()=>R.remove(),900);},1200));},500));})(t0);
+  }
+  function defeat(){
+    ended=true;cr.stun=Infinity;C.classList.remove("love","stun","sleep");spit(belly);
+    buns.splice(0).forEach(b=>{b.gone=true;toSafe(b.el,b.x,b.y);});
+    C.classList.add("baby");sfx.yay();confetti();
+    const r=C.getBoundingClientRect();bubble(r.left+r.width/2,r.top+r.height*0.6,"미안해~ 이제 당근만 먹을게 🥕");
+    say(`와! ${NAME[who]}랑 티니핑이 악어 괴물을 물리쳤다! 악어가 아기 악어가 됐어!`);
+    timers.push(setTimeout(()=>win(`${NAME[who]}랑 티니핑이 악어 괴물을 물리치고 토끼 ${rescued}마리를 구했다!`),4000));
+  }
+  // ping powers
+  const POW=[
+    {k:"hachu",img:IMG.pings[0],n:"하츄핑",say:"하츄핑 사랑의 하트 빔!",dmg:1,cd:2500},
+    {k:"diana",img:IMG.pings[1],n:"다이아나핑",say:"다이아나핑 반짝 별 공격!",dmg:2,cd:4000},
+    {k:"aurora",img:IMG.pings[2],n:"오로라핑",say:"오로라핑 무지개 간지럼!",dmg:1,cd:3500},
+    {k:"eclipse",img:IMG.pings[3],n:"이클립스핑",say:"이클립스핑 잠자는 달빛!",dmg:1,cd:5000}
+  ];
+  const bar=el(`<div class="powers"></div>`);field.appendChild(bar);
+  POW.forEach(pw=>{
+    const b=el(`<button class="pw" style="--cd:${pw.cd}ms"><img src="${pw.img}">${pw.n}<div class="cd"></div></button>`);bar.appendChild(b);
+    b.onpointerdown=e=>{e.stopPropagation();if(ended||b.classList.contains("cool"))return;
+      b.classList.add("cool");setTimeout(()=>b.classList.remove("cool"),pw.cd);
+      say(pw.say);[784,988,1175,1568].forEach((f,i)=>tone(f,.15,"triangle",.15,i*.06));
+      const br=b.getBoundingClientRect();const sh=el(`<div class="shot"><img src="${pw.img}"></div>`);
+      sh.style.left=br.left+"px";sh.style.top=br.top+"px";field.appendChild(sh);
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{const r=C.getBoundingClientRect();sh.style.left=(r.left+r.width/2-40)+"px";sh.style.top=(r.top+r.height*0.3)+"px";sh.style.transform="scale(1.3) rotate(360deg)";}));
+      setTimeout(()=>{sh.remove();hit(pw.dmg,pw.k);},460);};
+  });
+  field.onpointerdown=e=>{if(e.target.closest(".home"))return;tone(500,.08,"sine",.1,0,250);};
+  // croc AI
+  function loop(t){
+    if(!ended){
+      if(t>cr.stun){
+        C.classList.remove("love","stun","sleep");
+        let tgt=null,bd=1e9;const cx=cr.x+crocW()/2;
+        for(const b of buns){const d=Math.hypot(b.x-cx,b.y-cr.y);if(d<bd){bd=d;tgt=b;}}
+        if(tgt){const mx=cr.dir>0?cr.x+crocW()*0.85:cr.x+crocW()*0.1,my=cr.y+crocW()*0.2;
+          const dx=tgt.x+20-mx,dy=tgt.y+20-my,d=Math.hypot(dx,dy)||1;
+          if(Math.abs(dx)>20)cr.dir=dx>0?1:-1;
+          const sp=0.75+(MAXHP-hp)*0.03;cr.x+=dx/d*sp;cr.y+=dy/d*sp*0.6;
+          cr.y=Math.max(innerHeight*0.25,Math.min(innerHeight*0.62,cr.y));
+          if(d<110)C.classList.add("open");else C.classList.remove("open");
+          if(d<45){ // gobble
+            tgt.gone=true;buns.splice(buns.indexOf(tgt),1);tgt.el.remove();belly++;setBelly();sfx.munch();
+            bubble(mx,my-50,"냠! 토끼 맛있다~");if(Math.random()<.5)say("앗! 악어 괴물이 토끼를 먹었어! 티니핑, 도와줘!");
+            C.classList.remove("open");}
+        }else C.classList.remove("open");
+      }else C.classList.remove("open");
+      C.style.left=cr.x+"px";C.style.top=cr.y+"px";C.firstChild.style.scale=cr.dir>0?"1 1":"-1 1";
+    }
+    raf=requestAnimationFrame(loop);
+  }
+  for(let i=0;i<4;i++)addBun();
+  timers.push(setInterval(addBun,2200));
+  raf=requestAnimationFrame(loop);
+}
+
 // ---------- wiring ----------
 setMusicBtn();
 document.getElementById("music").onclick=e=>{e.stopPropagation();musicOn=!musicOn;try{localStorage.setItem("music",musicOn?"on":"off")}catch(_){}
@@ -780,11 +957,12 @@ document.addEventListener("pointerdown",()=>startMusic(),{once:false,passive:tru
 document.querySelectorAll("[data-who]").forEach(b=>b.onclick=()=>{audio();who=b.dataset.who;sfx.ding();show("#menu");say(`안녕 ${NAME[who]}! 무슨 놀이 할까?`);});
 $("#goStars").onclick=()=>{audio();startStars();};
 $("#goCake").onclick=()=>{audio();startCake();};
-$("#again").onclick=()=>({stars:startStars,cake:startCake,feed:startFeed,bug:startBug,princess:startPrincess,dentist:startDentist})[mode]();
+$("#again").onclick=()=>({stars:startStars,cake:startCake,feed:startFeed,bug:startBug,princess:startPrincess,dentist:startDentist,croc:startCroc})[mode]();
 $("#goFeed").onclick=()=>{audio();startFeed();};
 $("#goBug").onclick=()=>{audio();startBug();};
 $("#goPrincess").onclick=()=>{audio();startPrincess();};
 $("#goDentist").onclick=()=>{audio();startDentist();};
+$("#goCroc").onclick=()=>{audio();startCroc();};
 $("#toMenu").onclick=()=>{clearGame();show("#menu");};
 </script>
 </body>
