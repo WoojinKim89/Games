@@ -103,6 +103,40 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
 .sleeper.awake .zz{display:none}
 .sleeper.awake img{animation:run .25s infinite}
 .sleeper{right:auto!important;bottom:auto!important;z-index:11}
+.grid4 .pick.wide{grid-column:1/-1}
+.pick .pp{display:flex;gap:8px;align-items:flex-end}
+.grid4 .pick .pp img{width:clamp(60px,15vw,100px);height:clamp(60px,15vw,100px);object-fit:contain}
+#field.sea{display:block;background:linear-gradient(#5fd3f3,#2a8fd0 60%,#1b5fa8)}
+#field.snow{display:block;background:linear-gradient(#1d3b7a,#5f8fd8 70%,#dff2ff)}
+#field.ball{display:block;background:radial-gradient(circle at 50% 30%,#fff3c4,transparent 60%),linear-gradient(#ffc6e4,#e9a6ff)}
+.fx{position:absolute;pointer-events:none;z-index:1;animation:rise linear infinite}
+@keyframes rise{from{transform:translateY(0)}to{transform:translateY(-110vh)}}
+.fx.down{animation-name:fallfx}
+@keyframes fallfx{from{transform:translateY(-10vh)}to{transform:translateY(110vh) rotate(360deg)}}
+.pwrap{position:absolute;top:76px;bottom:0;left:0;right:0;display:flex;flex-direction:column;align-items:center;z-index:3}
+.stage{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;padding-top:30px}
+.fig{position:relative;container-type:size}
+.fig > img.body{width:100%;height:100%;display:block}
+.fig > img.framed{border-radius:24px;border:6px solid #fff;box-shadow:0 8px 0 rgba(0,0,0,.15);object-fit:cover}
+.fig svg{position:absolute;inset:0;width:100%;height:100%}
+.fig .face{position:absolute;left:26%;top:2%;width:48%;border-radius:50%;border:4px solid #fff}
+.acc{position:absolute;transform:translate(-50%,-50%);line-height:1;pointer-events:none;animation:drop .45s cubic-bezier(.3,1.6,.5,1);z-index:5;filter:drop-shadow(0 3px 3px rgba(0,0,0,.25))}
+.aura{position:absolute;pointer-events:none;animation:twinkle 1s ease-in-out infinite;z-index:6;font-size:8cqw}
+.bfly{position:absolute;pointer-events:none;z-index:6;font-size:10cqw;animation:orbit 4s linear infinite}
+@keyframes orbit{0%{left:5%;top:30%}25%{left:75%;top:5%}50%{left:85%;top:55%}75%{left:10%;top:70%}100%{left:5%;top:30%}}
+.heart{position:absolute;pointer-events:none;z-index:6;font-size:8cqw;animation:hup 2.4s ease-in infinite;opacity:0}
+@keyframes hup{0%{transform:translateY(0) scale(.5);opacity:0}20%{opacity:1}100%{transform:translateY(-60cqh) scale(1.2);opacity:0}}
+.fig.twirl{animation:twirl 1.2s ease-in-out 2}
+@keyframes twirl{50%{transform:rotateY(180deg) scale(1.1)}100%{transform:rotateY(360deg)}}
+.tray{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:6px 8px 4px;max-width:640px}
+.it{width:clamp(56px,14vw,78px);height:clamp(56px,14vw,78px);border-radius:20px;border:4px solid #fff;background:rgba(255,255,255,.85);font-size:clamp(30px,7.5vw,44px);box-shadow:0 5px 0 rgba(0,0,0,.18);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.it.on{background:#fff59a;border-color:#ffb3d9}
+.it.dot{border-radius:50%}
+.magic{margin:4px 0 calc(12px + env(safe-area-inset-bottom,0px));border:none;border-radius:30px;padding:10px 30px;font:inherit;font-size:clamp(24px,6vw,34px);color:#fff;background:linear-gradient(90deg,#ff7ac3,#a77bff);box-shadow:0 6px 0 #8a4fc0;cursor:pointer}
+.magic:active{transform:translateY(5px);box-shadow:0 1px 0 #8a4fc0}
+.pcards{position:absolute;inset:76px 0 0 0;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-content:center;padding:10px;z-index:3}
+.pcards .pick img{width:clamp(110px,26vw,170px);height:clamp(130px,30vw,200px);object-fit:contain}
+.finale{position:absolute;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;gap:12px;justify-content:center;z-index:40}
 /* short screens (phone landscape) */
 @media (max-height:520px){
  .screen{gap:8px;padding:8px;justify-content:flex-start}
@@ -116,7 +150,16 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
  .plate .ly{height:30px;width:160px}
  .btns{flex:1 1 100%;padding:4px}
  .cb{width:64px;height:64px;font-size:34px}
- .grid4{grid-template-columns:repeat(4,minmax(0,1fr));width:100%}
+ .grid4{grid-template-columns:repeat(5,minmax(0,1fr));width:100%}
+ .grid4 .pick.wide{grid-column:auto}
+ .grid4 .pick .pp{gap:2px}
+ .grid4 .pick .pp img{width:34px;height:60px}
+ .pwrap{flex-direction:row;top:62px}
+ .stage{width:auto;flex:1 1 55%;height:100%;padding-top:24px}
+ .tray{flex:0 0 45%;align-content:center;padding-bottom:50px}
+ .it{width:50px;height:50px;font-size:28px;border-radius:14px}
+ .magic{position:absolute;right:10px;bottom:10px;margin:0;font-size:20px;padding:8px 16px}
+ .pcards .pick img{width:90px;height:100px}
  .grid4 .pick img{width:70px;height:70px}
  .grid4 .pick{font-size:17px}
  .granny{top:64px}
@@ -151,6 +194,7 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
     <button class="pick" id="goCake"><img src="IMG.hachu">🎂 케이크 만들기</button>
     <button class="pick" id="goFeed"><img src="IMG.rion" style="border-radius:50%">🍰 리온이 먹이기</button>
     <button class="pick" id="goBug"><img src="IMG.eclipse">🦟 모기 잡기</button>
+    <button class="pick wide" id="goPrincess"><span class="pp"><img src="IMG.eunyul" style="border-radius:50%"><img src="IMG.elsa" style="border-radius:20px;object-fit:cover"><img src="IMG.cinderella"></span>👑 공주님 꾸미기</button>
   </div>
   <div class="row" style="align-items:center;color:#7a3fa0;font-size:22px"><img src="IMG.rion" style="width:64px;border-radius:50%;border:4px solid #fff"> 리온이 조심! 💩</div>
 </div>
@@ -169,7 +213,7 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
 </div>
 
 <script>
-const IMG={sohee:"IMG.sohee2",jun:"IMG.jun",rion:"IMG.rion",pings:["IMG.hachu","IMG.diana","IMG.aurora","IMG.eclipse"]};
+const IMG={eunyul:"IMG.eunyul",elsa:"IMG.elsa",cinderella:"IMG.cinderella",sohee:"IMG.sohee2",jun:"IMG.jun",rion:"IMG.rion",pings:["IMG.hachu","IMG.diana","IMG.aurora","IMG.eclipse"]};
 const NAME={sohee:"소이",jun:"준이"};
 let who="sohee", mode="stars", timers=[], raf=0;
 const $=s=>document.querySelector(s);
@@ -531,6 +575,103 @@ function startBug(){
   raf=requestAnimationFrame(loop);
 }
 
+// ---------- PRINCESS DRESS-UP ----------
+const MERMAID_SVG=`<svg viewBox="0 0 200 300" aria-hidden="true">
+<defs><linearGradient id="tailG" x1="0" y1="0" x2="0" y2="1"><stop id="t1" offset="0" stop-color="#ff9ad5"/><stop id="t2" offset=".55" stop-color="#ff7ac3"/><stop id="t3" offset="1" stop-color="#c060ff"/></linearGradient></defs>
+<path d="M44 60 Q30 150 58 185 L142 185 Q170 150 156 60 Q100 10 44 60Z" fill="#7a4a2a"/>
+<path d="M66 148 Q56 205 88 248 Q100 262 112 248 Q144 205 134 148 Z" fill="url(#tailG)"/>
+<path d="M100 250 Q68 262 48 296 Q82 288 100 270 Q118 288 152 296 Q132 262 100 250Z" fill="url(#tailG)" stroke="#fff" stroke-opacity=".5" stroke-width="2"/>
+<g fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="2"><path d="M74 170 q8 8 16 0 q8 8 16 0 q8 8 16 0"/><path d="M78 190 q8 8 14 0 q8 8 14 0 q8 8 14 0"/><path d="M84 210 q8 8 16 0 q8 8 16 0"/><path d="M90 230 q10 8 20 0"/></g>
+<rect x="91" y="92" width="18" height="18" rx="6" fill="#f3cdb8"/>
+<path d="M72 106 Q68 130 66 150 L134 150 Q132 130 128 106 Q100 96 72 106Z" fill="#f6d6c4"/>
+<path d="M74 110 Q56 130 58 156" stroke="#f3cdb8" stroke-width="12" stroke-linecap="round" fill="none"/>
+<path d="M126 110 Q150 122 168 126" stroke="#f3cdb8" stroke-width="12" stroke-linecap="round" fill="none"/>
+<circle cx="86" cy="124" r="12" fill="#b58cff"/><circle cx="114" cy="124" r="12" fill="#b58cff"/>
+<path d="M80 120 q6 -6 12 0 M108 120 q6 -6 12 0" stroke="#fff" stroke-width="2" fill="none"/>
+<g fill="#fff">${[70,80,90,100,110,120,130].map(x=>`<circle cx="${x}" cy="150" r="4"/>`).join("")}</g>
+</svg>`;
+const PRINCESS=[
+  {k:"mermaid",n:"은율 인어공주",bg:"sea",ar:2/3,crown:[50,1],cs:30,ns:12,neck:[50,35],hand:[85,42],flower:[28,10]},
+  {k:"elsa",n:"엘사",bg:"snow",ar:420/456,img:IMG.elsa,frame:true,crown:[30,8],cs:18,ns:8,neck:[31,37],hand:[57,30],flower:[20,16]},
+  {k:"cinderella",n:"신데렐라",bg:"ball",ar:324/420,img:IMG.cinderella,crown:[56,3],cs:15,ns:7,neck:[54,22],hand:[34,48],flower:[47,9]}
+];
+const TAILS=[["#ff9ad5","#ff7ac3","#c060ff"],["#c9a2ff","#9a6bff","#5a3fb8"],["#8ff5df","#33c3b4","#1b7fa8"],["#ff9ad5","#ffe066","#7ff0d8"]];
+function bgFx(kind){
+  const ch=kind==="sea"?["🫧","🫧","🐠","🫧","🐟","🫧"]:kind==="snow"?["❄️","❄️","✨","❄️"]:["✨","💖","✨","🌟"];
+  for(let i=0;i<14;i++){const f=el(`<div class="fx${kind==="sea"?"":" down"}">${ch[i%ch.length]}</div>`);
+    f.style.left=Math.random()*100+"%";f.style[kind==="sea"?"bottom":"top"]="-40px";f.style.fontSize=(18+Math.random()*22)+"px";
+    f.style.animationDuration=(5+Math.random()*6)+"s";f.style.animationDelay=(-Math.random()*8)+"s";f.style.opacity=.8;field.appendChild(f);}
+}
+function startPrincess(){
+  mode="princess";clearGame();show(null);field.className="ball";
+  hud("👑 공주님 고르기");bgFx("ball");
+  const w=el(`<div class="pcards"></div>`);field.appendChild(w);
+  PRINCESS.forEach(p=>{const b=el(`<button class="pick"><img src="${p.k==="mermaid"?IMG.eunyul:p.img}" style="${p.k==="mermaid"?"border-radius:50%;height:auto":""}">${p.k==="mermaid"?"🧜‍♀️ 은율 인어공주":p.n}</button>`);
+    b.onclick=()=>{sfx.ding();dressUp(p);};w.appendChild(b);});
+  say("어떤 공주님을 예쁘게 꾸며줄까? 은율 인어공주, 엘사, 신데렐라!");
+}
+function dressUp(p){
+  clearGame();show(null);field.className=p.bg;bgFx(p.bg);
+  hud(`👑 ${p.n}`);
+  const wrap=el(`<div class="pwrap"><div class="stage"><div class="fig"></div></div><div class="tray"></div><button class="magic">✨ 변신! ✨</button></div>`);
+  field.appendChild(wrap);
+  const fig=wrap.querySelector(".fig"),stage=wrap.querySelector(".stage"),tray=wrap.querySelector(".tray");
+  if(p.k==="mermaid")fig.innerHTML=MERMAID_SVG+`<img class="face" src="${IMG.eunyul}">`;
+  else fig.innerHTML=`<img class="body${p.frame?" framed":""}" src="${p.img}">`;
+  function fit(){const W=stage.clientWidth*0.92,Hh=stage.clientHeight-34;let h=Hh,wd=h*p.ar;if(wd>W){wd=W;h=wd/p.ar;}fig.style.width=wd+"px";fig.style.height=h+"px";}
+  fit();addEventListener("resize",fit);timers.push(setTimeout(fit,50));
+  const on={};
+  function place(key,html,[x,y],size,extra=""){
+    let a=fig.querySelector(`[data-k="${key}"]`);if(a)a.remove();
+    a=el(`<div class="acc" data-k="${key}" style="left:${x}%;top:${y}%;font-size:${size}cqw;${extra}">${html}</div>`);fig.appendChild(a);
+  }
+  function unplace(key){fig.querySelectorAll(`[data-k="${key}"]`).forEach(e=>e.remove());}
+  const ITEMS=[
+    {k:"crown1",g:"crown",e:"👑",say:"금 왕관 썼다!",put:()=>place("crown","👑",p.crown,p.cs)},
+    {k:"crown2",g:"crown",e:"👑",f:"hue-rotate(290deg) saturate(1.6)",say:"분홍 왕관 썼다!",put:()=>place("crown","👑",p.crown,p.cs,"filter:hue-rotate(290deg) saturate(1.6) drop-shadow(0 3px 3px rgba(0,0,0,.25))")},
+    {k:"crown3",g:"crown",e:"👑",f:"hue-rotate(170deg) saturate(1.4)",say:"얼음 왕관 썼다!",put:()=>place("crown","👑",p.crown,p.cs,"filter:hue-rotate(170deg) saturate(1.4) drop-shadow(0 3px 3px rgba(0,0,0,.25))")},
+    {k:"neck",e:"💎",say:"반짝반짝 목걸이!",put:()=>place("neck","💎",p.neck,p.ns)},
+    {k:"flower",e:"🌸",say:"예쁜 꽃 핀!",put:()=>place("flower","🌸",p.flower,p.ns+2)},
+    {k:"wand",e:"🪄",say:"요술봉!",put:()=>place("wand","🪄",p.hand,p.cs*0.7)},
+    {k:"sparkle",e:"✨",say:"반짝반짝!",put:()=>{for(let i=0;i<7;i++){const a=el(`<div class="aura" data-k="sparkle">✨</div>`);a.style.left=Math.random()*90+"%";a.style.top=Math.random()*85+"%";a.style.animationDelay=Math.random()+"s";fig.appendChild(a);}},off:()=>unplace("sparkle")},
+    {k:"bfly",e:"🦋",say:"나비야 안녕!",put:()=>{[0,-2].forEach(d=>{const a=el(`<div class="bfly" data-k="bfly">🦋</div>`);a.style.animationDelay=d+"s";fig.appendChild(a);});},off:()=>unplace("bfly")},
+    {k:"heart",e:"💖",say:"사랑해요!",put:()=>{for(let i=0;i<5;i++){const a=el(`<div class="heart" data-k="heart">💖</div>`);a.style.left=(10+i*18)+"%";a.style.top="80%";a.style.animationDelay=(i*.45)+"s";fig.appendChild(a);}},off:()=>unplace("heart")}
+  ];
+  if(p.k==="mermaid")ITEMS.push({k:"shell",e:"🐚",say:"조개 목걸이!",put:()=>place("neck","🐚",p.neck,12)});
+  ITEMS.forEach(it=>{
+    const b=el(`<button class="it" data-k="${it.k}" aria-label="${it.say}">${it.e}</button>`);if(it.f)b.style.filter=it.f;
+    b.onclick=()=>{
+      if(on[it.k]){on[it.k]=0;b.classList.remove("on");it.off?it.off():unplace(it.g==="crown"?"crown":it.k==="shell"?"neck":it.k);sfx.pop();return;}
+      if(it.g==="crown")ITEMS.filter(o=>o.g==="crown").forEach(o=>{on[o.k]=0;});
+      if(it.k==="neck"||it.k==="shell"){on.neck=on.shell=0;}
+      tray.querySelectorAll(".it[data-k]").forEach(bb=>bb.classList.toggle("on",!!on[bb.dataset.k]));
+      on[it.k]=1;b.classList.add("on");it.put();sfx.ding();tone(1568,.3,"sine",.12,.1);
+      say(it.say);
+    };
+    tray.appendChild(b);
+  });
+  if(p.k==="mermaid")TAILS.forEach((c,i)=>{
+    const b=el(`<button class="it dot" aria-label="꼬리 색" style="background:linear-gradient(${c.join(",")})"></button>`);
+    b.onclick=()=>{["t1","t2","t3"].forEach((id,j)=>fig.querySelector("#"+id).setAttribute("stop-color",c[j]));sfx.ding();say(["분홍 꼬리!","보라 꼬리!","민트 꼬리!","무지개 꼬리!"][i]);};
+    tray.appendChild(b);
+  });
+  say(p.k==="mermaid"?"은율 엄마가 인어공주가 됐어! 왕관도 씌워주고 예쁘게 꾸며주자!":`${p.n}를 예쁘게 꾸며주자! 왕관도 씌워줘!`);
+  wrap.querySelector(".magic").onclick=()=>{
+    if(!Object.values(on).some(Boolean)){say("먼저 왕관이나 목걸이를 골라줘!");return;}
+    wrap.querySelector(".magic").hidden=true;tray.style.visibility="hidden";
+    fig.classList.remove("twirl");void fig.offsetWidth;fig.classList.add("twirl");
+    sfx.yay();confetti();say(`우와! ${p.n} 너무너무 예쁘다! 공주님 파티 시작!`);
+    // Rion comes to see... and toots
+    const R=el(`<div class="rion"><img src="${IMG.rion}"></div>`);field.appendChild(R);
+    let x=-160;const y=innerHeight-200;R.style.top=y+"px";R.style.left=x+"px";
+    timers.push(setTimeout(()=>{const t0=performance.now();(function go(t){const k=Math.min(1,(t-t0)/900);R.style.left=(-160+k*(innerWidth*0.12+160))+"px";
+      if(k<1)raf=requestAnimationFrame(go);else{bubble(innerWidth*0.12,y-30,"멍! 공주님 예뻐요!");sfx.bark();
+        timers.push(setTimeout(()=>{const w=fart();bubble(innerWidth*0.12+60,y-70,w);say("앗! 리온이가 너무 좋아서 방구 뀌었다!");},1400));}})(t0);},2400));
+    timers.push(setTimeout(()=>{const f=el(`<div class="finale"><button class="pick" style="font-size:22px">👑 다른 공주님</button><button class="pick" style="font-size:22px">🔁 다시 꾸미기</button></div>`);
+      field.appendChild(f);f.children[0].onclick=startPrincess;f.children[1].onclick=()=>dressUp(p);},5200));
+  };
+}
+
 // ---------- wiring ----------
 setMusicBtn();
 document.getElementById("music").onclick=e=>{e.stopPropagation();musicOn=!musicOn;try{localStorage.setItem("music",musicOn?"on":"off")}catch(_){}
@@ -539,9 +680,10 @@ document.addEventListener("pointerdown",()=>startMusic(),{once:false,passive:tru
 document.querySelectorAll("[data-who]").forEach(b=>b.onclick=()=>{audio();who=b.dataset.who;sfx.ding();show("#menu");say(`안녕 ${NAME[who]}! 무슨 놀이 할까?`);});
 $("#goStars").onclick=()=>{audio();startStars();};
 $("#goCake").onclick=()=>{audio();startCake();};
-$("#again").onclick=()=>({stars:startStars,cake:startCake,feed:startFeed,bug:startBug})[mode]();
+$("#again").onclick=()=>({stars:startStars,cake:startCake,feed:startFeed,bug:startBug,princess:startPrincess})[mode]();
 $("#goFeed").onclick=()=>{audio();startFeed();};
 $("#goBug").onclick=()=>{audio();startBug();};
+$("#goPrincess").onclick=()=>{audio();startPrincess();};
 $("#toMenu").onclick=()=>{clearGame();show("#menu");};
 </script>
 </body>
