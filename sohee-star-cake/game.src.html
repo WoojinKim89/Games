@@ -303,6 +303,55 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
 .fig .mface{position:absolute;left:31.5%;top:0.6%;width:37%;z-index:2;filter:drop-shadow(0 2px 2px rgba(0,0,0,.15))}
 .tapfx{position:fixed;z-index:999;pointer-events:none;font-size:26px;transform:translate(-50%,-50%);animation:tapfx .6s ease-out forwards}
 @keyframes tapfx{from{opacity:1;transform:translate(-50%,-50%) scale(.4)}to{opacity:0;transform:translate(-50%,-120%) scale(1.3)}}
+#world{padding:0!important;display:none;background:#8fd16a}
+#world.on{display:block}
+#wc{position:absolute;inset:0;touch-action:none;cursor:pointer}
+.rpghud{position:absolute;top:calc(8px + env(safe-area-inset-top,0px));left:8px;right:84px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;z-index:20;pointer-events:none}
+#rpgCard{display:flex;align-items:center;gap:8px;background:linear-gradient(#fffdf6,#fff0f8);border:3px solid #4a2f4f;border-radius:16px;padding:5px 12px 5px 5px;box-shadow:0 4px 0 #4a2f4f;min-width:0}
+#rpgCard img{width:46px;height:46px;border-radius:12px;border:2px solid #4a2f4f;object-fit:cover;background:#fff}
+#rpgCard b{display:block;color:#4a2f4f;font-size:15px;white-space:nowrap}
+#rpgCard b small{font-size:11px;color:#8a5cd6}
+#rpgCard .lv{display:inline-block;background:#4a2f4f;color:#ffd34d;border-radius:8px;padding:0 6px;font-size:12px;margin-top:2px}
+#rpgCard .xp{width:110px;height:8px;background:#e6d9ec;border-radius:5px;margin-top:3px;overflow:hidden;border:1.5px solid #4a2f4f}
+#rpgCard .xp i{display:block;height:100%;background:linear-gradient(90deg,#7ff0d8,#ffd34d);transition:width .5s}
+.rpgright{display:flex;flex-direction:column;gap:6px;align-items:flex-end;pointer-events:auto}
+#rpgBadges{background:#4a2f4f;color:#ffd34d;border-radius:14px;padding:6px 12px;font-size:16px;box-shadow:0 3px 0 rgba(0,0,0,.25);white-space:nowrap}
+#rpgMenu{width:46px;height:46px;border-radius:14px;border:3px solid #4a2f4f;background:#fff;font-size:22px;box-shadow:0 3px 0 #4a2f4f;cursor:pointer}
+#areaName{position:absolute;left:0;right:0;margin:0 auto;width:max-content;max-width:90vw;top:96px;z-index:19;background:rgba(74,47,79,.88);color:#fff;border:2px solid #ffd34d;border-radius:14px;padding:6px 18px;font-size:20px;opacity:0;pointer-events:none}
+#areaName.show{animation:areaIn 2.6s forwards}
+@keyframes areaIn{0%{opacity:0;transform:translateY(-10px)}12%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0}}
+.rpgtip{position:absolute;left:12px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:18;background:rgba(255,255,255,.88);color:#7a3fa0;border-radius:12px;padding:4px 10px;font-size:14px;pointer-events:none}
+#dlg{position:absolute;left:8px;right:8px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:30;display:flex;gap:10px;align-items:stretch;background:linear-gradient(#fffdf6,#fff2f9);border:4px solid #4a2f4f;border-radius:20px;padding:10px;box-shadow:0 6px 0 #4a2f4f,0 0 0 3px #ffd34d inset;max-width:640px;margin:0 auto;animation:drop .35s cubic-bezier(.3,1.6,.5,1)}
+#dlg[hidden]{display:none}
+#dlg .dp{flex:0 0 auto;width:clamp(70px,20vw,96px);aspect-ratio:1;border-radius:16px;border:3px solid #4a2f4f;background:radial-gradient(#fff,#ffe1ef);overflow:hidden;display:flex;align-items:center;justify-content:center}
+#dlg .dp img{width:100%;height:100%;object-fit:cover}
+#dlg .dp .dpe{font-size:54px}
+#dlg .dbody{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+#dlg .dn{align-self:flex-start;background:#4a2f4f;color:#ffd34d;border-radius:10px;padding:1px 10px;font-size:15px}
+#dlg .dt{color:#3a2540;font-size:clamp(17px,4.4vw,21px);line-height:1.4;min-height:2.8em}
+#dlg .dc{display:flex;gap:8px;flex-wrap:wrap}
+#dlg .dbtn{border:3px solid #4a2f4f;border-radius:14px;background:linear-gradient(#ffe066,#ffb84d);color:#4a2f4f;font:inherit;font-size:clamp(17px,4.4vw,20px);padding:6px 14px;box-shadow:0 4px 0 #4a2f4f;cursor:pointer}
+#dlg .dbtn:last-child:not(:first-child){background:#fff}
+#dlg .dnext{align-self:flex-end;color:#7a3fa0;animation:bob .8s infinite}
+.pick.cls{gap:2px;padding:10px 12px;border:4px solid #4a2f4f;box-shadow:0 7px 0 #4a2f4f;background:linear-gradient(#fffdf6,#ffeaf6)}
+.pick.cls b{font-size:clamp(22px,5.5vw,30px);color:#4a2f4f}
+.pick.cls small{font-size:clamp(13px,3.4vw,16px);background:#4a2f4f;color:#ffd34d;border-radius:10px;padding:1px 8px}
+.pick.cls .stats{font-size:clamp(11px,3vw,14px);color:#8a5cd6;line-height:1.35;margin-top:2px}
+.pick.cls .kslot{width:clamp(110px,30vw,170px)}
+.pick.cls .kslot canvas{width:100%;height:auto;display:block}
+.reward{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.rw-in{background:linear-gradient(#fffdf6,#fff0f8);border:5px solid #4a2f4f;border-radius:24px;box-shadow:0 8px 0 #4a2f4f;padding:16px 26px;text-align:center;animation:drop .5s cubic-bezier(.3,1.6,.5,1)}
+.rw-t{font-size:clamp(28px,8vw,40px);color:#ff5fa8;-webkit-text-stroke:2px #4a2f4f;paint-order:stroke fill}
+.rw-q{color:#4a2f4f;font-size:18px}
+.rw-x{color:#c47a00;font-size:22px;margin-top:4px}
+.rw-b{color:#7a3fa0;font-size:20px}
+.rw-l{margin-top:6px;font-size:clamp(26px,7vw,36px);color:#ffd34d;-webkit-text-stroke:2px #4a2f4f;paint-order:stroke fill;animation:twinkle .5s infinite}
+.finaleBall{position:fixed;inset:0;z-index:150;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:16px;background:radial-gradient(circle at 50% 20%,#ffe9a8,transparent 50%),linear-gradient(#2b2363,#7a4fb0 60%,#ffb3d9);color:#fff;text-align:center}
+.finaleBall .fb-row{display:flex;gap:8px;align-items:flex-end}
+.finaleBall .fb-p{height:clamp(80px,20vw,130px);animation:bob 1s ease-in-out infinite}
+.finaleBall .fb-p.round{border-radius:50%;border:4px solid #fff;width:clamp(70px,16vw,100px);height:auto}
+.finaleBall .fb-party{width:min(92vw,420px);height:auto}
+.finaleBall h2{margin:0;font-size:clamp(26px,7vw,38px);text-shadow:0 3px 0 #ff5fa8}
 /* short screens (phone landscape) */
 @media (max-height:520px){
  .screen{gap:8px;padding:8px;justify-content:flex-start}
@@ -327,6 +376,11 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
  .it{width:50px;height:50px;font-size:28px;border-radius:14px}
  .magic{position:absolute;right:10px;bottom:10px;margin:0;font-size:20px;padding:8px 16px}
  .pcards .pick img{width:90px;height:100px}
+ .pick.cls .kslot{width:80px}
+ .pick.cls .stats{display:none}
+ #dlg .dp{width:60px}
+ #dlg .dt{min-height:1.4em}
+ #areaName{top:64px}
  .dwrap{flex-direction:row;flex-wrap:wrap;justify-content:center;top:60px}
  .patient{height:80px}
  .mouth{width:auto;height:calc(100vh - 150px)}
@@ -371,11 +425,11 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
 
 <div id="title" class="screen on">
   <div class="pings"><img src="IMG.hachu"><img src="IMG.diana"><img src="IMG.aurora"><img src="IMG.eclipse"></div>
-  <h1>소이랑 준이의<br>⭐별 &amp; 🎂케이크 놀이</h1>
-  <div class="sub">누가 할까요?</div>
+  <h1>소이랑 준이의<br>⚔️ 무지개 마을 대모험</h1>
+  <div class="sub">용사를 골라주세요!</div>
   <div class="row">
-    <button class="pick" data-who="sohee"><span class="kslot" data-k="sohee"></span>소이</button>
-    <button class="pick" data-who="jun"><span class="kslot" data-k="jun"></span>준이</button>
+    <button class="pick cls" data-who="sohee"><span class="kslot" data-k="sohee"></span><b>소이</b><small>🪄 별빛 마법사</small><span class="stats">마법 ★★★★★<br>용기 ★★★★☆<br>귀여움 ★★★★★</span></button>
+    <button class="pick cls" data-who="jun"><span class="kslot" data-k="jun"></span><b>준이</b><small>🛡️ 꼬마 기사</small><span class="stats">힘 ★★★★★<br>용기 ★★★★★<br>귀여움 ★★★★☆</span></button>
   </div>
 </div>
 
@@ -391,9 +445,17 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
     <button class="pick" id="goCroc"><span class="pp"><img src="IMG.hachu"><span style="font-size:clamp(50px,12vw,80px);line-height:1">🐊</span><img src="IMG.aurora"></span>🐊 악어 괴물 물리치기</button>
     <button class="pick" id="goNum"><span class="pp"><img src="IMG.rion" style="border-radius:50%;object-fit:cover"><span class="ppn">1 2 3</span></span>🔢 영어 숫자 놀이</button>
   </div>
+  <button class="pick" id="toWorld" style="font-size:24px;flex-direction:row;padding:10px 24px">🗺️ 모험 마을로</button>
   <div class="row" style="align-items:center;color:#7a3fa0;font-size:22px"><span class="pdog menudog"></span> 리온이 조심! 💩</div>
 </div>
 
+<div id="world" class="screen">
+  <canvas id="wc"></canvas>
+  <div class="rpghud"><div id="rpgCard"></div><div class="rpgright"><div id="rpgBadges"></div><button id="rpgMenu" aria-label="놀이 목록">📋</button></div></div>
+  <div id="areaName"></div>
+  <div class="rpgtip">👆 가고 싶은 곳을 눌러요</div>
+  <div id="dlg" hidden><div class="dp"></div><div class="dbody"><div class="dn"></div><div class="dt"></div><div class="dc"></div><div class="dnext">▼</div></div></div>
+</div>
 <div id="field"></div>
 <button id="music" aria-label="배경음악">🎵</button>
 
@@ -403,7 +465,7 @@ h1{color:#fff;font-size:clamp(28px,7vw,56px);text-align:center;margin:0;text-sha
   <div class="pings"><img src="IMG.hachu"><img src="IMG.diana"><img src="IMG.aurora"><img src="IMG.eclipse"></div>
   <div class="row">
     <button class="pick" id="again" style="font-size:30px">🔁 또 하기</button>
-    <button class="pick" id="toMenu" style="font-size:30px">🏠 처음으로</button>
+    <button class="pick" id="toMenu" style="font-size:30px">🗺️ 마을로</button>
   </div>
 </div>
 
@@ -487,9 +549,9 @@ function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.re
 function clearGame(){field.onpointerdown=null;timers.forEach(clearTimeout);timers.forEach(clearInterval);timers=[];cancelAnimationFrame(raf);field.innerHTML="";}
 function bubble(x,y,txt){const b=document.createElement("div");b.className="bubble";b.textContent=txt;b.style.left=Math.max(4,Math.min(innerWidth-200,x-60))+"px";b.style.top=Math.max(70,y-60)+"px";field.appendChild(b);b.style.left=Math.max(8,Math.min(innerWidth-b.offsetWidth-8,x-b.offsetWidth/2+30))+"px";setTimeout(()=>b.remove(),1500);}
 function el(html){const d=document.createElement("div");d.innerHTML=html.trim();return d.firstChild;}
-function hud(label){const h=el(`<div class="hud"><button class="home">🏠</button><div class="count" id="cnt">${label}</div><div style="width:60px"></div></div>`);field.appendChild(h);h.querySelector(".home").onpointerdown=e=>{e.stopPropagation();clearGame();show("#menu");};}
+function hud(label){const h=el(`<div class="hud"><button class="home">🏠</button><div class="count" id="cnt">${label}</div><div style="width:60px"></div></div>`);field.appendChild(h);h.querySelector(".home").onpointerdown=e=>{e.stopPropagation();goWorld();};}
 function confetti(){for(let i=0;i<40;i++){const c=document.createElement("div");c.className="confetti";c.textContent=["⭐","💖","🎉","✨","🌙","🎂"][i%6];c.style.left=Math.random()*100+"vw";c.style.animationDuration=(2+Math.random()*2)+"s";c.style.animationDelay=Math.random()+"s";document.body.appendChild(c);setTimeout(()=>c.remove(),5000);}}
-function win(text){clearGame();sfx.yay();confetti();$("#winFace").src=IMG[who];$("#winText").textContent=text;show("#win");say(text);}
+function win(text){const qm=mode;clearGame();sfx.yay();confetti();$("#winFace").src=IMG[who];$("#winText").textContent=text;show("#win");say(text);const q=QUESTS.find(z=>z.id===qm);if(q)setTimeout(()=>rewardOverlay(completeQuest(qm),`${q.icon} ${q.place}`),900);}
 
 // Rion: chases a target, poops when it arrives
 function makeRion(){const r=el(`<div class="rion pdog">${dogInner()}</div>`);field.appendChild(r);return {el:r,x:-150,y:innerHeight*0.6,place(){r.style.left=this.x+"px";r.style.top=this.y+"px";r.firstChild.style.transform=""; }};}
@@ -872,15 +934,15 @@ function dressUp(p){
     if(!Object.values(on).some(Boolean)){say("먼저 왕관이나 목걸이를 골라줘!");return;}
     wrap.querySelector(".magic").hidden=true;tray.style.visibility="hidden";
     fig.classList.remove("twirl");void fig.offsetWidth;fig.classList.add("twirl");
-    sfx.yay();confetti();say(`우와! ${p.n} 너무너무 예쁘다! 공주님 파티 시작!`);
+    sfx.yay();confetti();say(`우와! ${p.n} 너무너무 예쁘다! 공주님 파티 시작!`);timers.push(setTimeout(()=>rewardOverlay(completeQuest("princess"),"🧜‍♀️ 인어 호수"),5400));
     // Rion comes to see... and toots
     const R=el(`<div class="rion pdog">${dogInner()}</div>`);field.appendChild(R);
     let x=-160;const y=innerHeight-200;R.style.top=y+"px";R.style.left=x+"px";
     timers.push(setTimeout(()=>{const t0=performance.now();(function go(t){const k=Math.min(1,(t-t0)/900);R.style.left=(-160+k*(innerWidth*0.12+160))+"px";
       if(k<1)raf=requestAnimationFrame(go);else{bubble(innerWidth*0.12,y-30,"멍! 공주님 예뻐요!");sfx.bark();
         timers.push(setTimeout(()=>{const w=fart();bubble(innerWidth*0.12+60,y-70,w);say("앗! 리온이가 너무 좋아서 방구 뀌었다!");},1400));}})(t0);},2400));
-    timers.push(setTimeout(()=>{const f=el(`<div class="finale"><button class="pick" style="font-size:22px">👑 다른 공주님</button><button class="pick" style="font-size:22px">🔁 다시 꾸미기</button></div>`);
-      field.appendChild(f);f.children[0].onclick=startPrincess;f.children[1].onclick=()=>dressUp(p);},5200));
+    timers.push(setTimeout(()=>{const f=el(`<div class="finale"><button class="pick" style="font-size:22px">👑 다른 공주님</button><button class="pick" style="font-size:22px">🔁 다시 꾸미기</button><button class="pick" style="font-size:22px">🗺️ 마을로</button></div>`);
+      field.appendChild(f);f.children[0].onclick=startPrincess;f.children[1].onclick=()=>dressUp(p);f.children[2].onclick=()=>goWorld();},5200));
   };
 }
 
@@ -1282,6 +1344,391 @@ function startNum(){
   round();
 }
 
+// =====================================================================
+//  RPG ADVENTURE VILLAGE  (overworld that links every game as a quest)
+// =====================================================================
+const RPG={T:48,MW:36,MH:28};
+const CLASS={sohee:{cls:"별빛 마법사",icon:"🪄",stat:[["마법",5],["용기",4],["귀여움",5]]},
+             jun:{cls:"꼬마 기사",icon:"🛡️",stat:[["힘",5],["용기",5],["귀여움",4]]}};
+const QUESTS=[
+  {id:"stars",place:"별빛 언덕",icon:"⭐",npc:{img:"diana",n:"다이아나핑"},tx:7,ty:6,
+   say:["{n}! 밤하늘 별들이 언덕에 다 떨어졌어!","리온이가 쫓아오기 전에 별 10개를 모아줄래?"],start:()=>startStars()},
+  {id:"cake",place:"하츄 케이크 가게",icon:"🎂",npc:{img:"hachu",n:"하츄핑"},tx:15,ty:9,
+   say:["하츄~! 케이크 주문이 산더미야!","그림이랑 똑같이 케이크를 만들어 줄래?"],start:()=>startCake()},
+  {id:"feed",place:"리온이네 집",icon:"🦴",npc:{img:"aurora",n:"오로라핑"},tx:7,ty:12,
+   say:["리온이가 배고프대!","소이가 만든 케이크를 리온이한테 먹여주자. 그런데... 똥 조심!"],start:()=>startFeed()},
+  {id:"bug",place:"윙윙 숲",icon:"🦟",npc:{img:"eclipse",n:"이클립스핑"},tx:29,ty:8,
+   say:["쉿... 숲에 모기 떼가 나타났어.","핑 친구들은 잡지 말고, 모기만 잡아줘!"],start:()=>startBug()},
+  {id:"princess",place:"인어 호수",icon:"🧜‍♀️",npc:{img:"mermaid",n:"은율 인어공주"},tx:13,ty:20,
+   say:["어머, {n} 왔구나! 엄마는 호수의 인어공주가 됐어.","왕관이랑 목걸이로 엄마랑 친구들을 예쁘게 꾸며줄래?"],start:()=>startPrincess()},
+  {id:"dentist",place:"무지개 치과",icon:"🦷",npc:{img:"rainbow",n:"무지개 괴물"},tx:24,ty:17,
+   say:["으앙~ 이가 너무 아파!","세균이랑 충치 똥이 생겼대. 치료해 줄 수 있어?"],start:()=>startDentist()},
+  {id:"croc",place:"악어 늪",icon:"🐊",npc:{emoji:"🐰",n:"아기 토끼"},tx:25,ty:22,
+   say:["도와주세요! 악어 괴물이 친구들을 꿀꺽 삼켰어요!","티니핑 마법으로 악어 3형제를 물리쳐 주세요!"],start:()=>startCroc()},
+  {id:"num",place:"숫자 학교",icon:"🔢",npc:{img:"elsa",n:"엘사 선생님"},tx:21,ty:22,
+   say:["숫자 학교에 온 걸 환영해요!","리온이가 던지는 공을 받으면서 영어로 세어봐요. One, two, three!"],start:()=>startNum()}
+];
+const CASTLE_NPC={id:"castle",place:"신데렐라 성",icon:"🏰",npc:{img:"cinderella",n:"신데렐라"},tx:19,ty:5};
+const BLD=[
+  {q:"cake",x:13,y:6,w:4,h:3,roof:"#ff8fb8",roof2:"#e8669a",wall:"#fff3e6",sign:"🎂"},
+  {q:"dentist",x:21,y:14,w:4,h:3,roof:"#6cc8f5",roof2:"#3ea6dd",wall:"#ffffff",sign:"🦷"},
+  {q:"num",x:16,y:19,w:5,h:3,roof:"#ffcf4d",roof2:"#e8a91f",wall:"#fff8e6",sign:"🔢"},
+  {q:"feed",x:4,y:10,w:3,h:2,roof:"#c47a45",roof2:"#9c5a2c",wall:"#f7e1c6",sign:"🦴"},
+  {q:"castle",x:15,y:0,w:7,h:4,castle:true}
+];
+let rpgSave={done:{},exp:0};
+try{const v=JSON.parse(localStorage.getItem("rpgSave")||"null");if(v&&v.done)rpgSave=v;}catch(e){}
+function saveRpg(){try{localStorage.setItem("rpgSave",JSON.stringify(rpgSave));}catch(e){}}
+const lvl=()=>Math.floor(rpgSave.exp/100)+1;
+const IMGS={};
+function rpgImg(k){if(!IMGS[k]){const i=new Image();i.src=k==="sohee"?IMG.soihead:k==="mermaid"?IMG.eunface:IMG[k]||IMG.pings[["hachu","diana","aurora","eclipse"].indexOf(k)];IMGS[k]=i;}return IMGS[k];}
+["sohee","jun","rion","eunface","mermaid","elsa","cinderella","rainbow","hachu","diana","aurora","eclipse"].forEach(rpgImg);
+
+// ---------- seeded map ----------
+let W=null;
+function buildWorld(){
+  const {MW,MH}=RPG;let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+  const g=[...Array(MH)].map(()=>Array(MW).fill(0)); // 0 grass 1 path 2 water 3 swamp 4 tree 6 bld 7 npc 8 hill
+  for(let y=0;y<MH;y++)for(let x=0;x<MW;x++){
+    if(((x-7.5)/5.6)**2+((y-20.5)/4)**2<1)g[y][x]=2;
+    if(((x-30.5)/5)**2+((y-23)/3.6)**2<1)g[y][x]=3;
+  }
+  const carve=(x0,y0,x1,y1)=>{let x=x0,y=y0;const put=(a,b)=>{for(const[dx,dy]of[[0,0]]){const X=a+dx,Y=b+dy;if(X>0&&Y>0&&X<MW-1&&Y<MH-1&&g[Y][X]<2)g[Y][X]=1;}};
+    while(x!==x1){put(x,y);x+=Math.sign(x1-x);}while(y!==y1){put(x,y);y+=Math.sign(y1-y);}put(x,y);};
+  for(let y=12;y<=15;y++)for(let x=16;x<=20;x++)g[y][x]=1; // plaza
+  const P={x:18,y:13};
+  [...QUESTS,CASTLE_NPC].forEach(q=>carve(P.x,P.y,q.tx+(q.id==="princess"?1:0),q.ty+1));
+  for(const b of BLD)for(let y=b.y;y<b.y+b.h;y++)for(let x=b.x;x<b.x+b.w;x++)g[y][x]=6;
+  const near=(x,y)=>[...QUESTS,CASTLE_NPC].some(q=>Math.hypot(q.tx-x,q.ty-y)<2.2)||Math.hypot(x-7,y-5)<3||(x>=15&&x<=21&&y>=11&&y<=16);
+  for(let y=0;y<MH;y++)for(let x=0;x<MW;x++){
+    if(g[y][x]!==0)continue;
+    const edge=x<1||y<1||x>=MW-1||y>=MH-1,forest=x>=25&&y<=12&&y>=1;
+    if(edge||(!near(x,y)&&rnd()<(forest?.42:.07)))g[y][x]=4;
+  }
+  for(const q of [...QUESTS,CASTLE_NPC])g[q.ty][q.tx]=7;
+  const flowers=[];for(let y=0;y<MH;y++)for(let x=0;x<MW;x++)if(g[y][x]===0&&rnd()<.09)flowers.push({x,y,c:["#ff8fc8","#ffe066","#ffffff","#b58cff","#ff7a7a"][Math.floor(rnd()*5)],ox:rnd(),oy:rnd()});
+  const trees=[];for(let y=0;y<MH;y++)for(let x=0;x<MW;x++)if(g[y][x]===4)trees.push({x,y,v:rnd(),s:.85+rnd()*.35});
+  W={g,flowers,trees,bg:null,treeSpr:[],bldSpr:{},seed:rnd};
+  renderGround();prerenderSprites();
+}
+function renderGround(){
+  const {T,MW,MH}=RPG;const c=document.createElement("canvas");c.width=MW*T;c.height=MH*T;const x=c.getContext("2d");
+  let seed=99;const r=()=>(seed=(seed*16807)%2147483647)/2147483647;
+  x.fillStyle="#8fd16a";x.fillRect(0,0,c.width,c.height);
+  for(let i=0;i<900;i++){x.fillStyle=r()<.5?"rgba(120,190,80,.35)":"rgba(170,230,120,.35)";x.beginPath();x.ellipse(r()*c.width,r()*c.height,20+r()*50,10+r()*26,0,0,7);x.fill();}
+  x.strokeStyle="rgba(70,140,50,.45)";x.lineWidth=2;for(let i=0;i<2600;i++){const a=r()*c.width,b=r()*c.height;x.beginPath();x.moveTo(a,b);x.lineTo(a+(r()-.5)*4,b-5-r()*5);x.stroke();}
+  // star hill
+  const hx=7.5*T,hy=5.5*T;const hg=x.createRadialGradient(hx,hy-20,10,hx,hy,3.2*T);hg.addColorStop(0,"#b9ec8e");hg.addColorStop(1,"rgba(143,209,106,0)");x.fillStyle=hg;x.beginPath();x.ellipse(hx,hy,3.3*T,2.4*T,0,0,7);x.fill();
+  for(let y=0;y<MH;y++)for(let X=0;X<MW;X++){
+    const t=W.g[y][X],px=X*T,py=y*T;
+    if(t===1){x.fillStyle="#ecd09a";x.beginPath();x.roundRect(px-3,py-3,T+6,T+6,14);x.fill();}
+  }
+  for(let y=0;y<MH;y++)for(let X=0;X<MW;X++){if(W.g[y][X]!==1)continue;const px=X*T,py=y*T;x.fillStyle="rgba(190,150,90,.5)";for(let k=0;k<3;k++){x.beginPath();x.ellipse(px+r()*T,py+r()*T,2+r()*3,1.5+r()*2,0,0,7);x.fill();}}
+  // water + swamp shapes (smooth)
+  const blob=(cx,cy,rx,ry,c1,c2,edge)=>{x.fillStyle=edge;x.beginPath();x.ellipse(cx,cy,rx+10,ry+10,0,0,7);x.fill();const gg=x.createRadialGradient(cx,cy-ry*.3,10,cx,cy,Math.max(rx,ry));gg.addColorStop(0,c1);gg.addColorStop(1,c2);x.fillStyle=gg;x.beginPath();x.ellipse(cx,cy,rx,ry,0,0,7);x.fill();};
+  blob(8*T,21*T,5.6*T,4*T,"#8fe0ff","#3aa6e0","#f3e2b0");
+  blob(31*T,23.5*T,5*T,3.6*T,"#7fae6a","#4c7a46","#6b8f4f");
+  for(let i=0;i<14;i++){const a=r()*6.28,d=r();const px=31*T+Math.cos(a)*d*4*T,py=23.5*T+Math.sin(a)*d*2.8*T;x.fillStyle="#3f8f3a";x.beginPath();x.arc(px,py,9+r()*6,.3,6.0);x.lineTo(px,py);x.fill();if(r()<.4){x.fillStyle="#ff9ad5";x.beginPath();x.arc(px+3,py-3,4,0,7);x.fill();}}
+  for(const f of W.flowers){const px=(f.x+f.ox)*T,py=(f.y+f.oy)*T;x.fillStyle=f.c;for(let k=0;k<5;k++){x.beginPath();x.arc(px+Math.cos(k*1.26)*4,py+Math.sin(k*1.26)*4,3,0,7);x.fill();}x.fillStyle="#ffd34d";x.beginPath();x.arc(px,py,2.4,0,7);x.fill();}
+  W.bg=c;
+}
+function prerenderSprites(){
+  const {T}=RPG;
+  for(let v=0;v<3;v++){const c=document.createElement("canvas");c.width=T*1.6;c.height=T*2.1;const x=c.getContext("2d");const cx=c.width/2,by=c.height-6;
+    x.fillStyle="rgba(0,0,0,.18)";x.beginPath();x.ellipse(cx,by,T*.5,T*.16,0,0,7);x.fill();
+    x.fillStyle="#8a5a35";x.fillRect(cx-6,by-T*.75,12,T*.72);
+    const cols=[["#3f9a45","#5fbf5a","#8fe07a"],["#2f8a5a","#4fb27a","#7ad8a0"],["#4a9a35","#74c04a","#a8e07a"]][v];
+    const blobs=[[0,-1.25,.62],[-.34,-1.0,.46],[.34,-1.0,.46],[0,-.85,.5]];
+    for(const[ox,oy,rr]of blobs){x.fillStyle=cols[0];x.beginPath();x.arc(cx+ox*T,by+oy*T,rr*T+3,0,7);x.fill();}
+    for(const[ox,oy,rr]of blobs){x.fillStyle=cols[1];x.beginPath();x.arc(cx+ox*T,by+oy*T,rr*T,0,7);x.fill();}
+    x.fillStyle=cols[2];x.beginPath();x.arc(cx-.18*T,by-1.42*T,.22*T,0,7);x.fill();
+    if(v===1){x.fillStyle="#ff6b6b";for(const[a,b]of[[-.3,-1.1],[.25,-1.3],[.1,-.9]]){x.beginPath();x.arc(cx+a*T,by+b*T,4,0,7);x.fill();}}
+    W.treeSpr.push(c);}
+  for(const b of BLD){const c=document.createElement("canvas");const pw=b.w*T,ph=(b.h+1.6)*T;c.width=pw+20;c.height=ph+10;const x=c.getContext("2d");const ox=10,base=c.height-6;
+    x.fillStyle="rgba(0,0,0,.2)";x.beginPath();x.ellipse(ox+pw/2,base,pw*.55,14,0,0,7);x.fill();
+    if(b.castle){
+      x.fillStyle="#f3e8ff";x.fillRect(ox+T*.6,base-T*3.2,pw-T*1.2,T*3.2);
+      for(const tx of[0,pw-T*1.4]){x.fillStyle="#e6d6ff";x.fillRect(ox+tx,base-T*4.4,T*1.4,T*4.4);x.fillStyle="#b58cff";x.beginPath();x.moveTo(ox+tx-6,base-T*4.4);x.lineTo(ox+tx+T*.7,base-T*5.5);x.lineTo(ox+tx+T*1.4+6,base-T*4.4);x.fill();}
+      x.fillStyle="#d9c2ff";x.fillRect(ox+pw/2-T,base-T*4.6,T*2,T*1.6);x.fillStyle="#ff8fc8";x.beginPath();x.moveTo(ox+pw/2-T-8,base-T*4.6);x.lineTo(ox+pw/2,base-T*6);x.lineTo(ox+pw/2+T+8,base-T*4.6);x.fill();
+      x.fillStyle="#ffd34d";x.beginPath();x.arc(ox+pw/2,base-T*6.05,7,0,7);x.fill();
+      for(let i=0;i<6;i++){x.fillStyle="#e6d6ff";x.fillRect(ox+T*.6+i*(pw-T*1.2)/6+4,base-T*3.45,T*.4,T*.3);}
+      x.fillStyle="#7a4fc0";x.beginPath();x.roundRect(ox+pw/2-T*.55,base-T*1.5,T*1.1,T*1.5,[T*.55,T*.55,0,0]);x.fill();
+      x.fillStyle="#8fd3ff";for(const wx of[T*1.5,pw-T*2.1]){x.beginPath();x.roundRect(ox+wx,base-T*2.4,T*.6,T*.8,[T*.3,T*.3,4,4]);x.fill();}
+      x.font=`${T*.6}px serif`;x.textAlign="center";x.fillText("🚩",ox+T*.9,base-T*5.4);x.fillText("🚩",ox+pw-T*.7,base-T*5.4);
+    }else{
+      const wallTop=base-b.h*T*.9;
+      x.fillStyle=b.wall;x.strokeStyle="rgba(90,60,40,.35)";x.lineWidth=3;x.beginPath();x.roundRect(ox+6,wallTop,pw-12,base-wallTop,8);x.fill();x.stroke();
+      x.fillStyle=b.roof2;x.beginPath();x.moveTo(ox-6,wallTop+6);x.lineTo(ox+pw/2,wallTop-T*1.25);x.lineTo(ox+pw+6,wallTop+6);x.closePath();x.fill();
+      x.fillStyle=b.roof;x.beginPath();x.moveTo(ox+2,wallTop);x.lineTo(ox+pw/2,wallTop-T*1.15);x.lineTo(ox+pw-2,wallTop);x.closePath();x.fill();
+      x.strokeStyle="rgba(255,255,255,.4)";x.lineWidth=2;for(let i=1;i<4;i++){x.beginPath();x.moveTo(ox+pw/2-i*pw/9,wallTop-T*1.15+i*T*.28);x.lineTo(ox+pw/2+i*pw/9,wallTop-T*1.15+i*T*.28);x.stroke();}
+      x.fillStyle="#9a6a45";x.beginPath();x.roundRect(ox+pw/2-T*.38,base-T*1.05,T*.76,T*1.05,[T*.38,T*.38,0,0]);x.fill();x.fillStyle="#ffd34d";x.beginPath();x.arc(ox+pw/2+T*.2,base-T*.5,3,0,7);x.fill();
+      x.fillStyle="#9fe0ff";x.strokeStyle="#fff";x.lineWidth=3;for(const wx of[ox+T*.35,ox+pw-T*1.05]){x.beginPath();x.roundRect(wx,base-T*1.6,T*.7,T*.6,6);x.fill();x.stroke();}
+      x.fillStyle="#fff";x.strokeStyle=b.roof2;x.lineWidth=3;x.beginPath();x.arc(ox+pw/2,wallTop-T*.35,T*.38,0,7);x.fill();x.stroke();
+      x.font=`${T*.46}px serif`;x.textAlign="center";x.textBaseline="middle";x.fillText(b.sign,ox+pw/2,wallTop-T*.33);
+    }
+    W.bldSpr[b.q]={c,b};}
+}
+
+// ---------- character drawing (RPG chibi sprites) ----------
+function outlineFill(x,path,fill,stroke="#4a2f4f",lw=2.2){x.fillStyle=fill;path();x.fill();x.lineWidth=lw;x.strokeStyle=stroke;x.stroke();}
+function headPhoto(x,img,r,dir,hair){
+  x.save();x.beginPath();x.arc(0,0,r+2.5,0,7);x.fillStyle="#4a2f4f";x.fill();
+  x.beginPath();x.arc(0,0,r+1,0,7);x.fillStyle="#fff";x.fill();
+  x.beginPath();x.arc(0,0,r,0,7);x.clip();
+  if(img&&img.complete&&img.naturalWidth){const s=r*2.25;x.drawImage(img,-s/2+(dir==="left"?-2:dir==="right"?2:0),-s/2+1,s,s);}
+  x.restore();
+}
+function drawKid(x,k,px,py,dir,ph,moving,sc=1){
+  x.save();x.translate(px,py);x.scale(sc,sc);
+  const soi=k==="sohee";const sw=moving?Math.sin(ph)*5:0;const bob=moving?-Math.abs(Math.sin(ph))*2.5:Math.sin(ph*.35)*.8;
+  x.fillStyle="rgba(0,0,0,.22)";x.beginPath();x.ellipse(0,0,15,5,0,0,7);x.fill();
+  x.translate(0,bob);
+  // cape (behind)
+  if(dir!=="up"){outlineFill(x,()=>{x.beginPath();x.moveTo(-11,-34);x.quadraticCurveTo(-18,-14,-14+sw*.3,-6);x.lineTo(14-sw*.3,-6);x.quadraticCurveTo(18,-14,11,-34);x.closePath();},soi?"#8a5cd6":"#d94a5a");}
+  // legs
+  const leg=(lx,off)=>{outlineFill(x,()=>{x.beginPath();x.roundRect(lx-3.5,-13+off*.2,7,12,3);},soi?"#fff":"#4f7fd0");outlineFill(x,()=>{x.beginPath();x.ellipse(lx,-1+off*.15,5,3.2,0,0,7);},soi?"#ff5fa8":"#2e3a63");};
+  leg(-5+sw*.4,sw);leg(5-sw*.4,-sw);
+  // body
+  if(soi){
+    outlineFill(x,()=>{x.beginPath();x.moveTo(-9,-30);x.quadraticCurveTo(0,-33,9,-30);x.lineTo(15,-11);x.quadraticCurveTo(0,-6,-15,-11);x.closePath();},"#ff9cc8");
+    x.fillStyle="#ff7ab3";x.beginPath();x.moveTo(-14,-13);x.quadraticCurveTo(0,-9,14,-13);x.lineTo(15,-11);x.quadraticCurveTo(0,-6,-15,-11);x.fill();
+    outlineFill(x,()=>{x.beginPath();x.roundRect(-9,-36,18,10,4);},"#fff0f6");
+    x.fillStyle="#ff5fa8";x.beginPath();x.arc(-2.5,-29,2.6,0,7);x.arc(2.5,-29,2.6,0,7);x.fill();
+    // star cape clasp
+    x.fillStyle="#ffd34d";x.font="8px serif";x.textAlign="center";x.fillText("⭐",0,-20);
+  }else{
+    outlineFill(x,()=>{x.beginPath();x.roundRect(-10,-36,20,24,6);},"#f4f4ff");
+    outlineFill(x,()=>{x.beginPath();x.moveTo(-10,-36);x.lineTo(-2,-36);x.lineTo(0,-22);x.lineTo(2,-36);x.lineTo(10,-36);x.lineTo(10,-13);x.lineTo(-10,-13);x.closePath();},"#8a6be0");
+    x.fillStyle="#6a4a2c";x.fillRect(-10,-17,20,3.5);x.fillStyle="#ffd34d";x.fillRect(-2,-17.5,4,4.5);
+  }
+  // arms + props
+  const arm=(sx,a,front)=>{x.save();x.translate(sx,-33);x.rotate(a);outlineFill(x,()=>{x.beginPath();x.roundRect(-3,0,6,13,3);},soi?"#ffb8d6":"#f4f4ff");
+    x.fillStyle="#ffe0cf";x.beginPath();x.arc(0,14,3.4,0,7);x.fill();x.strokeStyle="#4a2f4f";x.lineWidth=1.5;x.stroke();
+    if(front){if(soi){x.strokeStyle="#c48a3a";x.lineWidth=2.5;x.beginPath();x.moveTo(0,14);x.lineTo(0,27);x.stroke();x.font="12px serif";x.textAlign="center";x.fillText("⭐",0,32);}
+      else{x.fillStyle="#cfd8e6";x.strokeStyle="#4a2f4f";x.lineWidth=1.5;x.beginPath();x.roundRect(-1.8,14,3.6,15,1);x.fill();x.stroke();x.fillStyle="#c48a3a";x.fillRect(-5,13,10,3);}}
+    x.restore();};
+  const right=dir!=="left";
+  arm(-10,.25+sw*.06,!right);arm(10,-.25-sw*.06,right);
+  if(!soi&&dir!=="up"){x.save();x.translate(right?-13:13,-24);outlineFill(x,()=>{x.beginPath();x.arc(0,0,7.5,0,7);},"#5b8fd8");x.fillStyle="#ffd34d";x.font="8px serif";x.textAlign="center";x.textBaseline="middle";x.fillText("⭐",0,.5);x.restore();}
+  // head
+  x.save();x.translate(0,-50);headPhoto(x,rpgImg(soi?"sohee":"jun"),15.5,dir,soi?"#3a2620":"#2a1d18");
+  if(soi){x.fillStyle="#ffd34d";x.strokeStyle="#c48a00";x.lineWidth=1.2;x.beginPath();x.moveTo(-9,-14);x.lineTo(-6,-21);x.lineTo(-2,-15);x.lineTo(0,-23);x.lineTo(2,-15);x.lineTo(6,-21);x.lineTo(9,-14);x.closePath();x.fill();x.stroke();x.fillStyle="#ff5fa8";x.beginPath();x.arc(0,-17,1.8,0,7);x.fill();}
+  else{x.fillStyle="#cfd8e6";x.strokeStyle="#4a2f4f";x.lineWidth=1.5;x.beginPath();x.arc(0,-6,17.5,Math.PI*1.12,Math.PI*1.88);x.lineTo(14,-12);x.arc(0,-6,15,Math.PI*1.85,Math.PI*1.15,true);x.closePath();x.fill();x.stroke();
+    x.fillStyle="#ff5f6d";x.beginPath();x.ellipse(0,-24,4,6,0,0,7);x.fill();}
+  if(dir!=="up"){x.fillStyle="rgba(255,120,160,.35)";x.beginPath();x.arc(-9,5,3.2,0,7);x.arc(9,5,3.2,0,7);x.fill();}
+  x.restore();x.restore();
+}
+function drawDog(x,px,py,dir,ph,moving,sc=1){
+  x.save();x.translate(px,py);x.scale(sc,sc);if(dir==="right")x.scale(-1,1);
+  const sw=moving?Math.sin(ph*1.3)*4:0;const bob=moving?-Math.abs(Math.sin(ph*1.3))*2:0;
+  x.fillStyle="rgba(0,0,0,.2)";x.beginPath();x.ellipse(0,0,18,5,0,0,7);x.fill();x.translate(0,bob);
+  for(const[lx,o]of[[-10,sw],[-4,-sw],[6,-sw],[12,sw]]){outlineFill(x,()=>{x.beginPath();x.roundRect(lx-3+o*.3,-9,6,9,3);},"#fff","#9a8f9a",1.4);}
+  x.save();x.translate(15,-20);x.rotate(Math.sin(ph*2.2)*.5);x.fillStyle="#fff";x.strokeStyle="#9a8f9a";x.lineWidth=1.4;for(const[a,b,r]of[[2,-4,6],[5,-10,5],[0,-13,4]]){x.beginPath();x.arc(a,b,r,0,7);x.fill();x.stroke();}x.restore();
+  x.fillStyle="#fff";x.strokeStyle="#9a8f9a";x.lineWidth=1.4;x.beginPath();x.ellipse(2,-17,17,11,0,0,7);x.fill();x.stroke();
+  for(const[a,b,r]of[[-6,-24,7],[4,-25,7],[12,-20,6]]){x.beginPath();x.arc(a,b,r,0,7);x.fill();}
+  // red hero scarf
+  x.fillStyle="#ff5f6d";x.beginPath();x.moveTo(-14,-26);x.quadraticCurveTo(-4,-22,-2,-28);x.lineTo(6,-14+sw*.4);x.lineTo(-2,-16);x.closePath();x.fill();
+  x.save();x.translate(-14,-31);headPhoto(x,rpgImg("rion"),12.5,dir==="up"?"up":"down","#f3f3f3");x.restore();
+  x.restore();
+}
+function drawMermaidNpc(x,px,py,t){
+  x.save();x.translate(px,py+Math.sin(t*2)*2);
+  const g=x.createLinearGradient(0,-30,0,6);g.addColorStop(0,"#ff9ad5");g.addColorStop(1,"#c060ff");
+  x.fillStyle="#5e3d28";x.beginPath();x.ellipse(0,-44,15,22,0,0,7);x.fill();
+  x.fillStyle=g;x.strokeStyle="#4a2f4f";x.lineWidth=2;x.beginPath();x.moveTo(-9,-28);x.quadraticCurveTo(-12,-8,0,2);x.quadraticCurveTo(12,-8,9,-28);x.closePath();x.fill();x.stroke();
+  x.beginPath();x.moveTo(0,0);x.quadraticCurveTo(-12,4,-16,10);x.quadraticCurveTo(-4,8,0,4);x.quadraticCurveTo(4,8,16,10);x.quadraticCurveTo(12,4,0,0);x.fill();x.stroke();
+  x.fillStyle="#c9a2ff";x.beginPath();x.roundRect(-9,-36,18,9,4);x.fill();x.stroke();
+  x.fillStyle="#f2cdb8";x.fillRect(-2.5,-40,5,5);
+  x.save();x.translate(0,-52);x.beginPath();x.ellipse(0,0,11,13.5,0,0,7);x.fillStyle="#fff";x.fill();x.clip();const im=rpgImg("mermaid");if(im.complete)x.drawImage(im,-13,-15.5,26,31);x.restore();
+  x.font="13px serif";x.textAlign="center";x.fillText("👑",0,-64);
+  x.restore();
+}
+function drawNpc(x,q,px,py,t){
+  const n=q.npc;
+  x.fillStyle="rgba(0,0,0,.2)";x.beginPath();x.ellipse(px,py,16,5,0,0,7);x.fill();
+  if(n.img==="mermaid"){drawMermaidNpc(x,px,py,t);}
+  else if(n.emoji){x.font="38px serif";x.textAlign="center";x.textBaseline="alphabetic";x.fillText(n.emoji,px,py-2+Math.sin(t*3)*2);}
+  else{const im=rpgImg(n.img);if(im.complete&&im.naturalWidth){const h=n.img==="elsa"?62:n.img==="cinderella"?66:n.img==="rainbow"?40:58;const w=h*im.naturalWidth/im.naturalHeight;
+    x.save();if(n.img==="elsa"){x.beginPath();x.roundRect(px-w/2,py-h-2+Math.sin(t*2)*1.5,w,h,10);x.clip();}x.drawImage(im,px-w/2,py-h-2+Math.sin(t*2)*1.5,w,h);x.restore();
+    if(n.img==="elsa"){x.strokeStyle="#fff";x.lineWidth=3;x.beginPath();x.roundRect(px-w/2,py-h-2+Math.sin(t*2)*1.5,w,h,10);x.stroke();}}}
+}
+
+// ---------- pathfinding ----------
+function walkable(x,y){if(!W||x<0||y<0||x>=RPG.MW||y>=RPG.MH)return false;const t=W.g[y][x];return t===0||t===1;}
+function findPath(sx,sy,tx,ty){
+  const {MW,MH}=RPG;const key=(x,y)=>y*MW+x;const open=[[sx,sy]],came=new Map(),gS=new Map([[key(sx,sy),0]]);const h=(x,y)=>Math.abs(x-tx)+Math.abs(y-ty);const f=new Map([[key(sx,sy),h(sx,sy)]]);
+  let it=0;while(open.length&&it++<4000){open.sort((a,b)=>f.get(key(...a))-f.get(key(...b)));const [cx,cy]=open.shift();
+    if(cx===tx&&cy===ty){const p=[[cx,cy]];let k=key(cx,cy);while(came.has(k)){const pr=came.get(k);p.unshift(pr);k=key(...pr);}return p;}
+    for(const[dx,dy]of[[1,0],[-1,0],[0,1],[0,-1]]){const nx=cx+dx,ny=cy+dy;if(!walkable(nx,ny))continue;const ng=gS.get(key(cx,cy))+1;const nk=key(nx,ny);
+      if(ng<(gS.has(nk)?gS.get(nk):1e9)){came.set(nk,[cx,cy]);gS.set(nk,ng);f.set(nk,ng+h(nx,ny));if(!open.some(o=>o[0]===nx&&o[1]===ny))open.push([nx,ny]);}}}
+  return null;
+}
+function nearestWalkable(tx,ty,from){let best=null,bd=1e9;for(let r=0;r<=4;r++)for(let y=ty-r;y<=ty+r;y++)for(let x=tx-r;x<=tx+r;x++){if(!walkable(x,y))continue;const d=Math.hypot(x-tx,y-ty)*10+Math.hypot(x-from.x,y-from.y)*.1;if(d<bd){bd=d;best={x,y};}}return best;}
+
+// ---------- world state & loop ----------
+function zoom(){return innerHeight<520?1:innerWidth<560?1.3:1.15;}
+const ST={hero:null,trail:[],path:[],cam:{x:0,y:0},running:false,last:0,t:0,target:null,dlg:null,clouds:[],flies:[],areaShown:"",sparks:[]};
+function goWorld(){
+  clearGame();if(!W)buildWorld();show("#world");
+  const {T}=RPG;
+  if(!ST.hero){ST.hero={x:18.5*T,y:14.5*T,dir:"down",ph:0,moving:false};ST.trail=[];for(let i=0;i<60;i++)ST.trail.push({x:ST.hero.x,y:ST.hero.y+i*.5,dir:"down"});}
+  for(let i=0;ST.clouds.length<5;i++)ST.clouds.push({x:Math.random()*RPG.MW*T,y:Math.random()*RPG.MH*T,r:80+Math.random()*90,v:8+Math.random()*10});
+  for(let i=0;ST.flies.length<7;i++)ST.flies.push({x:Math.random()*RPG.MW*T,y:Math.random()*RPG.MH*T,p:Math.random()*6,e:["🦋","🦋","🐝","✨"][i%4]});
+  updateRpgHud();resizeWorld();
+  if(!ST.running){ST.running=true;ST.last=performance.now();requestAnimationFrame(worldLoop);}
+  if(!ST.greeted){ST.greeted=true;openDlg([{who:who,text:`나는 ${NAME[who]}! ${CLASS[who].cls}야! 친구들을 도와주러 모험을 떠나자!`},{who:"rion",text:"멍멍! 리온이도 같이 갈래! 반짝이는 ❗ 친구한테 가 봐!"}]);}
+}
+function resizeWorld(){const c=$("#wc");const d=Math.min(2,devicePixelRatio||1);c.width=innerWidth*d;c.height=innerHeight*d;c.style.width=innerWidth+"px";c.style.height=innerHeight+"px";ST.dpr=d;}
+addEventListener("resize",()=>{if($("#world").classList.contains("on"))resizeWorld();});
+function worldLoop(now){
+  if(!$("#world").classList.contains("on")){ST.running=false;return;}
+  const dt=Math.min(.05,(now-ST.last)/1000);ST.last=now;ST.t+=dt;
+  stepHero(dt);drawWorld();requestAnimationFrame(worldLoop);
+}
+function stepHero(dt){
+  const h=ST.hero,{T}=RPG;h.moving=false;
+  if(ST.path.length&&!ST.dlg){
+    const [nx,ny]=ST.path[0];const tx=(nx+.5)*T,ty=(ny+.5)*T;const dx=tx-h.x,dy=ty-h.y,d=Math.hypot(dx,dy);const sp=190*dt;
+    if(d<=sp){h.x=tx;h.y=ty;ST.path.shift();if(!ST.path.length)arrive();}
+    else{h.x+=dx/d*sp;h.y+=dy/d*sp;h.moving=true;h.dir=Math.abs(dx)>Math.abs(dy)?(dx>0?"right":"left"):(dy>0?"down":"up");}
+    h.ph+=dt*13;
+    const last=ST.trail[0];if(Math.hypot(h.x-last.x,h.y-last.y)>3){ST.trail.unshift({x:h.x,y:h.y,dir:h.dir});ST.trail.length=80;}
+    if(Math.random()<dt*4)tone(180+Math.random()*40,.04,"triangle",.03);
+  }else h.ph+=dt*3;
+  // area name toast
+  const tx=Math.floor(h.x/T),ty=Math.floor(h.y/T);const q=[...QUESTS,CASTLE_NPC].find(q=>Math.hypot(q.tx-tx,q.ty-ty)<3.5);
+  const nm=q?q.place:"";if(nm!==ST.areaShown){ST.areaShown=nm;if(nm){const a=$("#areaName");a.textContent=`${q.icon} ${nm}`;a.classList.remove("show");void a.offsetWidth;a.classList.add("show");}}
+  // camera
+  const Z=zoom(),vw=innerWidth/Z,vh=innerHeight/Z;ST.cam.x=Math.max(0,Math.min(RPG.MW*T-vw,h.x-vw/2));ST.cam.y=Math.max(0,Math.min(RPG.MH*T-vh,h.y-vh*.55));
+}
+function questState(q){if(q.id==="castle")return Object.keys(rpgSave.done).length>=QUESTS.length?"ready":"locked";return rpgSave.done[q.id]?"done":"new";}
+function drawWorld(){
+  const c=$("#wc"),x=c.getContext("2d"),{T}=RPG,cam=ST.cam,t=ST.t;
+  const Z=zoom(),VW=innerWidth/Z,VH=innerHeight/Z;x.setTransform(ST.dpr*Z,0,0,ST.dpr*Z,0,0);x.imageSmoothingEnabled=true;
+  x.drawImage(W.bg,cam.x,cam.y,VW,VH,0,0,VW,VH);
+  x.save();x.translate(-cam.x,-cam.y);
+  // water shimmer
+  x.strokeStyle="rgba(255,255,255,.55)";x.lineWidth=2;
+  for(let i=0;i<10;i++){const a=i*1.7+t*.3,px=8*T+Math.cos(a)*3.5*T*((i%3+1)/3),py=21*T+Math.sin(a*1.3)*2.4*T*((i%2+1)/2);x.beginPath();x.arc(px,py,6+Math.sin(t*2+i)*2,Math.PI*1.1,Math.PI*1.9);x.stroke();}
+  // tap target ring
+  if(ST.target){const p=ST.target;x.strokeStyle=`rgba(255,255,255,${.5+.4*Math.sin(t*8)})`;x.lineWidth=3;x.beginPath();x.ellipse((p.x+.5)*T,(p.y+.5)*T+10,14+4*Math.sin(t*8),6,0,0,7);x.stroke();}
+  // y-sorted entities
+  const ents=[];const vx0=cam.x-T*2,vx1=cam.x+VW+T*2,vy0=cam.y-T,vy1=cam.y+VH+T*3;
+  for(const tr of W.trees){const px=(tr.x+.5)*T,py=(tr.y+1)*T;if(px<vx0||px>vx1||py<vy0||py>vy1)continue;ents.push({y:py,d:()=>{const s=W.treeSpr[Math.floor(tr.v*3)];const sc=tr.s;x.drawImage(s,px-s.width*sc/2,py-s.height*sc+4,s.width*sc,s.height*sc);}});}
+  for(const k in W.bldSpr){const {c:s,b}=W.bldSpr[k];const px=b.x*T-10,py=(b.y+b.h)*T;ents.push({y:py-4,d:()=>x.drawImage(s,px,py-s.height+6)});}
+  for(const q of [...QUESTS,CASTLE_NPC]){const px=(q.tx+.5)*T,py=(q.ty+.85)*T;ents.push({y:py,d:()=>{drawNpc(x,q,px,py,t);
+    const st=questState(q);const my=py-(q.npc.img==="cinderella"?76:q.npc.img==="mermaid"?82:70)+Math.sin(t*4)*3;
+    if(st==="new"||st==="ready"){x.fillStyle="#ffd34d";x.strokeStyle="#c47a00";x.lineWidth=2;x.beginPath();x.arc(px,my,11,0,7);x.fill();x.stroke();x.fillStyle="#7a3f00";x.font="bold 16px sans-serif";x.textAlign="center";x.textBaseline="middle";x.fillText("!",px,my+1);}
+    else if(st==="done"){x.font="18px serif";x.textAlign="center";x.textBaseline="middle";x.fillText("🏅",px,my);}
+    else{x.font="16px serif";x.textAlign="center";x.textBaseline="middle";x.fillText("🔒",px,my);}}});}
+  // party: hero + followers
+  const h=ST.hero,other=who==="sohee"?"jun":"sohee";
+  const f1=ST.trail[Math.min(ST.trail.length-1,14)],f2=ST.trail[Math.min(ST.trail.length-1,28)];
+  ents.push({y:f2.y,d:()=>drawDog(x,f2.x,f2.y,f2.dir,h.ph,h.moving)});
+  ents.push({y:f1.y,d:()=>drawKid(x,other,f1.x,f1.y,f1.dir,h.ph+1.5,h.moving,.92)});
+  ents.push({y:h.y+.1,d:()=>{drawKid(x,who,h.x,h.y,h.dir,h.ph,h.moving,1);x.fillStyle="#fff";x.strokeStyle="#7a3fa0";x.lineWidth=3;x.font="bold 12px Jua,sans-serif";x.textAlign="center";x.textBaseline="middle";x.strokeText(`Lv.${lvl()} ${NAME[who]}`,h.x,h.y-80);x.fillText(`Lv.${lvl()} ${NAME[who]}`,h.x,h.y-80);}});
+  ents.sort((a,b)=>a.y-b.y).forEach(e=>e.d());
+  // butterflies & sparkles
+  x.textAlign="center";x.textBaseline="middle";
+  for(const f of ST.flies){f.p+=.016;f.x+=Math.cos(f.p*.7)*.8;f.y+=Math.sin(f.p*1.3)*.6;x.font="16px serif";x.fillText(f.e,f.x,f.y+Math.sin(f.p*6)*3);}
+  for(let i=ST.sparks.length-1;i>=0;i--){const s=ST.sparks[i];s.l-=.02;if(s.l<=0){ST.sparks.splice(i,1);continue;}x.globalAlpha=s.l;x.font="14px serif";x.fillText("✨",s.x,s.y-(1-s.l)*30);x.globalAlpha=1;}
+  // cloud shadows
+  x.fillStyle="rgba(40,60,90,.08)";for(const cl of ST.clouds){cl.x+=cl.v*.016;if(cl.x>RPG.MW*T+200)cl.x=-200;x.beginPath();x.ellipse(cl.x,cl.y,cl.r,cl.r*.55,0,0,7);x.fill();}
+  x.restore();
+  x.setTransform(ST.dpr,0,0,ST.dpr,0,0);drawMinimap(x);
+}
+let miniBg=null;
+function drawMinimap(x){
+  const {T,MW,MH}=RPG;const s=3.2,w=MW*s,h=MH*s,ox=innerWidth-w-12,oy=innerHeight-h-14;
+  if(!miniBg){miniBg=document.createElement("canvas");miniBg.width=w;miniBg.height=h;const m=miniBg.getContext("2d");const col={0:"#8fd16a",1:"#ecd09a",2:"#5cc2f0",3:"#5e8f5a",4:"#3f8a45",6:"#ff9cc8",7:"#ffd34d"};
+    for(let y=0;y<MH;y++)for(let X=0;X<MW;X++){m.fillStyle=col[W.g[y][X]]||"#8fd16a";m.fillRect(X*s,y*s,s,s);}}
+  x.save();x.globalAlpha=.92;x.fillStyle="#fff";x.beginPath();x.roundRect(ox-4,oy-4,w+8,h+8,8);x.fill();x.drawImage(miniBg,ox,oy);x.globalAlpha=1;
+  for(const q of QUESTS){x.fillStyle=rpgSave.done[q.id]?"#ffb800":"#ff5fa8";x.beginPath();x.arc(ox+(q.tx+.5)*s,oy+(q.ty+.5)*s,2.6,0,7);x.fill();}
+  x.fillStyle="#fff";x.strokeStyle="#7a3fa0";x.lineWidth=2;x.beginPath();x.arc(ox+ST.hero.x/T*s,oy+ST.hero.y/T*s,3.4,0,7);x.fill();x.stroke();x.restore();
+}
+// ---------- input ----------
+function worldTap(e){
+  if(ST.dlg){advanceDlg();return;}
+  const {T}=RPG;const Z=zoom();const wx=e.clientX/Z+ST.cam.x,wy=e.clientY/Z+ST.cam.y;
+  for(let i=0;i<4;i++)ST.sparks.push({x:wx+(Math.random()-.5)*20,y:wy+(Math.random()-.5)*20,l:1});
+  let tx=Math.floor(wx/T),ty=Math.floor(wy/T);
+  // tapping near an NPC (or its building) -> go talk
+  let q=[...QUESTS,CASTLE_NPC].find(q=>Math.hypot(q.tx+.5-wx/T,q.ty+.3-wy/T)<1.3);
+  if(!q){const b=BLD.find(b=>tx>=b.x&&tx<b.x+b.w&&ty>=b.y-2&&ty<b.y+b.h);if(b)q=b.q==="castle"?CASTLE_NPC:QUESTS.find(z=>z.id===b.q);}
+  const h=ST.hero,hx=Math.floor(h.x/T),hy=Math.floor(h.y/T);
+  if(q){const spot=nearestWalkable(q.tx,q.ty+1,{x:hx,y:hy});if(!spot)return;tx=spot.x;ty=spot.y;ST.pendingQ=q;}
+  else{ST.pendingQ=null;if(!walkable(tx,ty)){const s=nearestWalkable(tx,ty,{x:hx,y:hy});if(!s)return;tx=s.x;ty=s.y;}}
+  const p=findPath(hx,hy,tx,ty);if(!p)return;p.shift();ST.path=p;ST.target={x:tx,y:ty};sfx.pop();
+  if(!p.length)arrive();
+}
+function arrive(){ST.target=null;const q=ST.pendingQ;ST.pendingQ=null;if(!q)return;
+  const h=ST.hero;h.dir=(q.tx+.5)*RPG.T<h.x-10?"left":(q.tx+.5)*RPG.T>h.x+10?"right":"up";talkTo(q);}
+function talkTo(q){
+  const nm=NAME[who];const fill=s=>s.replace("{n}",nm+(q.id==="princess"?"":"야"));
+  if(q.id==="castle"){
+    const n=Object.keys(rpgSave.done).length;
+    if(n<QUESTS.length){openDlg([{q,text:`어서 와요, ${nm} 기사님! 마을 친구 ${QUESTS.length}명을 모두 도와 🏅 배지를 모으면 무도회에 초대할게요.`},{q,text:`지금 배지는 ${n}개예요. ❗ 표시가 있는 친구를 찾아가 봐요!`}]);}
+    else openDlg([{q,text:`우와! 배지 ${QUESTS.length}개를 다 모았군요! 오늘의 영웅 ${nm}!`},{q,text:"모두 함께 성에서 무도회를 열어요! 🎉"}],[["🎉 무도회 가기",()=>grandFinale()],["다음에",null]]);
+    return;}
+  const done=rpgSave.done[q.id];
+  const lines=done?[{q,text:`또 왔구나, ${nm}! 덕분에 ${q.place}가 행복해졌어. 한 번 더 할래?`}]:q.say.map(s=>({q,text:fill(s)}));
+  openDlg(lines,[[done?"🔁 다시 모험":"⚔️ 모험 시작!",()=>{curQuest=q.id;q.start();}],["다음에",null]]);
+}
+let curQuest=null;
+// ---------- dialogue ----------
+function openDlg(lines,choices){ST.dlg={lines,i:0,choices,typing:0};ST.path=[];renderDlg();}
+function dlgPortrait(l){if(l.q){const n=l.q.npc;if(n.emoji)return `<span class="dpe">${n.emoji}</span>`;return `<img src="${n.img==="mermaid"?IMG.eunface:rpgImg(n.img).src}">`;}
+  if(l.who==="rion")return `<img src="${IMG.rion}">`;return `<img src="${l.who==="jun"?IMG.jun:IMG.soihead}">`;}
+function renderDlg(){
+  const d=ST.dlg,box=$("#dlg");if(!d){box.hidden=true;return;}
+  const l=d.lines[d.i];const name=l.q?l.q.npc.n:l.who==="rion"?"리온":NAME[l.who];
+  box.hidden=false;box.querySelector(".dp").innerHTML=dlgPortrait(l);box.querySelector(".dn").textContent=name;
+  const tx=box.querySelector(".dt");tx.textContent="";const ch=box.querySelector(".dc");ch.innerHTML="";box.querySelector(".dnext").hidden=true;
+  clearInterval(d.typing);let k=0;say(l.text);
+  d.typing=setInterval(()=>{k+=1;tx.textContent=l.text.slice(0,k);if(k%2===0)tone(700+Math.random()*200,.02,"square",.02);if(k>=l.text.length){clearInterval(d.typing);d.typing=0;finishLine();}},32);
+}
+function finishLine(){const d=ST.dlg,box=$("#dlg");const l=d.lines[d.i];box.querySelector(".dt").textContent=l.text;
+  if(d.i===d.lines.length-1&&d.choices){const ch=box.querySelector(".dc");ch.innerHTML="";d.choices.forEach(([lab,fn])=>{const b=el(`<button class="dbtn">${lab}</button>`);b.onpointerdown=e=>{e.stopPropagation();ST.dlg=null;renderDlg();sfx.ding();fn&&fn();};ch.appendChild(b);});}
+  else box.querySelector(".dnext").hidden=false;}
+function advanceDlg(){const d=ST.dlg;if(!d)return;if(d.typing){clearInterval(d.typing);d.typing=0;finishLine();return;}
+  if(d.i===d.lines.length-1){if(d.choices)return;ST.dlg=null;renderDlg();return;}d.i++;sfx.pop();renderDlg();}
+// ---------- progress ----------
+function completeQuest(id){
+  if(!QUESTS.some(q=>q.id===id))return null;
+  const first=!rpgSave.done[id];const before=lvl();rpgSave.done[id]=1;rpgSave.exp+=first?80:30;saveRpg();updateRpgHud();
+  return {first,gain:first?80:30,levelUp:lvl()>before};
+}
+function updateRpgHud(){
+  const n=Object.keys(rpgSave.done).length;const L=lvl(),e=rpgSave.exp%100;
+  $("#rpgCard").innerHTML=`<img src="${who==="jun"?IMG.jun:IMG.soihead}"><div><b>${NAME[who]} <small>${CLASS[who].icon} ${CLASS[who].cls}</small></b><span class="lv">Lv.${L}</span><div class="xp"><i style="width:${e}%"></i></div></div>`;
+  $("#rpgBadges").textContent=`🏅 ${n}/${QUESTS.length}`;
+}
+function rewardOverlay(res,label){
+  if(!res)return;const o=el(`<div class="reward"><div class="rw-in"><div class="rw-t">퀘스트 완료!</div><div class="rw-q">${label}</div><div class="rw-x">⭐ EXP +${res.gain}</div>${res.first?'<div class="rw-b">🏅 새 배지 획득!</div>':""}${res.levelUp?`<div class="rw-l">LEVEL UP! Lv.${lvl()}</div>`:""}</div></div>`);
+  document.body.appendChild(o);[523,659,784,1047].forEach((f,i)=>tone(f,.25,"triangle",.18,i*.12));if(res.levelUp)setTimeout(()=>{[784,988,1175,1568,2093].forEach((f,i)=>tone(f,.2,"square",.08,i*.08));say(`레벨 업! 레벨 ${lvl()}!`);},700);
+  setTimeout(()=>o.remove(),3200);
+}
+function grandFinale(){
+  const o=el(`<div class="finaleBall"><div class="fb-sky"></div><div class="fb-row">${["cinderella","elsa"].map(k=>`<img class="fb-p" src="${rpgImg(k).src}">`).join("")}<img class="fb-p round" src="${IMG.eunface}"><img class="fb-p" src="${IMG.rainbow}"></div>
+    <canvas class="fb-party" width="360" height="130"></canvas><h2>🎉 ${NAME[who]} 기사단 최고! 🎉</h2><p>모든 모험 완료! 마을 친구들이 모두 행복해졌어요.</p><button class="pick">🗺️ 마을로</button></div>`);
+  document.body.appendChild(o);confetti();sfx.yay();say(`축하해요! ${NAME[who]}랑 친구들 덕분에 마을이 행복해졌어요! 모두 함께 춤춰요!`);
+  const cv=o.querySelector(".fb-party"),x=cv.getContext("2d");let t=0,alive=true;
+  (function dance(){if(!alive)return;t+=.05;x.clearRect(0,0,360,130);drawKid(x,"sohee",110,120+Math.sin(t*4)*-4,"down",t*6,true,1.3);drawKid(x,"jun",190,120+Math.cos(t*4)*-4,"down",t*6+1,true,1.3);drawDog(x,270,120,"left",t*6,true,1.3);
+    for(let i=0;i<6;i++){x.font="18px serif";x.fillText(["🎆","🎇","✨","🎉"][i%4],30+i*60+Math.sin(t+i)*8,20+Math.sin(t*2+i)*8);}requestAnimationFrame(dance);})();
+  o.querySelector("button").onclick=()=>{alive=false;o.remove();goWorld();};
+}
+// ---------- RPG character select (animated canvas sprites) ----------
+function initTitleSprites(){
+  document.querySelectorAll(".kslot").forEach(s=>{s.innerHTML=`<canvas width="200" height="230"></canvas>`;});
+  const cl=[...document.querySelectorAll(".kslot canvas")];let t=0;
+  (function anim(){if(!$("#title").classList.contains("on")){requestAnimationFrame(anim);return;}t+=.04;
+    cl.forEach(c=>{const k=c.parentNode.dataset.k,x=c.getContext("2d");x.clearRect(0,0,200,230);
+      x.fillStyle="rgba(255,255,255,.35)";x.beginPath();x.ellipse(100,205,60,14,0,0,7);x.fill();
+      drawKid(x,k,100,205,"down",t*3,false,2.3);
+      if(k==="sohee"){x.font="20px serif";x.fillText("✨",40+Math.sin(t*2)*6,60);x.fillText("⭐",150,90+Math.cos(t*2)*6);}else{x.font="20px serif";x.fillText("⚔️",36,70+Math.sin(t*2)*5);}});
+    requestAnimationFrame(anim);})();
+}
+
 // ---------- wiring ----------
 setMusicBtn();
 document.querySelectorAll(".kslot").forEach(k=>k.innerHTML=kidHTML(k.dataset.k));
@@ -1290,7 +1737,12 @@ document.addEventListener("pointerdown",e=>{const t=document.createElement("div"
 document.getElementById("music").onclick=e=>{e.stopPropagation();musicOn=!musicOn;try{localStorage.setItem("music",musicOn?"on":"off")}catch(_){}
   setMusicBtn();musicOn?startMusic():stopMusic();};
 document.addEventListener("pointerdown",()=>startMusic(),{once:false,passive:true});
-document.querySelectorAll("[data-who]").forEach(b=>b.onclick=()=>{audio();who=b.dataset.who;sfx.ding();show("#menu");say(`안녕 ${NAME[who]}! 무슨 놀이 할까?`);});
+document.querySelectorAll("[data-who]").forEach(b=>b.onclick=()=>{audio();who=b.dataset.who;sfx.ding();goWorld();});
+$("#wc").addEventListener("pointerdown",e=>{audio();worldTap(e);});
+$("#dlg").addEventListener("pointerdown",e=>{e.stopPropagation();advanceDlg();});
+$("#rpgMenu").onclick=e=>{e.stopPropagation();show("#menu");};
+$("#toWorld").onclick=()=>goWorld();
+initTitleSprites();
 $("#goStars").onclick=()=>{audio();startStars();};
 $("#goCake").onclick=()=>{audio();startCake();};
 $("#again").onclick=()=>({stars:startStars,cake:startCake,feed:startFeed,bug:startBug,princess:startPrincess,dentist:startDentist,croc:startCroc,num:startNum})[mode]();
@@ -1300,7 +1752,7 @@ $("#goPrincess").onclick=()=>{audio();startPrincess();};
 $("#goDentist").onclick=()=>{audio();startDentist();};
 $("#goCroc").onclick=()=>{audio();startCroc();};
 $("#goNum").onclick=()=>{audio();startNum();};
-$("#toMenu").onclick=()=>{clearGame();show("#menu");};
+$("#toMenu").onclick=()=>{goWorld();};
 </script>
 </body>
 </html>
