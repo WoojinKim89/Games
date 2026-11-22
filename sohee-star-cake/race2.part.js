@@ -126,8 +126,10 @@ function startRace(){
   say("매직 퍼레이드 그랑프리! 마차를 골라요. 이번엔 친구들이 훨씬 빨라요!");
 }
 function runRace(pk){
-  const segs=buildTrack(),N=segs.length,TL=N*RC.SEG,MAX=RC.MAX;
+  const use3D=!!window.THREE&&!window.__force2D;const segs=use3D?buildTrack3D():buildTrack(),N=segs.length,TL=N*RC.SEG,MAX=RC.MAX;
   raceSpr.floats={};RACERS.forEach(r=>raceSpr.floats[r.k]=drawFloatSprite(r));
+  let G3=null;if(window.__g3){window.__g3.dispose();window.__g3=null;}
+  if(use3D){const gl=el(`<canvas class="racecv racegl"></canvas>`);field.appendChild(gl);try{G3=create3DRace(segs,gl,RACERS,raceSpr);window.__g3=G3;}catch(e){console.warn(e);gl.remove();G3=null;}}
   const cv=el(`<canvas class="racecv"></canvas>`);field.appendChild(cv);const x=cv.getContext("2d");
   const ui=el(`<div class="rui"><div class="r-lap">LAP 1/${RC.LAPS}</div><div class="r-coin">⭐ 0</div><div class="r-rank">7<small>등</small></div></div>`);field.appendChild(ui);
   const itemBtn=el(`<button class="r-item"><span>❔</span><small>아이템</small></button>`);field.appendChild(itemBtn);
@@ -135,7 +137,7 @@ function runRace(pk){
   const driftBtn=el(`<button class="r-drift">💨<small>드리프트</small></button>`);field.appendChild(driftBtn);
   const cd=el(`<div class="r-count"></div>`);field.appendChild(cd);
   const ban=el(`<div class="r-banner"></div>`);field.appendChild(ban);
-  let W=innerWidth,H=innerHeight,dpr=1,BG=null;function fit(){dpr=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;BG=buildBackground(W,H);}fit();addEventListener("resize",fit);
+  let W=innerWidth,H=innerHeight,dpr=1,BG=null;function fit(){dpr=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;BG=buildBackground(W,H);if(G3)G3.resize(W,H);}fit();addEventListener("resize",fit);
   const R=RACERS.find(r=>r.k===pk),ST=R.st;
   const me={k:pk,pos:0,x:.3,speed:0,lap:1,spin:0,shield:0,boost:0,item:null,punchCD:0,steer:0,coins:0,drift:0,driftDir:0,driftCharge:0,roulette:0,uni:0,done:false,y:0};
   const top=()=>MAX*(.93+ST.spd*.025)*(1+me.coins*.012),accel=MAX*(.3+ST.acc*.06),steerRate=1.6+ST.hdl*.15;
@@ -269,6 +271,7 @@ function runRace(pk){
   function project(wx,wy,wz,camX,camY,camZ){const cz=wz-camZ;const sc=RC.CAMD/cz;return {x:Math.round(W/2+sc*(wx-camX)*W/2),y:Math.round(H/2-sc*(wy-camY)*H/2),w:Math.round(sc*RC.ROADW*W/2),sc,cz};}
   function quad(x1,y1,w1,x2,y2,w2,c){x.fillStyle=c;x.beginPath();x.moveTo(x1-w1,y1+.6);x.lineTo(x2-w2,y2-.6);x.lineTo(x2+w2,y2-.6);x.lineTo(x1+w1,y1+.6);x.closePath();x.fill();}
   function render(){
+    if(G3){G3.render({me,rivals,t,dt:Math.min(.05,lastDt),pk,shake,moonT,boostOn:me.boost>0,uni:me.uni>0});hud3D();return;}
     x.setTransform(dpr,0,0,dpr,0,0);const sx=shake>0?(Math.random()-.5)*14:0,sy=shake>0?(Math.random()-.5)*10:0;x.translate(sx,sy);
     // parallax background
     const hz=H/2-me.y*.0;const bgY=H/2-BG.far.height+20;
@@ -331,6 +334,21 @@ function runRace(pk){
     rivals.forEach(r=>{const f=pp(r);x.fillStyle=RACERS.find(z=>z.k===r.k).col;x.beginPath();x.arc(bx+bw*f,by+5,6,0,7);x.fill();x.strokeStyle="#fff";x.lineWidth=2;x.stroke();});
     const f=pp(meP());x.fillStyle="#ff5fa8";x.beginPath();x.arc(bx+bw*f,by+5,9,0,7);x.fill();x.strokeStyle="#fff";x.lineWidth=3;x.stroke();
   }
-  function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;update(dt);render();raf=requestAnimationFrame(frame);}
+  let lastDt=.016;
+  function hud3D(){
+    x.setTransform(dpr,0,0,dpr,0,0);x.clearRect(0,0,W,H);
+    if(me.speed>top()*1.05||me.uni>0){x.strokeStyle="rgba(255,255,255,.55)";x.lineWidth=2;for(let i=0;i<18;i++){const a=i/18*Math.PI*2+t;const r1=Math.min(W,H)*.36,r2=r1+50+Math.random()*90;x.beginPath();x.moveTo(W/2+Math.cos(a)*r1,H*.5+Math.sin(a)*r1*.6);x.lineTo(W/2+Math.cos(a)*r2,H*.5+Math.sin(a)*r2*.6);x.stroke();}}
+    if(me.drift){const lv=me.driftCharge>2.2?3:me.driftCharge>1.4?2:me.driftCharge>.7?1:0;x.fillStyle=["#fff","#5fb8ff","#ffb04d","#ff5fd0"][lv];x.strokeStyle="#2b1f40";x.lineWidth=4;x.font="bold 20px Jua,sans-serif";x.textAlign="center";const s=["드리프트...","터보 준비!","슈퍼 터보!","울트라!!"][lv];x.strokeText(s,W/2,H*.56);x.fillText(s,W/2,H*.56);}
+    x.textAlign="center";x.textBaseline="middle";
+    for(const f of fx){if(f.proj){const k=1-f.l/.8;x.font="44px serif";x.fillText(f.proj,W/2,H*.7-k*H*.35);continue;}
+      if(f.incoming){const k=1-f.l/.5;x.font="54px serif";x.fillText(f.incoming,W/2,H*.2+k*H*.45);continue;}
+      x.globalAlpha=Math.min(1,f.l);x.font=`bold ${Math.min(28,W*.065)}px Jua,sans-serif`;x.lineWidth=5;x.strokeStyle="#2b1f40";x.strokeText(f.txt,f.x,f.y-(1.2-f.l)*40);x.fillStyle=f.col;x.fillText(f.txt,f.x,f.y-(1.2-f.l)*40);x.globalAlpha=1;}
+    if(moonT>0){x.fillStyle="rgba(20,10,60,.2)";x.fillRect(0,0,W,H);}
+    const bw=Math.min(W*.62,320),bx=(W-bw)/2,by=122;x.fillStyle="rgba(255,255,255,.75)";x.beginPath();x.roundRect(bx,by,bw,10,5);x.fill();
+    const pp=o=>Math.min(1,((o.lap-1)*TL+o.z)/(RC.LAPS*TL));
+    rivals.forEach(r=>{const f=pp(r);x.fillStyle=RACERS.find(z=>z.k===r.k).col;x.beginPath();x.arc(bx+bw*f,by+5,6,0,7);x.fill();x.strokeStyle="#fff";x.lineWidth=2;x.stroke();});
+    const f=pp(meP());x.fillStyle="#ff5fa8";x.beginPath();x.arc(bx+bw*f,by+5,9,0,7);x.fill();x.strokeStyle="#fff";x.lineWidth=3;x.stroke();
+  }
+  function frame(now){const dt=Math.min(.05,(now-last)/1000);lastDt=dt;last=now;update(dt);render();raf=requestAnimationFrame(frame);}
   say(`${R.n} 출전! 출발! 할 때 화면을 누르면 로켓 스타트!`);raf=requestAnimationFrame(frame);
 }
